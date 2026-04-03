@@ -1,7 +1,14 @@
-import { neon } from '@neondatabase/serverless'
+import { neon, NeonDbError } from '@neondatabase/serverless'
 import { NextRequest, NextResponse } from 'next/server'
 import * as bcrypt from 'bcryptjs'
-import { cookies } from 'next/headers'
+
+export const runtime = 'nodejs'
+
+function isUndefinedColumnError(error: unknown): boolean {
+  if (error instanceof NeonDbError && error.code === '42703') return true
+  const msg = error instanceof Error ? error.message : String(error)
+  return /column .* does not exist/i.test(msg)
+}
 
 export async function POST(request: NextRequest) {
   try {
@@ -23,14 +30,25 @@ export async function POST(request: NextRequest) {
     }
 
     const sql = neon(process.env.DATABASE_URL)
-    const emailNormalized = String(email).trim().toLowerCase()
+    const loginValue = String(email).trim().toLowerCase()
 
-    const result = await sql`
-      SELECT id, email, password_hash
-      FROM admin_users
-      WHERE email = ${emailNormalized}
-      LIMIT 1
-    `
+    let result: Array<{ id: number; password_hash: string }>
+    try {
+      result = (await sql`
+        SELECT id, password_hash
+        FROM admin_users
+        WHERE email = ${loginValue}
+        LIMIT 1
+      `) as Array<{ id: number; password_hash: string }>
+    } catch (err) {
+      if (!isUndefinedColumnError(err)) throw err
+      result = (await sql`
+        SELECT id, password_hash
+        FROM admin_users
+        WHERE username = ${loginValue}
+        LIMIT 1
+      `) as Array<{ id: number; password_hash: string }>
+    }
 
     if (result.length === 0) {
       return NextResponse.json(
@@ -40,7 +58,15 @@ export async function POST(request: NextRequest) {
     }
 
     const user = result[0]
-    const passwordMatch = await bcrypt.compare(password, user.password_hash)
+    let passwordMatch = false
+    try {
+      passwordMatch = await bcrypt.compare(password, user.password_hash)
+    } catch {
+      return NextResponse.json(
+        { error: 'Invalid credentials' },
+        { status: 401 }
+      )
+    }
 
     if (!passwordMatch) {
       return NextResponse.json(
@@ -49,16 +75,15 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    const cookieStore = await cookies()
-    cookieStore.set('admin_session', String(user.id), {
+    const response = NextResponse.json({ success: true })
+    response.cookies.set('admin_session', String(user.id), {
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',
       sameSite: 'lax',
       path: '/',
-      maxAge: 60 * 60 * 24 * 7, // 7 days
+      maxAge: 60 * 60 * 24 * 7,
     })
-
-    return NextResponse.json({ success: true })
+    return response
   } catch (error) {
     console.error('Login error:', error)
     return NextResponse.json(
