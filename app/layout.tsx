@@ -9,7 +9,7 @@ const _geistMono = Geist_Mono({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: 'Gerçek Ortopedi | Orthopedic Excellence',
-  description: 'Premium orthopedic services and expertise. Leading orthopedic clinic providing comprehensive care.',
+  description: 'Premium orthopedic services and expertise. Leading orthopedic clinic providing comprehensive care',
 }
 
 export default function RootLayout({
