@@ -52,7 +52,8 @@ export default function NewBlogPost() {
         router.push('/admin/dashboard')
         router.refresh()
       } else {
-        setError('Failed to create post')
+        const errData = await response.json().catch(() => ({}))
+        setError(errData.error || 'Failed to create post')
       }
     } catch (err) {
       setError('An error occurred')

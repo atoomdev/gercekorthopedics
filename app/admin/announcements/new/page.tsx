@@ -42,7 +42,8 @@ export default function NewAnnouncement() {
         router.push('/admin/dashboard')
         router.refresh()
       } else {
-        setError('Failed to create announcement')
+        const errData = await response.json().catch(() => ({}))
+        setError(errData.error || 'Failed to create announcement')
       }
     } catch (err) {
       setError('An error occurred')
