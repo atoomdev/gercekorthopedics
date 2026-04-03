@@ -27,8 +27,9 @@ export async function POST(request: NextRequest) {
     )
   } catch (error) {
     console.error('Contact submission error:', error)
+    const msg = error instanceof Error ? error.message : String(error)
     return NextResponse.json(
-      { error: 'Mesaj gönderimi başarısız' },
+      { error: 'DB Error: ' + msg },
       { status: 500 }
     )
   }
