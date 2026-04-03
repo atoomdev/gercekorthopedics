@@ -45,7 +45,7 @@ export default function AdminDashboard() {
     router.push('/admin/login')
   }
 
-  const handleDelete = async (type: string, id: number) {
+  const handleDelete = async (type: string, id: number) => {
     if (!confirm('Are you sure?')) return
 
     try {
