@@ -6,22 +6,22 @@ const sql = neon(process.env.DATABASE_URL)
 async function seedAdmin() {
   try {
     // Create default admin user
-    // Email: admin@gertekortopedi.com
-    // Password: Admin123! (should be changed after first login)
-    const hashedPassword = await bcrypt.hash('Admin123!', 10)
+    // Email: admin@gmail.com
+    // Password: admin (should be changed after first login)
+    const hashedPassword = await bcrypt.hash('admin', 10)
 
     const result = await sql(
       `INSERT INTO admin_users (email, password_hash) 
        VALUES ($1, $2) 
        ON CONFLICT (email) DO NOTHING
        RETURNING id`,
-      ['admin@gertekortopedi.com', hashedPassword]
+      ['admin@gmail.com', hashedPassword]
     )
 
     if (result.length > 0) {
       console.log('✓ Admin user created successfully')
-      console.log('Email: admin@gertekortopedi.com')
-      console.log('Password: Admin123! (please change after login)')
+      console.log('Email: admin@gmail.com')
+      console.log('Password: admin (please change after login)')
     } else {
       console.log('✓ Admin user already exists')
     }
