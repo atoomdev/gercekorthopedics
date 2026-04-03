@@ -22,14 +22,15 @@ export default function AdminDashboard() {
           fetch('/api/admin/contacts'),
         ])
 
-        if (!postsRes.ok || !announcementsRes.ok || !contactsRes.ok) {
+        // Only redirect on 401 (not authenticated) — not on 500 errors
+        if (postsRes.status === 401 || announcementsRes.status === 401 || contactsRes.status === 401) {
           router.push('/admin/login')
           return
         }
 
-        setPosts(await postsRes.json())
-        setAnnouncements(await announcementsRes.json())
-        setContacts(await contactsRes.json())
+        if (postsRes.ok) setPosts(await postsRes.json())
+        if (announcementsRes.ok) setAnnouncements(await announcementsRes.json())
+        if (contactsRes.ok) setContacts(await contactsRes.json())
       } catch (error) {
         console.error('Error fetching data:', error)
       } finally {
@@ -235,7 +236,6 @@ export default function AdminDashboard() {
                 {contacts.map((contact) => (
                   <div key={contact.id} className="bg-white p-6 rounded-lg border border-[#e0e0e0]">
                     <h3 className="font-semibold text-[#383086] mb-2">{contact.name}</h3>
-                    <p className="text-sm text-[#666666] mb-1">Email: {contact.email}</p>
                     {contact.phone && (
                       <p className="text-sm text-[#666666] mb-3">Phone: {contact.phone}</p>
                     )}
