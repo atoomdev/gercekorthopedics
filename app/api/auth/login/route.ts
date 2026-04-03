@@ -14,12 +14,23 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    const sql = neon(process.env.DATABASE_URL!)
-    
-    const result = await sql(
-      `SELECT id, email, password_hash FROM admin_users WHERE email = $1 LIMIT 1`,
-      [email]
-    )
+    if (!process.env.DATABASE_URL) {
+      console.error('Login: DATABASE_URL is not set')
+      return NextResponse.json(
+        { error: 'Server misconfiguration' },
+        { status: 500 }
+      )
+    }
+
+    const sql = neon(process.env.DATABASE_URL)
+    const emailNormalized = String(email).trim().toLowerCase()
+
+    const result = await sql`
+      SELECT id, email, password_hash
+      FROM admin_users
+      WHERE email = ${emailNormalized}
+      LIMIT 1
+    `
 
     if (result.length === 0) {
       return NextResponse.json(
@@ -39,10 +50,11 @@ export async function POST(request: NextRequest) {
     }
 
     const cookieStore = await cookies()
-    cookieStore.set('admin_session', user.id, {
+    cookieStore.set('admin_session', String(user.id), {
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',
       sameSite: 'lax',
+      path: '/',
       maxAge: 60 * 60 * 24 * 7, // 7 days
     })
 

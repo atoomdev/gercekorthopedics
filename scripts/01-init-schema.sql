@@ -1,7 +1,7 @@
--- Create admin users table
+-- Create admin users table (login uses email — must match app/api/auth/login)
 CREATE TABLE IF NOT EXISTS admin_users (
   id SERIAL PRIMARY KEY,
-  username VARCHAR(255) NOT NULL UNIQUE,
+  email VARCHAR(255) NOT NULL UNIQUE,
   password_hash VARCHAR(255) NOT NULL,
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
@@ -54,7 +54,4 @@ CREATE INDEX IF NOT EXISTS idx_blog_posts_slug_tr ON blog_posts(slug_tr);
 CREATE INDEX IF NOT EXISTS idx_announcements_published ON announcements(published);
 CREATE INDEX IF NOT EXISTS idx_announcements_display_date ON announcements(display_date DESC);
 
--- Insert default admin user (password: 123)
-INSERT INTO admin_users (username, password_hash) 
-VALUES ('123', '$2b$10$5mYhLPYM.Vvkr1VTaH8Gye9h6VLHc8eMUGG0zRQ2zVzVz2VzVzVzV')
-ON CONFLICT (username) DO NOTHING;
+-- Default admin: run `node scripts/02-seed-admin.js` with DATABASE_URL set
