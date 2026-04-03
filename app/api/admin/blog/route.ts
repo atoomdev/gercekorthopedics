@@ -16,14 +16,19 @@ export async function GET(request: NextRequest) {
   try {
     const sql = neon(process.env.DATABASE_URL!)
     const posts = await sql(
-      `SELECT id, title, slug, excerpt, published, created_at 
-       FROM blog_posts 
+      `SELECT id,
+              title_en AS title, title_tr,
+              slug_en  AS slug,  slug_tr,
+              excerpt_en AS excerpt, excerpt_tr,
+              published, created_at
+       FROM blog_posts
        ORDER BY created_at DESC`
     )
     return NextResponse.json(posts)
   } catch (error) {
     console.error('Error fetching blog posts:', error)
-    return NextResponse.json({ error: 'Failed to fetch posts' }, { status: 500 })
+    const msg = error instanceof Error ? error.message : String(error)
+    return NextResponse.json({ error: 'DB Error: ' + msg }, { status: 500 })
   }
 }
 
@@ -33,14 +38,30 @@ export async function POST(request: NextRequest) {
   }
 
   try {
-    const { title, slug, excerpt, content, published } = await request.json()
+    const {
+      title_tr, title_en,
+      slug_tr, slug_en,
+      excerpt_tr, excerpt_en,
+      content_tr, content_en,
+      author, published
+    } = await request.json()
 
     const sql = neon(process.env.DATABASE_URL!)
     const result = await sql(
-      `INSERT INTO blog_posts (title, slug, excerpt, content, published) 
-       VALUES ($1, $2, $3, $4, $5) 
+      `INSERT INTO blog_posts
+         (title_en, title_tr, slug_en, slug_tr,
+          excerpt_en, excerpt_tr, content_en, content_tr,
+          author, published)
+       VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10)
        RETURNING id`,
-      [title, slug, excerpt, content, published || false]
+      [
+        title_en || '', title_tr || '',
+        slug_en  || '', slug_tr  || '',
+        excerpt_en || null, excerpt_tr || null,
+        content_en || '', content_tr || '',
+        author || null,
+        published ?? false,
+      ]
     )
 
     return NextResponse.json(result[0], { status: 201 })

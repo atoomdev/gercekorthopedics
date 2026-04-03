@@ -16,7 +16,7 @@ export async function GET(request: NextRequest) {
   try {
     const sql = neon(process.env.DATABASE_URL!)
     const contacts = await sql(
-      `SELECT id, name, email, phone, message, created_at 
+      `SELECT id, name, phone, message, created_at 
        FROM contact_submissions 
        ORDER BY created_at DESC`
     )

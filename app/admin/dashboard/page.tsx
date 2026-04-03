@@ -236,7 +236,6 @@ export default function AdminDashboard() {
                 {contacts.map((contact) => (
                   <div key={contact.id} className="bg-white p-6 rounded-lg border border-[#e0e0e0]">
                     <h3 className="font-semibold text-[#383086] mb-2">{contact.name}</h3>
-                    <p className="text-sm text-[#666666] mb-1">Email: {contact.email}</p>
                     {contact.phone && (
                       <p className="text-sm text-[#666666] mb-3">Phone: {contact.phone}</p>
                     )}

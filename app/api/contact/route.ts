@@ -15,10 +15,10 @@ export async function POST(request: NextRequest) {
     const sql = neon(process.env.DATABASE_URL!)
     
     const result = await sql(
-      `INSERT INTO contact_submissions (name, email, phone, message) 
-       VALUES ($1, $2, $3, $4) 
+      `INSERT INTO contact_submissions (name, phone, message) 
+       VALUES ($1, $2, $3) 
        RETURNING id`,
-      [name, email, phone || null, message]
+      [name, phone || null, message]
     )
 
     return NextResponse.json(
