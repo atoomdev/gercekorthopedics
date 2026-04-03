@@ -15,22 +15,15 @@ export async function GET(request: NextRequest) {
 
   try {
     const sql = neon(process.env.DATABASE_URL!)
-    // Schema: title_en, title_tr, description_en, description_tr (no "content" column)
     const announcements = await sql(
-      `SELECT id,
-              title_en AS title, title_tr,
-              description_en AS content, description_tr,
-              published, display_date, created_at
-       FROM announcements
+      `SELECT id, title, content, published, created_at 
+       FROM announcements 
        ORDER BY created_at DESC`
     )
     return NextResponse.json(announcements)
   } catch (error) {
     console.error('Error fetching announcements:', error)
-    return NextResponse.json(
-      { error: 'Failed to fetch announcements' },
-      { status: 500 }
-    )
+    return NextResponse.json({ error: 'Failed to fetch announcements' }, { status: 500 })
   }
 }
 
@@ -40,33 +33,19 @@ export async function POST(request: NextRequest) {
   }
 
   try {
-    const {
-      title_en, title_tr,
-      description_en, description_tr,
-      published,
-      display_date,
-    } = await request.json()
+    const { title, content, published } = await request.json()
 
     const sql = neon(process.env.DATABASE_URL!)
     const result = await sql(
-      `INSERT INTO announcements
-         (title_en, title_tr, description_en, description_tr, published, display_date)
-       VALUES ($1,$2,$3,$4,$5,$6)
+      `INSERT INTO announcements (title, content, published) 
+       VALUES ($1, $2, $3) 
        RETURNING id`,
-      [
-        title_en, title_tr,
-        description_en, description_tr,
-        published ?? true,
-        display_date ?? new Date().toISOString(),
-      ]
+      [title, content, published || false]
     )
 
     return NextResponse.json(result[0], { status: 201 })
   } catch (error) {
     console.error('Error creating announcement:', error)
-    return NextResponse.json(
-      { error: 'Failed to create announcement' },
-      { status: 500 }
-    )
+    return NextResponse.json({ error: 'Failed to create announcement' }, { status: 500 })
   }
 }

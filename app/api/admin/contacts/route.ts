@@ -15,18 +15,14 @@ export async function GET(request: NextRequest) {
 
   try {
     const sql = neon(process.env.DATABASE_URL!)
-    // Schema: id, name, phone, message, created_at  (NO email column)
     const contacts = await sql(
-      `SELECT id, name, phone, message, created_at
-       FROM contact_submissions
+      `SELECT id, name, email, phone, message, created_at 
+       FROM contact_submissions 
        ORDER BY created_at DESC`
     )
     return NextResponse.json(contacts)
   } catch (error) {
     console.error('Error fetching contacts:', error)
-    return NextResponse.json(
-      { error: 'Failed to fetch contacts' },
-      { status: 500 }
-    )
+    return NextResponse.json({ error: 'Failed to fetch contacts' }, { status: 500 })
   }
 }

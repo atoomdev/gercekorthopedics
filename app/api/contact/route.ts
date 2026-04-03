@@ -5,10 +5,9 @@ export async function POST(request: NextRequest) {
   try {
     const { name, email, phone, message } = await request.json()
 
-    // Validate inputs
     if (!name || !email || !message) {
       return NextResponse.json(
-        { error: 'Missing required fields' },
+        { error: 'Gerekli alanlar eksik' },
         { status: 400 }
       )
     }
@@ -29,7 +28,7 @@ export async function POST(request: NextRequest) {
   } catch (error) {
     console.error('Contact submission error:', error)
     return NextResponse.json(
-      { error: 'Failed to submit contact form' },
+      { error: 'Mesaj gönderimi başarısız' },
       { status: 500 }
     )
   }
