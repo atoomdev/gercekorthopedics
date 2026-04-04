@@ -49,12 +49,12 @@ export function WhyUs() {
           </div>
 
           {/* Right Visual */}
-          <div className="relative h-64 sm:h-80 md:h-96 lg:h-[450px] bg-card rounded-2xl sm:rounded-3xl overflow-hidden border border-border flex items-center justify-center animate-slide-right animate-shadow-glow hover-shadow-lift order-1 lg:order-2">
-            <div className="absolute inset-0 opacity-5">
-              <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-60 sm:w-80 h-60 sm:h-80 bg-primary rounded-full animate-pulse-slow"></div>
+          <div className="relative h-64 sm:h-80 md:h-96 lg:h-[450px] bg-card rounded-2xl sm:rounded-3xl overflow-hidden border border-border flex items-center justify-center">
+            <div className="absolute inset-0 opacity-20">
+              <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-60 sm:w-80 h-60 sm:h-80 bg-primary rounded-full"></div>
             </div>
             <div className="relative z-10 text-center px-4 sm:px-6 md:px-8">
-              <div className="w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 mx-auto mb-4 sm:mb-6 rounded-xl sm:rounded-2xl bg-primary/10 flex items-center justify-center animate-bounce-soft">
+              <div className="w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 mx-auto mb-4 sm:mb-6 rounded-xl sm:rounded-2xl bg-primary/10 flex items-center justify-center">
                 <Shield className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 text-primary" />
               </div>
               <p className="text-primary font-semibold text-lg sm:text-xl">{t('Taahhüdümüz', 'Our Commitment')}</p>
