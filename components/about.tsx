@@ -56,8 +56,8 @@ export function About() {
             {/* Stats Grid */}
             <div className="grid grid-cols-2 gap-3 sm:gap-4 md:gap-6">
               {stats.map((stat, idx) => (
-                <div 
-                  key={idx} 
+                <div
+                  key={idx}
                   className="p-4 sm:p-5 bg-secondary rounded-lg sm:rounded-xl hover-shadow-lift transition-all duration-300 animate-fade-up"
                   style={{ animationDelay: `${(idx + 3) * 100}ms` }}
                 >

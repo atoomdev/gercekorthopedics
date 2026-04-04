@@ -42,7 +42,7 @@ export function Hero() {
                 <div className="absolute bottom-1/4 right-1/4 w-32 sm:w-48 h-32 sm:h-48 bg-primary-foreground rounded-full blur-3xl animate-float delay-500"></div>
                 <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-40 sm:w-64 h-40 sm:h-64 bg-primary-foreground rounded-full blur-3xl animate-pulse-slow"></div>
               </div>
-              
+
               {/* Center content */}
               <div className="relative z-10 text-center p-4 sm:p-6 md:p-8">
                 <div className="w-20 h-20 sm:w-28 sm:h-28 md:w-32 md:h-32 mx-auto mb-4 sm:mb-6 rounded-xl sm:rounded-2xl bg-primary-foreground/10 backdrop-blur-sm flex items-center justify-center animate-bounce-soft">
