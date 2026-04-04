@@ -76,7 +76,7 @@ export function Navbar() {
               <img
                 src="/Untitled%20design.png"
                 alt="GO Logo"
-                className="h-10 w-10 object-contain" /* Menülerle orantılı boyut */
+                className="h-16 w-16 object-contain" /* Logoyu büyüttüm */
               />
             </div>
             <div>
