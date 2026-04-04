@@ -72,8 +72,12 @@ export function Navbar() {
       >
         <div className="container-shell flex min-h-[78px] items-center justify-between gap-4">
           <Link href="/" className="flex items-center gap-3">
-            <div className="flex size-12 items-center justify-center rounded-2xl bg-primary text-lg font-semibold text-primary-foreground">
-              GO
+            <div className="flex items-center justify-center">
+              <img
+                src="/Untitled%20design.png"
+                alt="GO Logo"
+                className="h-10 w-10 object-contain" /* Menülerle orantılı boyut */
+              />
             </div>
             <div>
               <p className="text-lg font-semibold tracking-tight text-foreground">
