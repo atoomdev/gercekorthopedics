@@ -51,7 +51,7 @@ export function ServicesPageContent() {
               <h2 className="mt-6 text-3xl font-semibold tracking-tight text-foreground sm:text-4xl">
                 {t(servicesPageCopy.guidanceTitle)}
               </h2>
-              <p className="mt-5 max-w-2xl text-base leading-8 text-muted-foreground">
+              <p className="mt-4 max-w-2xl text-sm leading-7 text-muted-foreground">
                 {t(servicesPageCopy.guidanceDescription)}
               </p>
             </div>

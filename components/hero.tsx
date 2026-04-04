@@ -26,7 +26,7 @@ export function Hero() {
             <h1 className="mt-6 max-w-4xl text-4xl font-semibold tracking-tight text-foreground sm:text-5xl lg:text-6xl">
               {t(heroCopy.title)}
             </h1>
-            <p className="mt-6 max-w-2xl text-lg leading-8 text-muted-foreground">
+            <p className="mt-5 max-w-2xl text-base leading-7 text-muted-foreground">
               {t(heroCopy.description)}
             </p>
 
@@ -103,7 +103,7 @@ export function Hero() {
                       key={item}
                       className="rounded-[24px] border border-border/70 bg-white/90 p-5 shadow-[0_16px_45px_rgba(10,34,57,0.05)]"
                     >
-                      <p className="text-base font-medium leading-7 text-foreground/90">
+                      <p className="text-sm font-medium leading-7 text-foreground/90">
                         {item}
                       </p>
                     </div>
@@ -117,7 +117,7 @@ export function Hero() {
                   <p className="mt-3 text-3xl font-semibold tracking-tight">
                     {siteConfig.phone.display}
                   </p>
-                  <p className="mt-3 text-sm leading-7 text-white/75">
+                  <p className="mt-3 text-sm leading-6 text-white/75">
                     {t(heroCopy.appointmentDescription)}
                   </p>
                 </div>

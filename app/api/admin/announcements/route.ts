@@ -1,16 +1,11 @@
 import { neon } from '@neondatabase/serverless'
 import { NextRequest, NextResponse } from 'next/server'
-import { cookies } from 'next/headers'
-
-async function checkAuth() {
-  const cookieStore = await cookies()
-  const sessionId = cookieStore.get('admin_session')?.value
-  return !!sessionId
-}
+import { requireAdminSession } from '@/lib/admin-api'
 
 export async function GET(request: NextRequest) {
-  if (!(await checkAuth())) {
-    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+  const unauthorizedResponse = await requireAdminSession()
+  if (unauthorizedResponse) {
+    return unauthorizedResponse
   }
 
   try {
@@ -32,8 +27,9 @@ export async function GET(request: NextRequest) {
 }
 
 export async function POST(request: NextRequest) {
-  if (!(await checkAuth())) {
-    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+  const unauthorizedResponse = await requireAdminSession()
+  if (unauthorizedResponse) {
+    return unauthorizedResponse
   }
 
   try {
@@ -42,6 +38,18 @@ export async function POST(request: NextRequest) {
       description_en, description_tr,
       published
     } = await request.json()
+
+    if (
+      !title_tr?.trim() ||
+      !title_en?.trim() ||
+      !description_tr?.trim() ||
+      !description_en?.trim()
+    ) {
+      return NextResponse.json(
+        { error: 'Required announcement fields are missing.' },
+        { status: 400 },
+      )
+    }
 
     const sql = neon(process.env.DATABASE_URL!)
     const result = await sql(

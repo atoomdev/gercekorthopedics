@@ -1,17 +1,63 @@
 'use client'
 
-import { useState, useEffect } from 'react'
-import { useRouter } from 'next/navigation'
+import { useEffect, useState } from 'react'
+import { useRouter, useSearchParams } from 'next/navigation'
 import Link from 'next/link'
-import { LogOut, Plus, Edit2, Trash2 } from 'lucide-react'
+import { Edit2, LogOut, Plus, Trash2 } from 'lucide-react'
+
+type DashboardTab = 'blog' | 'announcements' | 'contacts'
+
+type BlogPostListItem = {
+  id: number
+  title?: string | null
+  title_tr?: string | null
+  published: boolean
+  created_at: string
+}
+
+type AnnouncementListItem = {
+  id: number
+  title?: string | null
+  title_tr?: string | null
+  published: boolean
+  created_at: string
+}
+
+type ContactSubmission = {
+  id: number
+  name: string
+  phone?: string | null
+  message: string
+  created_at: string
+}
+
+type FeedbackState =
+  | { type: 'success' | 'error'; message: string }
+  | null
+
+function isDashboardTab(value: string | null): value is DashboardTab {
+  return value === 'blog' || value === 'announcements' || value === 'contacts'
+}
 
 export default function AdminDashboard() {
   const router = useRouter()
-  const [activeTab, setActiveTab] = useState('blog')
-  const [posts, setPosts] = useState<any[]>([])
-  const [announcements, setAnnouncements] = useState<any[]>([])
-  const [contacts, setContacts] = useState<any[]>([])
+  const searchParams = useSearchParams()
+  const searchTab = searchParams.get('tab')
+  const initialTab: DashboardTab = isDashboardTab(searchTab) ? searchTab : 'blog'
+
+  const [activeTab, setActiveTab] = useState<DashboardTab>(initialTab)
+  const [posts, setPosts] = useState<BlogPostListItem[]>([])
+  const [announcements, setAnnouncements] = useState<AnnouncementListItem[]>([])
+  const [contacts, setContacts] = useState<ContactSubmission[]>([])
   const [loading, setLoading] = useState(true)
+  const [feedback, setFeedback] = useState<FeedbackState>(null)
+  const [deletingKey, setDeletingKey] = useState<string | null>(null)
+
+  useEffect(() => {
+    if (isDashboardTab(searchParams.get('tab'))) {
+      setActiveTab(searchParams.get('tab') as DashboardTab)
+    }
+  }, [searchParams])
 
   useEffect(() => {
     const fetchData = async () => {
@@ -22,17 +68,36 @@ export default function AdminDashboard() {
           fetch('/api/admin/contacts'),
         ])
 
-        // Only redirect on 401 (not authenticated) — not on 500 errors
-        if (postsRes.status === 401 || announcementsRes.status === 401 || contactsRes.status === 401) {
+        if (
+          postsRes.status === 401 ||
+          announcementsRes.status === 401 ||
+          contactsRes.status === 401
+        ) {
           router.push('/admin/login')
           return
         }
 
-        if (postsRes.ok) setPosts(await postsRes.json())
-        if (announcementsRes.ok) setAnnouncements(await announcementsRes.json())
-        if (contactsRes.ok) setContacts(await contactsRes.json())
+        const [postsData, announcementsData, contactsData] = await Promise.all([
+          postsRes.json().catch(() => []),
+          announcementsRes.json().catch(() => []),
+          contactsRes.json().catch(() => []),
+        ])
+
+        if (!postsRes.ok || !announcementsRes.ok || !contactsRes.ok) {
+          throw new Error('Yönetim verileri yüklenemedi.')
+        }
+
+        setPosts(postsData)
+        setAnnouncements(announcementsData)
+        setContacts(contactsData)
       } catch (error) {
-        console.error('Error fetching data:', error)
+        setFeedback({
+          type: 'error',
+          message:
+            error instanceof Error
+              ? error.message
+              : 'Yönetim verileri yüklenemedi.',
+        })
       } finally {
         setLoading(false)
       }
@@ -41,214 +106,318 @@ export default function AdminDashboard() {
     fetchData()
   }, [router])
 
+  const handleTabChange = (tab: DashboardTab) => {
+    setActiveTab(tab)
+    router.replace(`/admin/dashboard?tab=${tab}`)
+  }
+
   const handleLogout = async () => {
     await fetch('/api/auth/logout', { method: 'POST' })
     router.push('/admin/login')
   }
 
-  const handleDelete = async (type: string, id: number) => {
-    if (!confirm('Are you sure?')) return
+  const handleDelete = async (
+    type: 'blog' | 'announcements',
+    id: number,
+  ) => {
+    const entityLabel = type === 'blog' ? 'blog yazısını' : 'duyuruyu'
+    if (!window.confirm(`Bu ${entityLabel} silmek istediğinize emin misiniz?`)) {
+      return
+    }
+
+    const currentKey = `${type}-${id}`
+    setDeletingKey(currentKey)
+    setFeedback(null)
 
     try {
       const response = await fetch(`/api/admin/${type}/${id}`, {
         method: 'DELETE',
       })
 
-      if (response.ok) {
-        if (type === 'blog') {
-          setPosts(posts.filter(p => p.id !== id))
-        } else if (type === 'announcements') {
-          setAnnouncements(announcements.filter(a => a.id !== id))
-        }
+      if (response.status === 401) {
+        router.push('/admin/login')
+        return
       }
+
+      const data = await response.json().catch(() => ({}))
+
+      if (!response.ok) {
+        throw new Error(
+          data.error || `${type === 'blog' ? 'Blog yazısı' : 'Duyuru'} silinemedi.`,
+        )
+      }
+
+      if (type === 'blog') {
+        setPosts((current) => current.filter((post) => post.id !== id))
+      } else {
+        setAnnouncements((current) =>
+          current.filter((announcement) => announcement.id !== id),
+        )
+      }
+
+      setFeedback({
+        type: 'success',
+        message:
+          type === 'blog'
+            ? 'Blog yazısı silindi.'
+            : 'Duyuru silindi.',
+      })
     } catch (error) {
-      console.error('Error deleting:', error)
+      setFeedback({
+        type: 'error',
+        message:
+          error instanceof Error ? error.message : 'Silme işlemi başarısız oldu.',
+      })
+    } finally {
+      setDeletingKey(null)
     }
   }
 
   if (loading) {
-    return <div className="min-h-screen flex items-center justify-center">Loading...</div>
+    return (
+      <div className="flex min-h-screen items-center justify-center bg-[#f5f7fb] text-sm text-[#667085]">
+        Yönetim paneli yükleniyor...
+      </div>
+    )
   }
 
   return (
-    <main className="min-h-screen bg-[#f5f5f5]">
-      {/* Header */}
-      <header className="bg-[#383086] text-white p-6">
-        <div className="max-w-7xl mx-auto flex justify-between items-center">
-          <div className="flex items-center gap-2">
-            <Link href="/" className="text-xl font-bold">
+    <main className="min-h-screen bg-[#f5f7fb]">
+      <header className="border-b border-[#dfe5f0] bg-white">
+        <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-6 py-5">
+          <div className="flex items-center gap-3">
+            <Link href="/" className="text-xl font-semibold tracking-tight text-[#1f2953]">
               Gerçek Ortopedi
             </Link>
-            <span className="text-sm opacity-75">Admin Panel</span>
+            <span className="rounded-full bg-[#eef1ff] px-3 py-1 text-xs font-semibold uppercase tracking-[0.2em] text-[#383086]">
+              Admin
+            </span>
           </div>
           <button
             onClick={handleLogout}
-            className="flex items-center gap-2 bg-white bg-opacity-20 px-4 py-2 rounded-lg hover:bg-opacity-30 transition"
+            className="inline-flex items-center gap-2 rounded-full border border-[#d9e0ea] px-4 py-2 text-sm font-medium text-[#1f2953] transition hover:bg-[#f8fafc]"
           >
-            <LogOut size={18} />
-            Logout
+            <LogOut className="size-4" />
+            Çıkış yap
           </button>
         </div>
       </header>
 
-      {/* Navigation Tabs */}
-      <div className="bg-white border-b border-[#e0e0e0]">
-        <div className="max-w-7xl mx-auto px-6">
-          <div className="flex gap-8">
+      <div className="mx-auto max-w-7xl px-6 py-8">
+        <div className="flex flex-wrap gap-2 rounded-full border border-[#dfe5f0] bg-white p-2">
+          {[
+            { key: 'blog', label: 'Blog' },
+            { key: 'announcements', label: 'Duyurular' },
+            { key: 'contacts', label: 'İletişim Formları' },
+          ].map((tab) => (
             <button
-              onClick={() => setActiveTab('blog')}
-              className={`py-4 px-2 border-b-2 font-medium transition ${
-                activeTab === 'blog'
-                  ? 'border-[#383086] text-[#383086]'
-                  : 'border-transparent text-[#666666] hover:text-[#383086]'
+              key={tab.key}
+              type="button"
+              onClick={() => handleTabChange(tab.key as DashboardTab)}
+              className={`rounded-full px-4 py-2 text-sm font-medium transition ${
+                activeTab === tab.key
+                  ? 'bg-[#383086] text-white'
+                  : 'text-[#667085] hover:bg-[#f5f7fb] hover:text-[#1f2953]'
               }`}
             >
-              Blog Posts
+              {tab.label}
             </button>
-            <button
-              onClick={() => setActiveTab('announcements')}
-              className={`py-4 px-2 border-b-2 font-medium transition ${
-                activeTab === 'announcements'
-                  ? 'border-[#383086] text-[#383086]'
-                  : 'border-transparent text-[#666666] hover:text-[#383086]'
-              }`}
-            >
-              Announcements
-            </button>
-            <button
-              onClick={() => setActiveTab('contacts')}
-              className={`py-4 px-2 border-b-2 font-medium transition ${
-                activeTab === 'contacts'
-                  ? 'border-[#383086] text-[#383086]'
-                  : 'border-transparent text-[#666666] hover:text-[#383086]'
-              }`}
-            >
-              Contact Submissions
-            </button>
-          </div>
+          ))}
         </div>
-      </div>
 
-      {/* Content */}
-      <div className="max-w-7xl mx-auto p-6">
-        {/* Blog Posts Tab */}
-        {activeTab === 'blog' && (
-          <div>
-            <div className="flex justify-between items-center mb-6">
-              <h2 className="text-2xl font-bold text-[#383086]">Blog Posts</h2>
-              <Link
-                href="/admin/blog/new"
-                className="flex items-center gap-2 bg-[#383086] text-white px-4 py-2 rounded-lg hover:bg-opacity-90 transition"
-              >
-                <Plus size={18} />
-                New Post
-              </Link>
-            </div>
+        {feedback ? (
+          <div
+            className={`mt-6 rounded-2xl px-4 py-3 text-sm ${
+              feedback.type === 'success'
+                ? 'border border-emerald-200 bg-emerald-50 text-emerald-700'
+                : 'border border-red-200 bg-red-50 text-red-700'
+            }`}
+          >
+            {feedback.message}
+          </div>
+        ) : null}
 
-            {posts.length === 0 ? (
-              <p className="text-[#666666]">No blog posts yet.</p>
-            ) : (
-              <div className="space-y-4">
-                {posts.map((post) => (
-                  <div key={post.id} className="bg-white p-6 rounded-lg border border-[#e0e0e0] flex justify-between items-start">
-                    <div>
-                      <h3 className="font-semibold text-[#383086] mb-1">{post.title}</h3>
-                      <p className="text-sm text-[#666666]">
-                        {new Date(post.created_at).toLocaleDateString()} • {post.published ? 'Published' : 'Draft'}
+        <div className="mt-8">
+          {activeTab === 'blog' ? (
+            <section>
+              <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+                <div>
+                  <h2 className="text-2xl font-semibold tracking-tight text-[#1f2953]">
+                    Blog yazıları
+                  </h2>
+                  <p className="mt-1 text-sm text-[#667085]">
+                    Mevcut blog içeriklerini düzenleyin veya yenilerini ekleyin.
+                  </p>
+                </div>
+                <Link
+                  href="/admin/blog/new"
+                  className="inline-flex items-center gap-2 rounded-full bg-[#383086] px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-[#2f2870]"
+                >
+                  <Plus className="size-4" />
+                  Yeni yazı
+                </Link>
+              </div>
+
+              {posts.length === 0 ? (
+                <p className="mt-6 rounded-2xl border border-[#dfe5f0] bg-white px-5 py-6 text-sm text-[#667085]">
+                  Henüz blog yazısı yok.
+                </p>
+              ) : (
+                <div className="mt-6 space-y-4">
+                  {posts.map((post) => {
+                    const title = post.title_tr || post.title || 'Başlıksız yazı'
+                    const isDeleting = deletingKey === `blog-${post.id}`
+
+                    return (
+                      <article
+                        key={post.id}
+                        className="flex flex-col gap-4 rounded-[24px] border border-[#dfe5f0] bg-white p-6 shadow-[0_18px_50px_rgba(32,41,72,0.05)] sm:flex-row sm:items-start sm:justify-between"
+                      >
+                        <div>
+                          <h3 className="text-lg font-semibold text-[#1f2953]">{title}</h3>
+                          <p className="mt-2 text-sm text-[#667085]">
+                            {new Date(post.created_at).toLocaleDateString('tr-TR')} •{' '}
+                            {post.published ? 'Yayında' : 'Taslak'}
+                          </p>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <Link
+                            href={`/admin/blog/${post.id}/edit`}
+                            className="inline-flex items-center gap-2 rounded-full border border-[#dfe5f0] px-3 py-2 text-sm font-medium text-[#1f2953] transition hover:bg-[#f8fafc]"
+                          >
+                            <Edit2 className="size-4 text-[#383086]" />
+                            Düzenle
+                          </Link>
+                          <button
+                            type="button"
+                            onClick={() => handleDelete('blog', post.id)}
+                            disabled={isDeleting}
+                            className="inline-flex items-center gap-2 rounded-full border border-red-200 px-3 py-2 text-sm font-medium text-red-600 transition hover:bg-red-50 disabled:cursor-not-allowed disabled:opacity-60"
+                          >
+                            <Trash2 className="size-4" />
+                            {isDeleting ? 'Siliniyor...' : 'Sil'}
+                          </button>
+                        </div>
+                      </article>
+                    )
+                  })}
+                </div>
+              )}
+            </section>
+          ) : null}
+
+          {activeTab === 'announcements' ? (
+            <section>
+              <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+                <div>
+                  <h2 className="text-2xl font-semibold tracking-tight text-[#1f2953]">
+                    Duyurular
+                  </h2>
+                  <p className="mt-1 text-sm text-[#667085]">
+                    Duyuruları güncelleyin, yayın durumunu yönetin veya silin.
+                  </p>
+                </div>
+                <Link
+                  href="/admin/announcements/new"
+                  className="inline-flex items-center gap-2 rounded-full bg-[#383086] px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-[#2f2870]"
+                >
+                  <Plus className="size-4" />
+                  Yeni duyuru
+                </Link>
+              </div>
+
+              {announcements.length === 0 ? (
+                <p className="mt-6 rounded-2xl border border-[#dfe5f0] bg-white px-5 py-6 text-sm text-[#667085]">
+                  Henüz duyuru yok.
+                </p>
+              ) : (
+                <div className="mt-6 space-y-4">
+                  {announcements.map((announcement) => {
+                    const title =
+                      announcement.title_tr || announcement.title || 'Başlıksız duyuru'
+                    const isDeleting = deletingKey === `announcements-${announcement.id}`
+
+                    return (
+                      <article
+                        key={announcement.id}
+                        className="flex flex-col gap-4 rounded-[24px] border border-[#dfe5f0] bg-white p-6 shadow-[0_18px_50px_rgba(32,41,72,0.05)] sm:flex-row sm:items-start sm:justify-between"
+                      >
+                        <div>
+                          <h3 className="text-lg font-semibold text-[#1f2953]">{title}</h3>
+                          <p className="mt-2 text-sm text-[#667085]">
+                            {new Date(announcement.created_at).toLocaleDateString('tr-TR')} •{' '}
+                            {announcement.published ? 'Yayında' : 'Taslak'}
+                          </p>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <Link
+                            href={`/admin/announcements/${announcement.id}/edit`}
+                            className="inline-flex items-center gap-2 rounded-full border border-[#dfe5f0] px-3 py-2 text-sm font-medium text-[#1f2953] transition hover:bg-[#f8fafc]"
+                          >
+                            <Edit2 className="size-4 text-[#383086]" />
+                            Düzenle
+                          </Link>
+                          <button
+                            type="button"
+                            onClick={() => handleDelete('announcements', announcement.id)}
+                            disabled={isDeleting}
+                            className="inline-flex items-center gap-2 rounded-full border border-red-200 px-3 py-2 text-sm font-medium text-red-600 transition hover:bg-red-50 disabled:cursor-not-allowed disabled:opacity-60"
+                          >
+                            <Trash2 className="size-4" />
+                            {isDeleting ? 'Siliniyor...' : 'Sil'}
+                          </button>
+                        </div>
+                      </article>
+                    )
+                  })}
+                </div>
+              )}
+            </section>
+          ) : null}
+
+          {activeTab === 'contacts' ? (
+            <section>
+              <div>
+                <h2 className="text-2xl font-semibold tracking-tight text-[#1f2953]">
+                  İletişim formları
+                </h2>
+                <p className="mt-1 text-sm text-[#667085]">
+                  Ziyaretçilerin bıraktığı son mesajları inceleyin.
+                </p>
+              </div>
+
+              {contacts.length === 0 ? (
+                <p className="mt-6 rounded-2xl border border-[#dfe5f0] bg-white px-5 py-6 text-sm text-[#667085]">
+                  Henüz iletişim formu gelmedi.
+                </p>
+              ) : (
+                <div className="mt-6 space-y-4">
+                  {contacts.map((contact) => (
+                    <article
+                      key={contact.id}
+                      className="rounded-[24px] border border-[#dfe5f0] bg-white p-6 shadow-[0_18px_50px_rgba(32,41,72,0.05)]"
+                    >
+                      <h3 className="text-lg font-semibold text-[#1f2953]">
+                        {contact.name}
+                      </h3>
+                      {contact.phone ? (
+                        <p className="mt-1 text-sm text-[#667085]">
+                          Telefon: {contact.phone}
+                        </p>
+                      ) : null}
+                      <p className="mt-4 rounded-[20px] bg-[#f5f7fb] px-4 py-4 text-sm leading-7 text-[#475467]">
+                        {contact.message}
                       </p>
-                    </div>
-                    <div className="flex gap-2">
-                      <Link
-                        href={`/admin/blog/${post.id}/edit`}
-                        className="p-2 hover:bg-[#f5f5f5] rounded transition"
-                      >
-                        <Edit2 size={18} className="text-[#383086]" />
-                      </Link>
-                      <button
-                        onClick={() => handleDelete('blog', post.id)}
-                        className="p-2 hover:bg-red-50 rounded transition"
-                      >
-                        <Trash2 size={18} className="text-red-500" />
-                      </button>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            )}
-          </div>
-        )}
-
-        {/* Announcements Tab */}
-        {activeTab === 'announcements' && (
-          <div>
-            <div className="flex justify-between items-center mb-6">
-              <h2 className="text-2xl font-bold text-[#383086]">Announcements</h2>
-              <Link
-                href="/admin/announcements/new"
-                className="flex items-center gap-2 bg-[#383086] text-white px-4 py-2 rounded-lg hover:bg-opacity-90 transition"
-              >
-                <Plus size={18} />
-                New Announcement
-              </Link>
-            </div>
-
-            {announcements.length === 0 ? (
-              <p className="text-[#666666]">No announcements yet.</p>
-            ) : (
-              <div className="space-y-4">
-                {announcements.map((announcement) => (
-                  <div key={announcement.id} className="bg-white p-6 rounded-lg border border-[#e0e0e0] flex justify-between items-start">
-                    <div>
-                      <h3 className="font-semibold text-[#383086] mb-1">{announcement.title}</h3>
-                      <p className="text-sm text-[#666666]">
-                        {new Date(announcement.created_at).toLocaleDateString()} • {announcement.published ? 'Published' : 'Draft'}
+                      <p className="mt-3 text-xs text-[#98a2b3]">
+                        {new Date(contact.created_at).toLocaleString('tr-TR')}
                       </p>
-                    </div>
-                    <div className="flex gap-2">
-                      <Link
-                        href={`/admin/announcements/${announcement.id}/edit`}
-                        className="p-2 hover:bg-[#f5f5f5] rounded transition"
-                      >
-                        <Edit2 size={18} className="text-[#383086]" />
-                      </Link>
-                      <button
-                        onClick={() => handleDelete('announcements', announcement.id)}
-                        className="p-2 hover:bg-red-50 rounded transition"
-                      >
-                        <Trash2 size={18} className="text-red-500" />
-                      </button>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            )}
-          </div>
-        )}
-
-        {/* Contacts Tab */}
-        {activeTab === 'contacts' && (
-          <div>
-            <h2 className="text-2xl font-bold text-[#383086] mb-6">Contact Submissions</h2>
-            {contacts.length === 0 ? (
-              <p className="text-[#666666]">No contact submissions yet.</p>
-            ) : (
-              <div className="space-y-4">
-                {contacts.map((contact) => (
-                  <div key={contact.id} className="bg-white p-6 rounded-lg border border-[#e0e0e0]">
-                    <h3 className="font-semibold text-[#383086] mb-2">{contact.name}</h3>
-                    {contact.phone && (
-                      <p className="text-sm text-[#666666] mb-3">Phone: {contact.phone}</p>
-                    )}
-                    <p className="text-[#666666] mb-2 p-3 bg-[#f5f5f5] rounded">{contact.message}</p>
-                    <p className="text-xs text-[#999999]">
-                      {new Date(contact.created_at).toLocaleString()}
-                    </p>
-                  </div>
-                ))}
-              </div>
-            )}
-          </div>
-        )}
+                    </article>
+                  ))}
+                </div>
+              )}
+            </section>
+          ) : null}
+        </div>
       </div>
     </main>
   )

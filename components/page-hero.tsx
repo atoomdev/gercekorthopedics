@@ -33,7 +33,7 @@ export function PageHero({
           <h1 className="max-w-3xl text-4xl font-semibold tracking-tight text-foreground sm:text-5xl lg:text-6xl">
             {title}
           </h1>
-          <p className="mt-6 max-w-3xl text-lg leading-8 text-muted-foreground">
+          <p className="mt-5 max-w-3xl text-base leading-7 text-muted-foreground">
             {description}
           </p>
           {(primaryCta || secondaryCta) && (

@@ -55,14 +55,14 @@ export function ServiceGrid({ services, detailed = false }: ServiceGridProps) {
               <h3 className="text-2xl font-semibold tracking-tight text-foreground">
                 {t(service.title)}
               </h3>
-              <p className="mt-4 text-base leading-7 text-muted-foreground">
+              <p className="mt-3 text-sm leading-7 text-muted-foreground">
                 {t(service.shortDescription)}
               </p>
 
               {detailed ? (
                 <ul className="mt-6 space-y-3 text-sm leading-6 text-foreground/80">
                   {t(service.focusAreas)
-                    .slice(0, 3)
+                    .slice(0, 2)
                     .map((item) => (
                       <li key={item} className="flex items-start gap-3">
                         <span className="mt-2 size-1.5 rounded-full bg-primary" />

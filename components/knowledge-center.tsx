@@ -27,7 +27,7 @@ export function KnowledgeCenter() {
             <h3 className="mt-5 text-3xl font-semibold tracking-tight">
               {t(knowledgeCenterCopy.guidanceTitle)}
             </h3>
-            <p className="mt-5 max-w-xl text-base leading-7 text-white/75">
+            <p className="mt-4 max-w-xl text-sm leading-7 text-white/75">
               {t(knowledgeCenterCopy.guidanceDescription)}
             </p>
             <div className="mt-8">
@@ -46,7 +46,7 @@ export function KnowledgeCenter() {
               <h3 className="text-2xl font-semibold tracking-tight text-foreground">
                 {t(card.title)}
               </h3>
-              <p className="mt-4 flex-1 text-base leading-7 text-muted-foreground">
+              <p className="mt-3 flex-1 text-sm leading-7 text-muted-foreground">
                 {t(card.description)}
               </p>
               <div className="mt-8">

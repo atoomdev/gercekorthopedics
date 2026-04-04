@@ -25,11 +25,11 @@ export function Specialties() {
               <h3 className="text-2xl font-semibold tracking-tight text-foreground">
                 {t(item.title)}
               </h3>
-              <p className="mt-4 text-base leading-7 text-muted-foreground">
+              <p className="mt-3 text-sm leading-7 text-muted-foreground">
                 {t(item.description)}
               </p>
               <ul className="mt-6 space-y-3 text-sm text-foreground/80">
-                {t(item.points).map((point) => (
+                {t(item.points).slice(0, 2).map((point) => (
                   <li key={point} className="flex items-start gap-3">
                     <span className="mt-2 size-1.5 rounded-full bg-accent" />
                     <span>{point}</span>

@@ -76,7 +76,7 @@ export function AnnouncementsPageContent({
                         <h2 className="mt-5 text-2xl font-semibold tracking-tight text-foreground">
                           {title}
                         </h2>
-                        <p className="mt-4 whitespace-pre-wrap text-base leading-8 text-muted-foreground">
+                        <p className="mt-3 whitespace-pre-wrap text-sm leading-7 text-muted-foreground">
                           {description}
                         </p>
                       </div>

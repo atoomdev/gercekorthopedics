@@ -67,7 +67,7 @@ export function BlogPageContent({ posts }: BlogPageContentProps) {
                     field(post.content_tr, post.content_en) ||
                     post.content ||
                     ''
-                  ).slice(0, 180)}...`
+                  ).slice(0, 140)}...`
 
                 return (
                   <article
@@ -81,7 +81,7 @@ export function BlogPageContent({ posts }: BlogPageContentProps) {
                     <h2 className="mt-5 text-2xl font-semibold tracking-tight text-foreground">
                       {title}
                     </h2>
-                    <p className="mt-4 flex-1 text-base leading-7 text-muted-foreground">
+                    <p className="mt-3 flex-1 text-sm leading-7 text-muted-foreground">
                       {excerpt}
                     </p>
                     <div className="mt-8">

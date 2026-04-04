@@ -106,16 +106,19 @@ export function Navbar() {
 
           <div className="hidden items-center gap-3 lg:flex">
             <LanguageSwitcher />
-            <a className="button-secondary" href="/#iletisim">
-              {t(commonCopy.contact)}
+            <a
+              className="button-secondary shrink-0 px-4 py-2 text-[13px]"
+              href="/#iletisim"
+            >
+              {t(navbarCopy.contactCta)}
             </a>
             <a
-              className="button-primary"
+              className="button-primary shrink-0 px-4 py-2 text-[13px]"
               href={`https://wa.me/${siteConfig.phone.whatsappRaw}`}
               target="_blank"
               rel="noreferrer"
             >
-              {t(commonCopy.whatsappReach)}
+              {t(navbarCopy.whatsappCta)}
             </a>
           </div>
 

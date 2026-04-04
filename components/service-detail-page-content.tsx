@@ -119,7 +119,7 @@ export function ServiceDetailPageContent({
                 <h2 className="mt-6 text-3xl font-semibold tracking-tight sm:text-4xl">
                   {template(serviceDetailPageCopy.nextStepTitle, { service: serviceTitle })}
                 </h2>
-                <p className="mt-5 max-w-2xl text-base leading-8 text-white/75">
+                <p className="mt-4 max-w-2xl text-sm leading-7 text-white/75">
                   {t(serviceDetailPageCopy.nextStepDescription)}
                 </p>
               </div>

@@ -19,10 +19,10 @@ export function SectionHeading({
   return (
     <div className={alignment}>
       {eyebrow ? <p className="eyebrow mb-4">{eyebrow}</p> : null}
-      <h2 className="text-3xl font-semibold tracking-tight text-foreground sm:text-4xl lg:text-5xl">
+      <h2 className="text-3xl font-semibold tracking-tight text-foreground sm:text-4xl lg:text-[2.85rem]">
         {title}
       </h2>
-      <p className="mt-5 text-base leading-7 text-muted-foreground sm:text-lg">
+      <p className="mt-4 text-sm leading-7 text-muted-foreground sm:text-base">
         {description}
       </p>
     </div>

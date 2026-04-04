@@ -46,19 +46,19 @@ export const siteConfig = {
 
 export const commonCopy = {
   appointment: text('Randevu Al', 'Book Appointment'),
-  contact: text('İletişime Geç', 'Contact Us'),
-  whatsappReach: text('WhatsApp’tan Ulaş', 'Reach Us on WhatsApp'),
-  exploreServices: text('Hizmetleri İncele', 'Explore Services'),
-  serviceDetails: text('Detayları İnceleyin', 'View Details'),
-  allServices: text('Tüm Hizmetleri Görün', 'View All Services'),
-  fillForm: text('Formu Doldur', 'Fill Out the Form'),
+  contact: text('İletişim', 'Contact'),
+  whatsappReach: text('WhatsApp', 'WhatsApp'),
+  exploreServices: text('Hizmetler', 'Services'),
+  serviceDetails: text('Detaylar', 'Details'),
+  allServices: text('Tüm Hizmetler', 'All Services'),
+  fillForm: text('Formu Doldur', 'Fill Form'),
   sendMessage: text('Mesaj Gönder', 'Send Message'),
   sending: text('Gönderiliyor...', 'Sending...'),
   rightsReserved: text('Tüm hakları saklıdır.', 'All rights reserved.'),
   customBadge: text('Kişiye özel', 'Custom'),
   backToBlog: text('Blog’a dön', 'Back to Blog'),
-  contactQuestion: text('Sorunuzu İletin', 'Send Your Question'),
-  viewBlog: text('Blog’u İncele', 'Explore the Blog'),
+  contactQuestion: text('Bize Yazın', 'Ask Us'),
+  viewBlog: text('Blog', 'Blog'),
 }
 
 export const metadataCopy = {
@@ -137,47 +137,47 @@ export const navigationLinks = [
 
 export const navbarCopy = {
   topBarMessage: text(
-    '1984’ten bu yana Ankara’da kişiye özel protez, ortez ve ortopedik uygulama deneyimi',
-    'Custom prosthetic, orthotic, and orthopedic application experience in Ankara since 1984',
+    '1984’ten beri Ankara’da kişiye özel ortopedik çözümler.',
+    'Custom orthopedic solutions in Ankara since 1984.',
   ),
-  whatsappConsultation: text('WhatsApp danışma', 'WhatsApp consultation'),
+  whatsappConsultation: text('WhatsApp', 'WhatsApp'),
   brandTagline: text(
-    'Protez, ortez ve kişiye özel ortopedik çözümler',
-    'Prosthetics, orthotics, and custom orthopedic solutions',
+    'Protez, ortez ve tabanlık',
+    'Prosthetics, orthotics, and insoles',
   ),
   mobileMenuLabel: text('Menüyü aç', 'Open menu'),
   languageSwitcherLabel: text('Dil seçimi', 'Language selection'),
+  contactCta: text('İletişim', 'Contact'),
+  whatsappCta: text('WhatsApp', 'WhatsApp'),
 }
 
 export const heroCopy = {
   eyebrow: text(
-    'Ankara merkezli ortopedik çözüm merkezi',
-    'Orthopedic solutions center based in Ankara',
+    'Ankara ortopedik çözüm merkezi',
+    'Orthopedic solutions center in Ankara',
   ),
   title: text(
-    'Protez, ortez ve kişiye özel ortopedik uygulamalarda güven veren bir sonraki adımı birlikte planlayalım.',
-    'Let’s plan the next confident step in prosthetic, orthotic, and custom orthopedic care together.',
+    'Protez, ortez ve tabanlıkta doğru adımı birlikte planlayalım.',
+    'Let’s plan the right next step in prosthetics, orthotics, and insoles.',
   ),
   description: text(
-    'Gerçek Ortopedi; protez uygulamaları, ortez çözümleri, yürüme analizi ve kişiye özel tabanlık süreçlerini, net iletişim ve kişiye özel planlama ile yürüten deneyimli bir uygulama merkezidir.',
-    'Gerçek Ortopedi is an experienced application center that delivers prosthetics, orthotic solutions, gait analysis, and custom insoles through clear communication and tailored planning.',
+    'Değerlendirme, ölçü ve uygulama sürecini sade, güvenli ve kişiye özel biçimde yürütüyoruz.',
+    'We manage assessment, measurement, and fitting through a clear, safe, and personalized process.',
   ),
   highlights: list(
     [
-      '1984’ten bu yana ortopedik uygulama deneyimi',
-      'Kişiye özel ölçü, üretim ve uygulama yaklaşımı',
-      'Protez, ortez, tabanlık ve yürüme analizi tek merkezde',
+      '1984’ten beri deneyim',
+      'Kişiye özel ölçü ve uygulama',
     ],
     [
-      'Orthopedic application experience since 1984',
-      'Custom measurement, production, and application approach',
-      'Prosthetics, orthotics, insoles, and gait analysis in one center',
+      'Experience since 1984',
+      'Custom measurement and fitting',
     ],
   ),
   workflowLabel: text('Klinik akış', 'Clinical flow'),
   workflowTitle: text(
-    'Değerlendirme, ölçü, uygulama ve takip',
-    'Assessment, measurement, fitting, and follow-up',
+    'Değerlendirme, ölçü ve takip',
+    'Assessment, fitting, and follow-up',
   ),
   workflowList: list(
     [
@@ -193,45 +193,45 @@ export const heroCopy = {
   ),
   appointmentLabel: text('Randevu ve bilgi', 'Appointments & guidance'),
   appointmentDescription: text(
-    'İlk görüşmeden itibaren ihtiyaç analizi, uygun çözüm planı ve sonraki adımlar net şekilde aktarılır.',
-    'From the first consultation onward, needs analysis, the right solution plan, and next steps are communicated clearly.',
+    'İlk görüşmede ihtiyaç ve uygun yol haritası netleşir.',
+    'The first consultation clarifies the need and the right plan.',
   ),
   approachLabel: text('Yaklaşım', 'Approach'),
-  approachDescription: text('Teknik doğruluk\nHasta odaklı süreç', 'Technical precision\nPatient-centered process'),
+  approachDescription: text('Teknik doğruluk\nKişiye özel süreç', 'Technical precision\nPersonalized care'),
   fitLabel: text('Uyum', 'Fit'),
   fitDescription: text(
-    'Günlük yaşamla\nbütünleşen çözümler',
-    'Solutions\nintegrated with daily life',
+    'Günlük yaşama\nuyumlu çözümler',
+    'Solutions for\ndaily life',
   ),
 }
 
 export const trustStats = [
-  { value: '1984', label: text('başlangıç yılı', 'founding year') },
-  { value: '40+', label: text('yıllık sektör birikimi', 'years of experience') },
-  { value: 'Ankara', label: text('uygulama merkezi', 'application center') },
-  { value: text('Kişiye özel', 'Custom'), label: text('ölçü ve üretim yaklaşımı', 'measurement and production approach') },
+  { value: '1984', label: text('kuruluş', 'founded') },
+  { value: '40+', label: text('yıl deneyim', 'years') },
+  { value: 'Ankara', label: text('uygulama merkezi', 'clinic') },
+  { value: text('Kişiye özel', 'Custom'), label: text('ölçü ve uyum', 'fit & measurement') },
 ]
 
 export const trustPillars = [
   {
-    title: text('Uzman değerlendirme ile başlar', 'It starts with expert assessment'),
+    title: text('Uzman değerlendirme', 'Expert assessment'),
     description: text(
-      'Her süreç; ihtiyacı, hareket kalitesini ve günlük yaşam hedeflerini anlamaya odaklanan ayrıntılı bir ön görüşme ile şekillenir.',
-      'Every process begins with a detailed consultation focused on understanding the need, movement quality, and daily-life goals.',
+      'Her süreç ihtiyaç, hareket ve günlük yaşam hedefleriyle başlar.',
+      'Every process starts with the need, movement pattern, and daily goals.',
     ),
   },
   {
-    title: text('Teknik doğruluk ve klinik denge birlikte yürür', 'Technical precision and clinical balance go together'),
+    title: text('Doğru ölçü ve uyum', 'Precise fit'),
     description: text(
-      'Ölçü, denge, uyum, malzeme seçimi ve uygulama detayları tek bir hasta deneyimi içinde ele alınır.',
-      'Measurement, balance, fit, material selection, and application details are handled as one integrated patient experience.',
+      'Ölçü, malzeme ve uygulama detayları birlikte planlanır.',
+      'Measurement, materials, and fitting details are planned together.',
     ),
   },
   {
-    title: text('Takip ve revizyon planı netleştirilir', 'Follow-up and revision are planned clearly'),
+    title: text('Takip planı nettir', 'Clear follow-up'),
     description: text(
-      'Teslim sonrası kullanım konforu, adaptasyon ve gerekli düzenlemeler için kontrollü bir takip akışı sunulur.',
-      'After delivery, a structured follow-up path supports comfort, adaptation, and any necessary adjustments.',
+      'Teslim sonrası konfor ve gerekli ayarlar kontrollü biçimde izlenir.',
+      'Comfort and adjustments are followed in a structured way after delivery.',
     ),
   },
 ]
@@ -239,12 +239,12 @@ export const trustPillars = [
 export const processCopy = {
   eyebrow: text('Süreç', 'Process'),
   title: text(
-    'İlk görüşmeden teslim ve takibe kadar net bir uygulama akışı',
-    'A clear application flow from first consultation to delivery and follow-up',
+    'İlk görüşmeden teslime net bir süreç',
+    'A clear path from consultation to delivery',
   ),
   description: text(
-    'Her adımın anlaşılır olması; hem güven duygusunu hem de tedaviye uyumu güçlendirir. Bu nedenle süreci sade, planlı ve görünür kılıyoruz.',
-    'When every step is understandable, it strengthens both trust and treatment adherence. That is why we keep the process simple, structured, and visible.',
+    'Her adımı anlaşılır ve planlı tutuyoruz.',
+    'We keep every step clear and structured.',
   ),
 }
 
@@ -252,36 +252,36 @@ export const processSteps = [
   {
     title: text('Değerlendirme', 'Assessment'),
     description: text(
-      'Şikayet, beklenti, fonksiyonel ihtiyaç ve günlük yaşam hedefleri birlikte ele alınır.',
-      'Your concerns, expectations, functional needs, and daily-life goals are evaluated together.',
+      'İhtiyaç ve kullanım hedefi netleştirilir.',
+      'Need and daily goals are clarified.',
     ),
   },
   {
     title: text('Analiz ve Ölçü', 'Analysis & Measurement'),
     description: text(
-      'Yürüme, denge, yük dağılımı ve anatomik uyum için gerekli ölçümler alınır.',
-      'Required measurements are taken for gait, balance, load distribution, and anatomical fit.',
+      'Gerekli ölçü ve analizler alınır.',
+      'Required measurements and analysis are completed.',
     ),
   },
   {
     title: text('Tasarım ve Planlama', 'Design & Planning'),
     description: text(
-      'Malzeme, bileşen ve uygulama planı; kullanım senaryosuna göre netleştirilir.',
-      'Materials, components, and the application plan are defined according to the usage scenario.',
+      'Uygun malzeme ve plan belirlenir.',
+      'The right materials and plan are defined.',
     ),
   },
   {
     title: text('Üretim ve Uygulama', 'Production & Fitting'),
     description: text(
-      'Kişiye özel üretim, deneme ve teknik ayarlar kontrollü şekilde tamamlanır.',
-      'Custom production, trials, and technical adjustments are completed in a controlled way.',
+      'Üretim, prova ve ayarlar tamamlanır.',
+      'Production, trial fitting, and adjustments are completed.',
     ),
   },
   {
     title: text('Teslim ve Takip', 'Delivery & Follow-up'),
     description: text(
-      'Kullanım eğitimi, adaptasyon takibi ve gerektiğinde revizyon süreci planlanır.',
-      'Usage training, adaptation follow-up, and revisions are planned when needed.',
+      'Teslim sonrası kullanım ve kontrol planlanır.',
+      'Use and follow-up are planned after delivery.',
     ),
   },
 ]
@@ -289,12 +289,12 @@ export const processSteps = [
 export const servicesSectionCopy = {
   eyebrow: text('Hizmetler', 'Services'),
   title: text(
-    'Teknik altyapıyı hasta için anlaşılır, güvenli ve kişiye uygun bir sürece çeviriyoruz',
-    'We turn technical capability into a clear, safe, and patient-appropriate process.',
+    'İhtiyacınıza uygun ortopedik çözümler',
+    'Orthopedic solutions shaped to your needs',
   ),
   description: text(
-    'Ortopedik çözüm ihtiyacını sadece ürün seçimi olarak değil; değerlendirme, doğru planlama, uygulama ve takip bütünlüğü içinde ele alıyoruz.',
-    'We do not approach orthopedic need as product selection alone; we address it through assessment, correct planning, application, and follow-up.',
+    'Ürünü değil, doğru değerlendirme ve uyumu öne çıkarıyoruz.',
+    'We focus on the right assessment, fit, and follow-up.',
   ),
 }
 
@@ -303,12 +303,12 @@ export const serviceDetails: ServiceDetail[] = [
     slug: 'protez-uygulamalari',
     title: text('Protez Uygulamaları', 'Prosthetic Applications'),
     shortDescription: text(
-      'Alt ve üst ekstremite kayıplarında hareket, denge ve günlük yaşama uyumu destekleyen kişiye özel protez planlaması.',
-      'Custom prosthetic planning that supports movement, balance, and daily-life adaptation in lower and upper extremity limb loss.',
+      'Alt ve üst ekstremite için kişiye özel protez planlaması.',
+      'Custom prosthetic planning for lower and upper extremity needs.',
     ),
     intro: text(
-      'Protez sürecinde amaç yalnızca eksik uzvu tamamlamak değil; güvenli yürüme, günlük yaşam konforu ve fonksiyonel bağımsızlığı artıran bir çözüm oluşturmaktır.',
-      'The goal of a prosthetic process is not simply to replace a missing limb, but to build a solution that improves safe walking, daily comfort, and functional independence.',
+      'Amaç yalnızca protez değil; güvenli, dengeli ve sürdürülebilir kullanımdır.',
+      'The goal is not only a prosthesis, but safe, balanced, sustainable use.',
     ),
     whoItsFor: list(
       [
@@ -359,12 +359,12 @@ export const serviceDetails: ServiceDetail[] = [
     slug: 'ortez-cozumleri',
     title: text('Ortez Çözümleri', 'Orthotic Solutions'),
     shortDescription: text(
-      'Eklem stabilitesi, koruma, yönlendirme ve günlük yaşam desteği için kişiye göre yapılandırılan ortez uygulamaları.',
-      'Orthotic applications tailored to the individual for joint stability, protection, guidance, and daily-life support.',
+      'Koruma, destek ve hizalama için kişiye uygun ortez çözümleri.',
+      'Orthotic solutions tailored for protection, support, and alignment.',
     ),
     intro: text(
-      'Ortez uygulamaları; hareketi sınırlandırmak, desteklemek veya yönlendirmek gerektiğinde, hastanın yaşam ritmine uyum sağlayan güvenilir bir destek sistemi oluşturur.',
-      'Orthotic applications create a reliable support system that limits, supports, or guides movement in line with the patient’s daily rhythm when needed.',
+      'Doğru ortez, hareketi güvenli biçimde destekler ve günlük yaşamı kolaylaştırır.',
+      'The right orthosis supports movement safely and makes daily life easier.',
     ),
     whoItsFor: list(
       [
@@ -415,12 +415,12 @@ export const serviceDetails: ServiceDetail[] = [
     slug: 'kisiye-ozel-tabanlik-ve-yurume-analizi',
     title: text('Kişiye Özel Tabanlık ve Yürüme Analizi', 'Custom Insoles & Gait Analysis'),
     shortDescription: text(
-      'Ayak basış düzeni, yük dağılımı ve yürüyüş paternine göre planlanan kişiye özel tabanlık çözümleri.',
-      'Custom insole solutions designed according to foot strike pattern, load distribution, and gait behavior.',
+      'Basış ve yürüyüş analizine göre planlanan kişiye özel tabanlıklar.',
+      'Custom insoles planned with pressure and gait analysis.',
     ),
     intro: text(
-      'Ayak yapısı ve basış paterninin doğru analiz edilmesi; ağrıyı azaltan, dengeyi iyileştiren ve günlük konforu artıran tabanlık planlamasının temelini oluşturur.',
-      'Accurate analysis of foot structure and pressure pattern forms the basis of insole planning that can reduce pain, improve balance, and increase daily comfort.',
+      'Doğru analiz, daha dengeli basış ve daha rahat kullanım sağlar.',
+      'Accurate analysis supports better pressure balance and daily comfort.',
     ),
     whoItsFor: list(
       [
@@ -471,12 +471,12 @@ export const serviceDetails: ServiceDetail[] = [
     slug: 'ust-ekstremite-cozumleri',
     title: text('Üst Ekstremite Çözümleri', 'Upper Extremity Solutions'),
     shortDescription: text(
-      'El, el bileği, dirsek ve kol bölgesine yönelik destek, fonksiyon ve kullanım kolaylığı odaklı kişiselleştirilmiş çözümler.',
-      'Personalized solutions focused on support, function, and ease of use for the hand, wrist, elbow, and arm.',
+      'El ve kol bölgesi için destek ve fonksiyon odaklı çözümler.',
+      'Support and function-focused solutions for the hand and arm.',
     ),
     intro: text(
-      'Üst ekstremite çözümlerinde hedef; kavrama, destek, günlük yaşam bağımsızlığı ve kullanım güvenliğini mümkün olan en doğal akışla desteklemektir.',
-      'In upper extremity solutions, the goal is to support grip, stability, daily independence, and safety in the most natural way possible.',
+      'Hedef; kavrama, destek ve günlük kullanım güvenliğini artırmaktır.',
+      'The goal is to improve grip, support, and daily-use safety.',
     ),
     whoItsFor: list(
       [
@@ -527,12 +527,12 @@ export const serviceDetails: ServiceDetail[] = [
     slug: 'servikal-ve-spinal-destekler',
     title: text('Servikal ve Spinal Destekler', 'Cervical & Spinal Supports'),
     shortDescription: text(
-      'Boyun, sırt ve gövde bölgesinde koruma, hizalama ve kontrollü destek amacıyla planlanan ortopedik sistemler.',
-      'Orthopedic systems planned for protection, alignment, and controlled support in the neck, back, and trunk region.',
+      'Boyun ve gövde için kontrollü destek ve hizalama çözümleri.',
+      'Controlled support and alignment solutions for the neck and trunk.',
     ),
     intro: text(
-      'Servikal ve spinal desteklerde doğru amaç; hastayı gereğinden fazla kısıtlamadan, gerekli hizalama ve korumayı güvenli biçimde sağlamaktır.',
-      'The right goal in cervical and spinal support is to provide the necessary alignment and protection without restricting the user more than needed.',
+      'Doğru destek, gerekli korumayı sağlarken günlük kullanımı da gözetir.',
+      'The right support provides protection without losing daily comfort.',
     ),
     whoItsFor: list(
       [
@@ -583,12 +583,12 @@ export const serviceDetails: ServiceDetail[] = [
     slug: 'rehabilitasyon-ve-destek-urunleri',
     title: text('Rehabilitasyon ve Destek Ürünleri', 'Rehabilitation & Support Products'),
     shortDescription: text(
-      'İyileşme sürecini kolaylaştıran, hareketi destekleyen ve günlük yaşam güvenliğini artıran yardımcı ürünler.',
-      'Supportive products that ease recovery, assist movement, and improve daily-life safety.',
+      'İyileşme ve günlük yaşamı destekleyen yardımcı ürünler.',
+      'Support products that help recovery and daily life.',
     ),
     intro: text(
-      'Rehabilitasyon ve destek ürünleri; ana tedavi planını tamamlayan, hareketi daha güvenli ve daha sürdürülebilir hale getiren yardımcı çözümler sunar.',
-      'Rehabilitation and support products complement the main treatment plan and offer auxiliary solutions that make movement safer and more sustainable.',
+      'Ana tedavi planını tamamlayan pratik ve güvenli destek ürünleri sunuyoruz.',
+      'We offer practical support products that complement the main treatment plan.',
     ),
     whoItsFor: list(
       [
@@ -640,12 +640,12 @@ export const serviceDetails: ServiceDetail[] = [
 export const specialtiesCopy = {
   eyebrow: text('Uzmanlık Alanları', 'Specialties'),
   title: text(
-    'Ortopedik ihtiyacınızı tek bir ürün değil, doğru çözüm planı olarak ele alıyoruz',
-    'We approach orthopedic need not as a single product, but as the right solution plan.',
+    'Uzmanlık alanlarımız',
+    'Our specialties',
   ),
   description: text(
-    'Her kullanıcı için aynı yaklaşım uygun değildir. Bu nedenle çözümü; bölgeye, fonksiyona, günlük yaşama ve kullanım hedeflerine göre yapılandırıyoruz.',
-    'The same approach is not suitable for every user. We shape the solution according to region, function, daily life, and usage goals.',
+    'Çözümü; bölgeye, fonksiyona ve günlük yaşama göre planlıyoruz.',
+    'We shape each solution around region, function, and daily life.',
   ),
 }
 
@@ -653,8 +653,8 @@ export const featuredSpecialties = [
   {
     title: text('Alt ekstremite odaklı çözümler', 'Lower extremity-focused solutions'),
     description: text(
-      'Yürüme dengesi, yük aktarımı ve günlük yaşam güvenliği hedefiyle protez, ortez ve tabanlık süreçleri birlikte ele alınır.',
-      'Prosthetic, orthotic, and insole processes are handled together with a focus on gait balance, load transfer, and daily-life safety.',
+      'Yürüme dengesi ve günlük kullanım için planlanan çözümler.',
+      'Solutions planned for gait balance and daily use.',
     ),
     points: list(
       ['Yürüme analizi desteği', 'Alt ekstremite protez ve ortez planlaması', 'Kademeli uyum ve takip yaklaşımı'],
@@ -664,8 +664,8 @@ export const featuredSpecialties = [
   {
     title: text('Üst ekstremite uygulamaları', 'Upper extremity applications'),
     description: text(
-      'Fonksiyon, kavrama ve kullanım kolaylığı için el, el bileği, dirsek ve kol bölgesine yönelik kişiselleştirilmiş çözümler sunulur.',
-      'Personalized solutions are offered for the hand, wrist, elbow, and arm to support function, grip, and ease of use.',
+      'El ve kol kullanımını destekleyen kişiye özel uygulamalar.',
+      'Personalized applications that support hand and arm use.',
     ),
     points: list(
       ['Günlük yaşama uyum', 'Fonksiyonel destek planı', 'Kullanıcı odaklı ölçü ve uygulama'],
@@ -675,8 +675,8 @@ export const featuredSpecialties = [
   {
     title: text('Omurga ve postür desteği', 'Spine and posture support'),
     description: text(
-      'Servikal ve spinal bölgede doğru destek seviyesi, kullanım konforu ve uzun süreli uyum birlikte düşünülür.',
-      'In the cervical and spinal region, the right support level, comfort, and long-term fit are considered together.',
+      'Boyun ve gövde desteğinde koruma ile konfor birlikte değerlendirilir.',
+      'Support, protection, and comfort are considered together.',
     ),
     points: list(
       ['Koruma ve hizalama dengesi', 'Kişiye göre destek seviyesi', 'Kontrollü takip planı'],
@@ -686,8 +686,8 @@ export const featuredSpecialties = [
   {
     title: text('Atölye ve uygulama sürekliliği', 'Workshop and fitting continuity'),
     description: text(
-      'Ölçüleme, prova, uygulama ve teknik düzenlemeler birbirinden kopuk değil; aynı kalite standardı içinde yürütülür.',
-      'Measurement, trial, fitting, and technical adjustments are not isolated steps; they are carried out within the same quality standard.',
+      'Ölçü, prova ve teknik ayarlar aynı kalite akışında yürür.',
+      'Measurement, trial fitting, and adjustments move within one quality flow.',
     ),
     points: list(
       ['Kişiye özel üretim yaklaşımı', 'Teknik ince ayar imkanı', 'Teslim sonrası kontrol desteği'],
@@ -699,51 +699,51 @@ export const featuredSpecialties = [
 export const aboutCopy = {
   eyebrow: text('Hakkımızda', 'About'),
   title: text(
-    'Klinik güveni, teknik yeterlilik ve kişiye özel planlama aynı masada buluşmalı',
-    'Clinical trust, technical capability, and custom planning should meet at the same table.',
+    'Deneyim, teknik yeterlilik ve kişiye özel yaklaşım',
+    'Experience, technical skill, and personalized care',
   ),
   description: text(
-    'Bu anlayışla; protez, ortez, tabanlık ve ortopedik destek süreçlerini tek merkezde, daha anlaşılır ve daha sürdürülebilir bir deneyime dönüştürmeyi hedefliyoruz.',
-    'With this understanding, we aim to turn prosthetic, orthotic, insole, and orthopedic support processes into a clearer and more sustainable experience under one roof.',
+    'Protez, ortez ve tabanlık süreçlerini tek merkezde, net ve güvenli biçimde yönetiyoruz.',
+    'We manage prosthetic, orthotic, and insole care under one roof with clarity and confidence.',
   ),
   foundedLabel: text('Kuruluş', 'Founded'),
   centerLabel: text('Merkez', 'Center'),
   whyImportantEyebrow: text('Neden önemli?', 'Why it matters'),
   whyImportantTitle: text(
-    'Kullanıcı deneyimini sadece sonuçta değil, sürecin her adımında güçlendiriyoruz',
-    'We strengthen the user experience not only in the result, but in every step of the process.',
+    'Sürecin her adımını görünür kılıyoruz',
+    'We make every step visible',
   ),
   whyImportantDescription: text(
-    'Modern bir ortopedik marka; karmaşık terimlerle değil, hastanın ne yaşayacağını netleştirerek güven inşa eder. Tasarladığımız deneyim bu prensibe dayanıyor.',
-    'A modern orthopedic brand builds trust not through complex terminology, but by clarifying what the patient will experience. Our design is built on that principle.',
+    'Net süreç, doğru beklenti ve daha güçlü güven sağlar.',
+    'A clear process supports better expectations and stronger trust.',
   ),
   storyPoints: [
     {
       title: text('Köklü deneyim', 'Established experience'),
       description: text(
-        'Gerçek Ortopedi, 1984’ten bu yana ortopedik uygulama alanında biriken tecrübesini güncel ihtiyaçlarla birleştirir.',
-        'Gerçek Ortopedi combines experience built since 1984 with today’s orthopedic needs.',
+        '1984’ten beri süren uygulama deneyimi.',
+        'Application experience built since 1984.',
       ),
     },
     {
       title: text('Kişiye özel ölçü yaklaşımı', 'Custom measurement approach'),
       description: text(
-        'Her kullanıcı için ölçü, denge, yüklenme ve kullanım alışkanlıkları dikkate alınarak daha doğru uyum hedeflenir.',
-        'For every user, fit is improved through a careful review of measurement, balance, load pattern, and usage habits.',
+        'Ölçü ve kullanım alışkanlığına göre daha doğru uyum hedeflenir.',
+        'Fit is tailored to measurement and usage habits.',
       ),
     },
     {
       title: text('Teknik üretim ve ince ayar', 'Technical production and fine-tuning'),
       description: text(
-        'Atölye ve uygulama akışının birlikte yürütülmesi; prova, düzeltme ve kullanım konforunu daha kontrollü hale getirir.',
-        'Running workshop and fitting flow together makes trials, adjustments, and comfort optimization more controlled.',
+        'Prova ve teknik ayarlar aynı akışta tamamlanır.',
+        'Trial fitting and adjustments are completed in one flow.',
       ),
     },
     {
       title: text('Süreç görünürlüğü', 'Process visibility'),
       description: text(
-        'Başvuru, planlama, uygulama ve takip adımlarını netleştirerek karar verme sürecini hasta için daha anlaşılır kılıyoruz.',
-        'We make decision-making clearer by defining the steps of application, planning, fitting, and follow-up.',
+        'Başvuru, uygulama ve takip adımlarını net tutuyoruz.',
+        'We keep the consultation, fitting, and follow-up steps clear.',
       ),
     },
   ],
@@ -759,108 +759,106 @@ export const credibilityNotes = [
 export const whyUsCopy = {
   eyebrow: text('Güven Unsurları', 'Trust Factors'),
   title: text(
-    'Karar vermeyi zorlaştıran belirsizlikleri azaltmak için tasarlanmış bir deneyim',
-    'An experience designed to reduce the uncertainties that make decision-making harder.',
+    'Güven veren bir süreç',
+    'A process built on trust',
   ),
   description: text(
-    'Doğru tıbbi yaklaşım kadar; neyin neden önerildiği, uygulamanın nasıl ilerlediği ve sonrasında hangi desteğin verileceği de önemlidir.',
-    'Beyond the right medical approach, it also matters why something is recommended, how the process will move forward, and what support will follow.',
+    'Ne önerildiğini, neden önerildiğini ve sonraki adımı açıkça paylaşıyoruz.',
+    'We explain what is recommended, why, and what comes next.',
   ),
   focusLabel: text('Hasta odaklı yaklaşım', 'Patient-centered approach'),
   focusTitle: text(
-    'Teknik kararlar, kullanıcının günlük yaşam hedefi ile birlikte değerlendirilir',
-    'Technical decisions are evaluated together with the user’s daily-life goals.',
+    'Teknik kararlar günlük yaşam hedefiyle birlikte değerlendirilir',
+    'Technical decisions are aligned with daily-life goals',
   ),
   supportTitle: text('Süreci açıklayan destek başlıkları', 'Support topics that clarify the process'),
   supportTopics: list(
     [
-      'İlk başvuruda hangi bilgilerin gerekli olduğu',
-      'Ölçü, prova ve teslim adımlarının nasıl ilerlediği',
-      'Kullanım sonrası kontrol ve revizyon planı',
-      'Bakım, onarım ve destek süreçleri hakkında yönlendirme',
+      'İlk başvuruda gerekli bilgiler',
+      'Ölçü, prova ve teslim akışı',
+      'Kontrol ve revizyon planı',
     ],
     [
-      'What information is needed at the first contact',
-      'How measurement, trial, and delivery steps progress',
-      'Post-use control and revision planning',
-      'Guidance on care, repair, and support processes',
+      'What is needed at first contact',
+      'Measurement, trial, and delivery flow',
+      'Follow-up and revision plan',
     ],
   ),
   communicationTitle: text('İletişimde hız ve açıklık', 'Fast and clear communication'),
   communicationDescription: text(
-    'Telefon, WhatsApp ve form kanallarını aynı anda görünür kılarak, danışma ve randevu başlatmayı kullanıcı için daha kolay hale getiriyoruz.',
-    'By making phone, WhatsApp, and form channels visible at the same time, we make consultation and appointment requests easier for users.',
+    'Telefon, WhatsApp ve form ile bize hızlıca ulaşabilirsiniz.',
+    'You can quickly reach us by phone, WhatsApp, or form.',
   ),
 }
 
 export const knowledgeCenterCopy = {
   eyebrow: text('Bilgi Merkezi', 'Knowledge Center'),
   title: text(
-    'Sadece uygulama değil, karar vermeyi kolaylaştıran net bilgi de sunuyoruz',
-    'We offer not only applications, but also clear information that makes decisions easier.',
+    'Karar vermeyi kolaylaştıran içerikler',
+    'Content that helps you decide',
   ),
   description: text(
-    'Hizmet akışını, kullanıcıya etkisini ve güncel bilgilendirmeleri erişilebilir içeriklerle görünür kılıyoruz.',
-    'We make the service flow, its impact, and current updates visible through accessible content.',
+    'Süreçleri ve güncel bilgileri sade içeriklerle paylaşıyoruz.',
+    'We share care journeys and updates through clear, accessible content.',
   ),
   guidanceEyebrow: text('Rehberlik', 'Guidance'),
   guidanceTitle: text(
-    'İlk kez başvuruyor olsanız da süreci daha net anlamanızı istiyoruz',
-    'Even if this is your first visit, we want the process to feel clear.',
+    'İlk başvuruda süreci birlikte netleştirelim',
+    'Let’s clarify the process from the first contact',
   ),
   guidanceDescription: text(
-    'Başvuru öncesi hazırlık, ölçü süreci, teslim, kullanım eğitimi ve takip gibi kritik başlıkları sade bir dille görünür hale getiriyoruz.',
-    'We make critical topics such as pre-visit preparation, measurement, delivery, usage training, and follow-up easier to understand.',
+    'Başvuru, ölçü, teslim ve takip adımlarını sade biçimde anlatıyoruz.',
+    'We explain consultation, measurement, delivery, and follow-up clearly.',
   ),
-  guidanceCta: text('Süreci birlikte değerlendirelim', 'Let’s review the process together'),
+  guidanceCta: text('Süreci Değerlendir', 'Review the Process'),
 }
 
 export const knowledgeCards = [
   {
     title: text('Blog', 'Blog'),
     description: text(
-      'Ortopedik bakım, protez-ortez kullanımı, ayak sağlığı ve uygulama süreçlerine dair açıklayıcı içerikler.',
-      'Clear content about orthopedic care, prosthetic-orthotic use, foot health, and application processes.',
+      'Protez, ortez ve ayak sağlığı hakkında kısa içerikler.',
+      'Short reads on prosthetics, orthotics, and foot health.',
     ),
     href: '/blog',
-    cta: text('Blog yazılarını inceleyin', 'Explore blog articles'),
+    cta: text('Yazıları Gör', 'View Articles'),
   },
   {
     title: text('Duyurular', 'Announcements'),
     description: text(
-      'Merkezden güncellemeler, bilgilendirmeler ve hasta iletişimini kolaylaştıran güncel duyurular.',
-      'Current announcements, operational updates, and helpful notices from the center.',
+      'Merkezden kısa güncellemeler ve bilgilendirmeler.',
+      'Short updates and notices from the clinic.',
     ),
     href: '/announcements',
-    cta: text('Duyurulara göz atın', 'Browse announcements'),
+    cta: text('Duyuruları Gör', 'View Updates'),
   },
 ]
 
 export const contactCopy = {
   eyebrow: text('İletişim', 'Contact'),
   title: text(
-    'İhtiyacınızı anlatın, size uygun ilk adımı birlikte planlayalım',
-    'Tell us about your need, and let’s plan the right first step together.',
+    'İhtiyacınızı paylaşın',
+    'Tell us what you need',
   ),
   description: text(
-    'Telefon, WhatsApp, e-posta ve form üzerinden hızlıca ulaşabilir; ilk görüşme için uygun yönlendirmeyi ekibimizden alabilirsiniz.',
-    'You can quickly reach us by phone, WhatsApp, email, or form and get the right guidance for the first consultation.',
+    'Telefon, WhatsApp veya form ile hızlıca ulaşabilirsiniz.',
+    'Reach us quickly by phone, WhatsApp, or the form.',
   ),
   cards: [
     {
       title: text('Telefon', 'Phone'),
       value: text(siteConfig.phone.display, siteConfig.phone.display),
-      hint: text('Randevu ve bilgi hattı', 'Appointments and information line'),
+      hint: text('Randevu hattı', 'Appointment line'),
     },
     {
       title: text('WhatsApp', 'WhatsApp'),
-      value: text('Danışma hattı', 'Consultation line'),
-      hint: text('Hızlı dönüş için mesaj gönderin', 'Send a message for a quick response'),
+      value: text('Hızlı iletişim', 'Quick contact'),
+      hint: text('Mesaj bırakın', 'Send a message'),
     },
     {
       title: text('E-posta', 'Email'),
       value: text(siteConfig.email, siteConfig.email),
-      hint: text('Detaylı talepler için yazabilirsiniz', 'You can write for detailed requests'),
+      hint: text('Detaylı talepler için', 'For detailed requests'),
     },
     {
       title: text('Adres', 'Address'),
@@ -870,17 +868,17 @@ export const contactCopy = {
   ],
   infoLabel: text('Bilgi notu', 'Helpful note'),
   infoTitle: text(
-    'İlk görüşmede ihtiyacınızı, günlük yaşam hedeflerinizi ve mevcut kullanım durumunuzu netleştirmek süreci hızlandırır.',
-    'Clarifying your need, daily-life goals, and current usage situation in the first consultation makes the process faster.',
+    'İlk görüşmede ihtiyacınızı kısa şekilde anlatmanız yeterlidir.',
+    'A short note about your need is enough for the first contact.',
   ),
   infoDescription: text(
-    'Daha önce kullandığınız ürün, mevcut şikayetiniz veya yeni başvuru nedeniniz varsa formda kısa şekilde belirtmeniz yeterlidir.',
-    'If you have a previous product, a current complaint, or a reason for your new inquiry, briefly sharing it in the form is enough.',
+    'Mevcut ürününüzü veya şikayetinizi birkaç cümleyle paylaşabilirsiniz.',
+    'You can briefly mention any current product or complaint.',
   ),
   formEyebrow: text('Randevu Talebi', 'Appointment Request'),
   formTitle: text(
-    'Kısa formu doldurun, size uygun yönlendirmeyi hazırlayalım',
-    'Fill out the short form and let us prepare the right guidance for you.',
+    'Kısa formu doldurun',
+    'Fill out the short form',
   ),
   labels: {
     name: text('Ad Soyad', 'Full Name'),
@@ -926,52 +924,52 @@ export const contactCopy = {
 export const footerCopy = {
   eyebrow: text('Gerçek Ortopedi', 'Gerçek Ortopedi'),
   title: text(
-    'Kişiye özel ortopedik çözümleri güven veren bir süreçle buluşturuyoruz',
-    'We bring custom orthopedic solutions together with a trustworthy process.',
+    'Kişiye özel ortopedik çözümler',
+    'Custom orthopedic solutions',
   ),
   description: text(
-    'Protez, ortez, yürüme analizi ve kişiye özel tabanlık uygulamalarında hastanın ihtiyacını anlamaya, doğru planı oluşturmaya ve sürdürülebilir kullanım desteği sunmaya odaklanıyoruz.',
-    'In prosthetics, orthotics, gait analysis, and custom insoles, we focus on understanding the patient’s needs, building the right plan, and supporting sustainable use.',
+    'Protez, ortez ve tabanlık süreçlerini net planlama ve yakın takip ile yürütüyoruz.',
+    'We manage prosthetic, orthotic, and insole care with clear planning and close follow-up.',
   ),
   menuTitle: text('Menü', 'Menu'),
   featuredServicesTitle: text('Öne çıkan hizmetler', 'Featured services'),
   quickContactTitle: text('Hızlı iletişim', 'Quick contact'),
   quickContactLabel: text('Randevu ve bilgi hattı', 'Appointment and information line'),
   quickContactDescription: text(
-    'İlk görüşme, süreç planlaması veya ürün yönlendirmesi için ekibimizle doğrudan iletişime geçebilirsiniz.',
-    'You can contact our team directly for first consultations, process planning, or product guidance.',
+    'İlk görüşme ve yönlendirme için ekibimize ulaşabilirsiniz.',
+    'Reach our team for first consultation and guidance.',
   ),
 }
 
 export const servicesPageCopy = {
   heroEyebrow: text('Hizmet Alanları', 'Service Areas'),
   heroTitle: text(
-    'Ortopedik ihtiyaçları daha anlaşılır, daha yönlendirici ve daha güvenli bir yapıda sunuyoruz',
-    'We present orthopedic needs in a structure that is clearer, more guiding, and more trustworthy.',
+    'Hizmet alanlarımız',
+    'Our service areas',
   ),
   heroDescription: text(
-    'Her hizmet başlığı; kimler için uygun olduğu, süreçte nelerin bekleneceği ve hangi faydayı hedeflediği açık şekilde yapılandırılmıştır.',
-    'Each service area is structured clearly around who it is for, what to expect from the process, and what benefit it aims to deliver.',
+    'Her başlık; ihtiyaç, süreç ve beklenen faydayı net biçimde özetler.',
+    'Each area summarizes the need, process, and expected benefit.',
   ),
   allHeadingsEyebrow: text('Tüm başlıklar', 'All service areas'),
   allHeadingsTitle: text(
-    'Doğru çözümü seçebilmek için önce ihtiyaç alanını netleştirmek gerekir',
-    'To choose the right solution, the need area must first become clear.',
+    'İhtiyaç alanınızı belirleyin',
+    'Find the right care area',
   ),
   allHeadingsDescription: text(
-    'Aşağıdaki hizmet kartları, hangi çözümün hangi kullanıcı ihtiyacına yanıt verdiğini daha kolay görmeniz için hazırlanmıştır.',
-    'The service cards below help you understand which solution responds to which user need.',
+    'Aşağıdaki kartlar size uygun başlığı hızlıca görmenize yardımcı olur.',
+    'The cards below help you quickly spot the right service.',
   ),
   guidanceEyebrow: text('Doğru yönlendirme', 'Right guidance'),
   guidanceTitle: text(
-    'Hangi hizmete ihtiyacınız olduğundan emin değilseniz birlikte değerlendirebiliriz',
-    'If you are not sure which service you need, we can evaluate it together.',
+    'Emin değilseniz birlikte değerlendirebiliriz',
+    'If you are unsure, we can review it together',
   ),
   guidanceDescription: text(
-    'İlk görüşmede mevcut durumunuzu, kullanım hedefinizi ve günlük yaşam ihtiyaçlarınızı dinleyerek uygun başlığa yönlendirme yapılabilir. Böylece yanlış ürün arayışı yerine doğru çözüm planıyla ilerlersiniz.',
-    'In the first consultation, we can review your current condition, usage goals, and daily-life needs to guide you to the right service. This helps you move forward with the right solution plan instead of searching for the wrong product.',
+    'İlk görüşmede mevcut durum ve kullanım hedefi değerlendirilerek doğru başlığa yönlendirme yapılır.',
+    'We review your current condition and usage goals to guide you to the right service.',
   ),
-  informationLine: text('Randevu ve Bilgi Al', 'Book an Appointment & Get Information'),
+  informationLine: text('Randevu Al', 'Book Appointment'),
 }
 
 export const serviceDetailPageCopy = {
@@ -985,32 +983,32 @@ export const serviceDetailPageCopy = {
   expectedBenefits: text('Beklenen faydalar', 'Expected benefits'),
   nextStepEyebrow: text('Sonraki adım', 'Next step'),
   nextStepTitle: text(
-    '{service} için size uygun değerlendirme sürecini başlatalım',
-    `Let's start the right assessment process for {service}`,
+    '{service} için ilk adımı planlayalım',
+    `Let's plan the first step for {service}`,
   ),
   nextStepDescription: text(
-    'Mevcut durumunuzu kısaca paylaşırsanız, ilk görüşme için en doğru yönlendirmeyi birlikte planlayabiliriz.',
-    'If you briefly share your current situation, we can plan the most appropriate guidance for the first consultation together.',
+    'Kısa bir ön bilgiyle ilk görüşmeyi doğru başlıkta planlayabiliriz.',
+    'A short note is enough to guide the first consultation in the right direction.',
   ),
-  whatsappAsk: text('WhatsApp ile Sorun', 'Ask on WhatsApp'),
+  whatsappAsk: text('WhatsApp', 'WhatsApp'),
 }
 
 export const blogPageCopy = {
   heroEyebrow: text('Blog', 'Blog'),
   heroTitle: text(
-    'Ortopedik bakım ve uygulama süreçlerini daha anlaşılır hale getiren içerikler',
-    'Content that makes orthopedic care and application processes easier to understand.',
+    'Kısa ve açıklayıcı içerikler',
+    'Short, practical reads',
   ),
   heroDescription: text(
-    'Kullanıcıların karar verme sürecini kolaylaştırmak için protez, ortez, yürüme analizi ve ayak sağlığı alanlarında açıklayıcı içerikler paylaşıyoruz.',
-    'We publish clear content about prosthetics, orthotics, gait analysis, and foot health to make decision-making easier for users.',
+    'Protez, ortez ve ayak sağlığı hakkında sade bilgiler paylaşıyoruz.',
+    'We share clear information on prosthetics, orthotics, and foot health.',
   ),
   emptyTitle: text('İçerikler hazırlanıyor', 'Content is being prepared'),
   emptyDescription: text(
     'Çok yakında protez, ortez ve ortopedik bakım süreçlerine dair açıklayıcı blog yazılarını burada bulabilirsiniz.',
     'You will soon find explanatory blog articles here about prosthetics, orthotics, and orthopedic care processes.',
   ),
-  readPost: text('Yazıyı okuyun', 'Read the article'),
+  readPost: text('Oku', 'Read'),
 }
 
 export const blogPostCopy = {
@@ -1019,24 +1017,24 @@ export const blogPostCopy = {
   readTimeSuffix: text('dk okuma', 'min read'),
   nextStepEyebrow: text('Sonraki adım', 'Next step'),
   nextStepTitle: text(
-    'İçerikte bahsedilen konu sizin için de geçerliyse bize ulaşabilirsiniz',
-    'If the topic in this article also applies to you, you can reach out to us.',
+    'Bu konu sizin için de geçerliyse bize ulaşın',
+    'If this topic applies to you, contact us',
   ),
   nextStepDescription: text(
-    'Süreci birlikte değerlendirmek, doğru hizmet alanını belirlemek ve ilk randevu adımını planlamak için iletişim sayfasına geçebilirsiniz.',
-    'You can move to the contact section to review the process together, identify the right service area, and plan the first appointment step.',
+    'Doğru hizmet alanını birlikte değerlendirebiliriz.',
+    'We can review the right service area together.',
   ),
 }
 
 export const announcementsPageCopy = {
   heroEyebrow: text('Duyurular', 'Announcements'),
   heroTitle: text(
-    'Merkezden güncel bilgilendirmeler ve takip edilmesi gereken duyurular',
-    'Current updates from the center and announcements worth following.',
+    'Merkezden güncel duyurular',
+    'Current clinic updates',
   ),
   heroDescription: text(
-    'Operasyonel güncellemeler, başvuru akışıyla ilgili bilgilendirmeler ve kullanıcı iletişimini kolaylaştıran gelişmeleri burada paylaşırız.',
-    'We share operational updates, application flow notices, and developments that make user communication easier here.',
+    'Çalışma akışı ve hizmetlerle ilgili kısa bilgilendirmeleri burada paylaşırız.',
+    'We share short updates about service flow and clinic information here.',
   ),
   emptyTitle: text('Güncel duyuru bulunmuyor', 'There are no current announcements'),
   emptyDescription: text(
