@@ -1,15 +1,52 @@
 import type { Metadata } from 'next'
-import { Geist, Geist_Mono } from 'next/font/google'
+import { Fraunces, Plus_Jakarta_Sans } from 'next/font/google'
 import { Analytics } from '@vercel/analytics/next'
-import { Providers } from '@/components/providers'
+
 import './globals.css'
 
-const _geist = Geist({ subsets: ["latin"] });
-const _geistMono = Geist_Mono({ subsets: ["latin"] });
+const plusJakartaSans = Plus_Jakarta_Sans({
+  subsets: ['latin', 'latin-ext'],
+  variable: '--font-sans',
+})
+
+const fraunces = Fraunces({
+  subsets: ['latin', 'latin-ext'],
+  variable: '--font-display',
+})
 
 export const metadata: Metadata = {
-  title: 'Gerçek Ortopedi | Orthopedic Excellence',
-  description: 'Premium orthopedic services and expertise. Leading orthopedic clinic providing comprehensive care',
+  metadataBase: new URL('https://www.gercekortopedi.com.tr'),
+  title: {
+    default: 'Gerçek Ortopedi | Protez, Ortez ve Kişiye Özel Ortopedik Çözümler',
+    template: '%s | Gerçek Ortopedi',
+  },
+  description:
+    'Gerçek Ortopedi; protez, ortez, yürüme analizi ve kişiye özel tabanlık uygulamalarında güven veren, modern ve hasta odaklı ortopedik çözüm merkezidir.',
+  applicationName: 'Gerçek Ortopedi',
+  keywords: [
+    'gerçek ortopedi',
+    'protez',
+    'ortez',
+    'kişiye özel tabanlık',
+    'yürüme analizi',
+    'ankara ortopedi',
+    'protez uygulama merkezi',
+  ],
+  openGraph: {
+    title: 'Gerçek Ortopedi',
+    description:
+      'Protez, ortez, yürüme analizi ve kişiye özel ortopedik çözümler için modern ve güven veren uygulama merkezi.',
+    url: 'https://www.gercekortopedi.com.tr',
+    siteName: 'Gerçek Ortopedi',
+    locale: 'tr_TR',
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Gerçek Ortopedi',
+    description:
+      'Kişiye özel protez, ortez ve ortopedik uygulamalar için premium dijital deneyim.',
+  },
 }
 
 export default function RootLayout({
@@ -19,10 +56,8 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="tr">
-      <body className="font-sans antialiased">
-        <Providers>
-          {children}
-        </Providers>
+      <body className={`${plusJakartaSans.variable} ${fraunces.variable} font-sans antialiased`}>
+        {children}
         <Analytics />
       </body>
     </html>

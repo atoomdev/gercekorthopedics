@@ -1,9 +1,11 @@
+import type { Metadata } from 'next'
 import { neon } from '@neondatabase/serverless'
-import { Navbar } from '@/components/navbar'
-import { Footer } from '@/components/footer'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
-import { ArrowLeft, Calendar, Clock } from 'lucide-react'
+import { ArrowLeft, CalendarDays, Clock3 } from 'lucide-react'
+
+import { Footer } from '@/components/footer'
+import { Navbar } from '@/components/navbar'
 
 export const dynamic = 'force-dynamic'
 
@@ -11,9 +13,10 @@ async function getPost(slug: string) {
   try {
     const sql = neon(process.env.DATABASE_URL!)
     const result = await sql`
-      SELECT * FROM blog_posts 
+      SELECT * FROM blog_posts
       WHERE (slug_en = ${slug} OR slug_tr = ${slug} OR slug = ${slug}) AND published = true
     `
+
     return result[0] || null
   } catch (error) {
     console.error('Error fetching post:', error)
@@ -21,11 +24,36 @@ async function getPost(slug: string) {
   }
 }
 
-export default async function BlogPostPage(props: {
+type PageProps = {
   params: Promise<{ slug: string }>
-}) {
-  const params = await props.params
-  const post = await getPost(params.slug)
+}
+
+export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+  const { slug } = await params
+  const post = await getPost(slug)
+
+  if (!post) {
+    return {
+      title: 'Yazı Bulunamadı',
+    }
+  }
+
+  const title = post.title_tr || post.title_en || post.title || ''
+  const description =
+    post.excerpt_tr ||
+    post.excerpt_en ||
+    post.excerpt ||
+    `${(post.content_tr || post.content_en || post.content || '').slice(0, 150)}...`
+
+  return {
+    title,
+    description,
+  }
+}
+
+export default async function BlogPostPage({ params }: PageProps) {
+  const { slug } = await params
+  const post = await getPost(slug)
 
   if (!post) {
     notFound()
@@ -33,67 +61,70 @@ export default async function BlogPostPage(props: {
 
   const content = post.content_tr || post.content_en || post.content || ''
   const title = post.title_tr || post.title_en || post.title || ''
-  const readTime = Math.ceil(content.split(' ').length / 200) || 1
+  const readTime = Math.max(1, Math.ceil(content.split(/\s+/).filter(Boolean).length / 220))
 
   return (
     <main className="min-h-screen bg-background">
       <Navbar />
-      
-      <article className="pt-32 pb-16 md:pt-40 md:pb-24">
-        <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
-          <Link
-            href="/blog"
-            className="inline-flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors mb-8 group"
-          >
-            <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
-            Back to Blog
-          </Link>
 
-          <header className="mb-10 animate-fade-up">
-            <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-primary mb-6 leading-tight">
-              {title}
-            </h1>
-            <div className="flex flex-wrap items-center gap-4 text-sm text-muted-foreground">
-              <div className="flex items-center gap-2">
-                <Calendar className="w-4 h-4" />
-                <time dateTime={post.created_at}>
-                  {new Date(post.created_at).toLocaleDateString()}
-                </time>
+      <article className="pt-32 pb-16 sm:pt-36 sm:pb-20">
+        <div className="container-shell">
+          <div className="mx-auto max-w-4xl">
+            <Link
+              href="/blog"
+              className="inline-flex items-center gap-2 text-sm font-medium text-muted-foreground transition hover:text-primary"
+            >
+              <ArrowLeft className="size-4" />
+              Blog’a dön
+            </Link>
+
+            <header className="mt-8 rounded-[36px] border border-border/80 bg-white p-8 shadow-[0_24px_80px_rgba(10,34,57,0.08)] sm:p-10">
+              <p className="eyebrow">Bilgilendirici içerik</p>
+              <h1 className="mt-6 text-4xl font-semibold tracking-tight text-foreground sm:text-5xl">
+                {title}
+              </h1>
+
+              <div className="mt-6 flex flex-wrap items-center gap-5 text-sm text-muted-foreground">
+                <div className="inline-flex items-center gap-2">
+                  <CalendarDays className="size-4" />
+                  <time dateTime={post.created_at}>
+                    {new Date(post.created_at).toLocaleDateString('tr-TR')}
+                  </time>
+                </div>
+                <div className="inline-flex items-center gap-2">
+                  <Clock3 className="size-4" />
+                  <span>{readTime} dk okuma</span>
+                </div>
               </div>
-              <span className="text-border">•</span>
-              <div className="flex items-center gap-2">
-                <Clock className="w-4 h-4" />
-                <span>{readTime} min read</span>
+            </header>
+
+            <div className="mt-10 rounded-[36px] border border-border/80 bg-white p-8 shadow-[0_24px_80px_rgba(10,34,57,0.08)] sm:p-10">
+              <div className="whitespace-pre-wrap text-base leading-8 text-foreground/80">
+                {content}
               </div>
             </div>
-          </header>
 
-          <div className="prose prose-lg max-w-none animate-fade-up delay-200">
-            <div className="whitespace-pre-wrap leading-relaxed text-muted-foreground text-lg">
-              {content}
-            </div>
-          </div>
-
-          <div className="mt-12 pt-8 border-t border-border animate-fade-up delay-300">
-            <div className="bg-secondary/50 p-8 rounded-2xl hover-shadow-lift transition-all duration-500">
-              <h3 className="text-xl font-semibold text-primary mb-3">
-                About This Post
-              </h3>
-              <p className="text-muted-foreground mb-5 leading-relaxed">
-                For more information about orthopedic health and our services, please visit our main page or contact us.
+            <div className="mt-10 rounded-[36px] bg-[linear-gradient(135deg,#0a2239,#103858)] p-8 text-white shadow-[0_28px_90px_rgba(10,34,57,0.18)]">
+              <p className="eyebrow border-white/15 bg-white/10 text-white/70">
+                Sonraki adım
               </p>
-              <Link
-                href="/#contact"
-                className="inline-flex items-center gap-2 px-6 py-3 bg-primary text-primary-foreground rounded-xl font-semibold hover:bg-primary/90 transition-all duration-300 animate-shadow-pulse"
-              >
-                Get In Touch
-                <span>→</span>
-              </Link>
+              <h2 className="mt-6 text-3xl font-semibold tracking-tight">
+                İçerikte bahsedilen konu sizin için de geçerliyse bize ulaşabilirsiniz
+              </h2>
+              <p className="mt-4 max-w-2xl text-base leading-8 text-white/75">
+                Süreci birlikte değerlendirmek, doğru hizmet alanını belirlemek ve ilk
+                randevu adımını planlamak için iletişim sayfasına geçebilirsiniz.
+              </p>
+              <div className="mt-8">
+                <Link className="button-secondary border-white/12 bg-white/10 text-white hover:bg-white/15" href="/#iletisim">
+                  İletişime Geç
+                </Link>
+              </div>
             </div>
           </div>
         </div>
       </article>
-      
+
       <Footer />
     </main>
   )

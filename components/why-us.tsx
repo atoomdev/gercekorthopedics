@@ -1,64 +1,96 @@
-'use client'
+import { CheckCircle2, ClipboardList, Headset, ShieldCheck } from 'lucide-react'
 
-import { CheckCircle, Shield } from 'lucide-react'
-import { useLanguage } from './providers'
+import { trustPillars } from '@/lib/site-content'
+import { SectionHeading } from '@/components/section-heading'
+
+const supportTopics = [
+  'İlk başvuruda hangi bilgilerin gerekli olduğu',
+  'Ölçü, prova ve teslim adımlarının nasıl ilerlediği',
+  'Kullanım sonrası kontrol ve revizyon planı',
+  'Bakım, onarım ve destek süreçleri hakkında yönlendirme',
+]
 
 export function WhyUs() {
-  const { t } = useLanguage()
-
-  const reasons = [
-    t('Gelişmiş sertifikalara sahip uzman ekip', 'Expert team with advanced certifications'),
-    t('En son tanı ve cerrahi teknoloji', 'Latest diagnostic and surgical technology'),
-    t('Her hasta için kişiselleştirilmiş tedavi planları', 'Personalized treatment plans for every patient'),
-    t('Kapsamlı ameliyat öncesi ve sonrası destek', 'Comprehensive pre and post-op support'),
-    t('Son teknoloji rehabilitasyon tesisleri', 'State-of-the-art rehabilitation facilities'),
-    t('Şefkatli ve hasta odaklı bakım', 'Compassionate and patient-focused care'),
-  ]
-
   return (
-    <section className="py-12 sm:py-16 md:py-20 lg:py-24 bg-secondary/50">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
-          {/* Left Content */}
-          <div className="space-y-4 sm:space-y-6 order-2 lg:order-1">
-            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-primary animate-fade-up text-center lg:text-left">
-              {t('Neden Gerçek Ortopedi', 'Why Choose Gerçek Ortopedi')}
-            </h2>
-            <p className="text-base sm:text-lg text-muted-foreground leading-relaxed animate-fade-up delay-100 text-center lg:text-left">
-              {t(
-                'Hayatları dönüştüren ve hareketliliği geri kazandıran olağanüstü ortopedik bakım sunmaya kararlıyız.',
-                "We're committed to delivering exceptional orthopedic care that transforms lives and restores mobility."
-              )}
-            </p>
-            <div className="space-y-2 sm:space-y-3 md:space-y-4">
-              {reasons.map((reason, idx) => (
-                <div 
-                  key={idx} 
-                  className="flex items-start gap-3 sm:gap-4 p-2.5 sm:p-3 rounded-lg sm:rounded-xl hover:bg-card hover-shadow-lift transition-all duration-300 animate-fade-up"
-                  style={{ animationDelay: `${(idx + 2) * 100}ms` }}
-                >
-                  <div className="w-7 h-7 sm:w-8 sm:h-8 bg-primary/10 rounded-md sm:rounded-lg flex items-center justify-center flex-shrink-0 mt-0.5">
-                    <CheckCircle className="w-4 h-4 sm:w-5 sm:h-5 text-primary" />
-                  </div>
-                  <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">
-                    {reason}
+    <section className="section-shell border-y border-border/70 bg-[linear-gradient(180deg,#f5fafb,#ffffff)]">
+      <div className="container-shell">
+        <div className="grid gap-10 lg:grid-cols-[0.92fr_1.08fr] lg:items-start">
+          <div>
+            <SectionHeading
+              eyebrow="Güven Unsurları"
+              title="Karar vermeyi zorlaştıran belirsizlikleri azaltmak için tasarlanmış bir deneyim"
+              description="Doğru tıbbi yaklaşım kadar; neyin neden önerildiği, uygulamanın nasıl ilerlediği ve sonrasında hangi desteğin verileceği de önemlidir."
+            />
+
+            <div className="mt-8 rounded-[30px] border border-primary/10 bg-primary p-7 text-primary-foreground shadow-[0_24px_80px_rgba(10,34,57,0.12)]">
+              <div className="flex items-center gap-4">
+                <div className="flex size-14 items-center justify-center rounded-2xl bg-white/10">
+                  <ShieldCheck className="size-6" />
+                </div>
+                <div>
+                  <p className="text-sm font-semibold uppercase tracking-[0.2em] text-primary-foreground/65">
+                    Hasta odaklı yaklaşım
+                  </p>
+                  <p className="mt-2 text-xl font-semibold">
+                    Teknik kararlar, kullanıcının günlük yaşam hedefi ile birlikte değerlendirilir
                   </p>
                 </div>
-              ))}
+              </div>
             </div>
           </div>
 
-          {/* Right Visual */}
-          <div className="relative h-64 sm:h-80 md:h-96 lg:h-[450px] bg-card rounded-2xl sm:rounded-3xl overflow-hidden border border-border flex items-center justify-center">
-            <div className="absolute inset-0 opacity-20">
-              <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-60 sm:w-80 h-60 sm:h-80 bg-primary rounded-full"></div>
-            </div>
-            <div className="relative z-10 text-center px-4 sm:px-6 md:px-8">
-              <div className="w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 mx-auto mb-4 sm:mb-6 rounded-xl sm:rounded-2xl bg-primary/10 flex items-center justify-center">
-                <Shield className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 text-primary" />
-              </div>
-              <p className="text-primary font-semibold text-lg sm:text-xl">{t('Taahhüdümüz', 'Our Commitment')}</p>
-              <p className="text-muted-foreground text-sm sm:text-base mt-1 sm:mt-2">{t('Sağlığınız önceliğimiz', 'Your wellness is our priority')}</p>
+          <div className="grid gap-5">
+            {trustPillars.map((item) => (
+              <article
+                key={item.title}
+                className="rounded-[28px] border border-border/80 bg-white p-6 shadow-[0_18px_60px_rgba(10,34,57,0.06)]"
+              >
+                <div className="flex items-start gap-4">
+                  <div className="flex size-12 shrink-0 items-center justify-center rounded-2xl bg-accent/10 text-accent">
+                    <CheckCircle2 className="size-5" />
+                  </div>
+                  <div>
+                    <h3 className="text-xl font-semibold tracking-tight text-foreground">
+                      {item.title}
+                    </h3>
+                    <p className="mt-3 text-sm leading-7 text-muted-foreground">
+                      {item.description}
+                    </p>
+                  </div>
+                </div>
+              </article>
+            ))}
+
+            <div className="grid gap-5 md:grid-cols-2">
+              <article className="rounded-[28px] border border-border/80 bg-slate-50/80 p-6">
+                <div className="flex size-12 items-center justify-center rounded-2xl bg-primary/8 text-primary">
+                  <ClipboardList className="size-5" />
+                </div>
+                <h3 className="mt-5 text-lg font-semibold text-foreground">
+                  Süreci açıklayan destek başlıkları
+                </h3>
+                <ul className="mt-4 space-y-3 text-sm leading-6 text-muted-foreground">
+                  {supportTopics.map((topic) => (
+                    <li key={topic} className="flex items-start gap-3">
+                      <span className="mt-2 size-1.5 rounded-full bg-primary" />
+                      <span>{topic}</span>
+                    </li>
+                  ))}
+                </ul>
+              </article>
+
+              <article className="rounded-[28px] border border-border/80 bg-slate-50/80 p-6">
+                <div className="flex size-12 items-center justify-center rounded-2xl bg-primary/8 text-primary">
+                  <Headset className="size-5" />
+                </div>
+                <h3 className="mt-5 text-lg font-semibold text-foreground">
+                  İletişimde hız ve açıklık
+                </h3>
+                <p className="mt-4 text-sm leading-7 text-muted-foreground">
+                  Telefon, WhatsApp ve form kanallarını aynı anda görünür kılarak,
+                  danışma ve randevu başlatmayı kullanıcı için daha kolay hale getiriyoruz.
+                </p>
+              </article>
             </div>
           </div>
         </div>

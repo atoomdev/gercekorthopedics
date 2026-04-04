@@ -1,187 +1,260 @@
 'use client'
 
 import { useState } from 'react'
-import { Mail, Phone, MapPin, Send } from 'lucide-react'
-import { useLanguage } from './providers'
+import { Mail, MapPin, MessageCircle, Phone, Send } from 'lucide-react'
+
+import { serviceDetails, siteConfig } from '@/lib/site-content'
+import { SectionHeading } from '@/components/section-heading'
+
+type FormState = {
+  name: string
+  phone: string
+  email: string
+  service: string
+  message: string
+}
+
+const initialState: FormState = {
+  name: '',
+  phone: '',
+  email: '',
+  service: '',
+  message: '',
+}
+
+const contactCards = [
+  {
+    title: 'Telefon',
+    value: siteConfig.phone.display,
+    href: `tel:${siteConfig.phone.raw}`,
+    icon: Phone,
+    hint: 'Randevu ve bilgi hattı',
+  },
+  {
+    title: 'WhatsApp',
+    value: 'Danışma hattı',
+    href: `https://wa.me/${siteConfig.phone.whatsappRaw}`,
+    icon: MessageCircle,
+    hint: 'Hızlı dönüş için mesaj gönderin',
+  },
+  {
+    title: 'E-posta',
+    value: siteConfig.email,
+    href: `mailto:${siteConfig.email}`,
+    icon: Mail,
+    hint: 'Detaylı talepler için yazabilirsiniz',
+  },
+  {
+    title: 'Adres',
+    value: siteConfig.address.line,
+    href: `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(siteConfig.address.line)}`,
+    icon: MapPin,
+    hint: 'Çankaya / Ankara',
+  },
+]
 
 export function Contact() {
-  const { t } = useLanguage()
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    phone: '',
-    message: '',
-  })
-  const [submitted, setSubmitted] = useState(false)
-  const [loading, setLoading] = useState(false)
+  const [formData, setFormData] = useState<FormState>(initialState)
+  const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle')
+  const [errorMessage, setErrorMessage] = useState('')
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    setLoading(true)
-    
+  const handleChange = (
+    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>,
+  ) => {
+    const { name, value } = event.target
+    setFormData((current) => ({ ...current, [name]: value }))
+  }
+
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault()
+    setStatus('loading')
+    setErrorMessage('')
+
+    const composedMessage = [
+      formData.service ? `Talep alanı: ${formData.service}` : null,
+      formData.email ? `E-posta: ${formData.email}` : null,
+      formData.message.trim(),
+    ]
+      .filter(Boolean)
+      .join('\n\n')
+
     try {
       const response = await fetch('/api/contact', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formData),
+        body: JSON.stringify({
+          name: formData.name.trim(),
+          phone: formData.phone.trim(),
+          email: formData.email.trim(),
+          message: composedMessage,
+        }),
       })
 
-      if (response.ok) {
-        setSubmitted(true)
-        setFormData({ name: '', email: '', phone: '', message: '' })
-        setTimeout(() => setSubmitted(false), 5000)
-      } else {
-        const errData = await response.json().catch(() => ({}))
-        alert('Server Error: ' + errData.error)
+      if (!response.ok) {
+        const data = await response.json().catch(() => ({}))
+        throw new Error(data.error || 'Mesaj gönderimi sırasında bir sorun oluştu.')
       }
+
+      setStatus('success')
+      setFormData(initialState)
     } catch (error) {
-      console.error('Error submitting form:', error)
-    } finally {
-      setLoading(false)
+      setStatus('error')
+      setErrorMessage(
+        error instanceof Error ? error.message : 'Mesaj gönderimi sırasında bir sorun oluştu.',
+      )
     }
   }
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const { name, value } = e.target
-    setFormData(prev => ({ ...prev, [name]: value }))
-  }
-
-  const contactInfo = [
-    {
-      icon: Phone,
-      title: t('Telefon', 'Phone'),
-      value: '+90 (XXX) XXX-XXXX',
-    },
-    {
-      icon: Mail,
-      title: 'Email',
-      value: 'info@gercekortopedi.com',
-    },
-    {
-      icon: MapPin,
-      title: t('Konum', 'Location'),
-      value: t('İstanbul, Türkiye', 'Istanbul, Turkey'),
-    },
-  ]
-
   return (
-    <section id="contact" className="py-12 sm:py-16 md:py-20 lg:py-24 bg-background">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-8 sm:mb-10 md:mb-12">
-          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-primary mb-3 sm:mb-4 animate-fade-up">
-            {t('Bize Ulaşın', 'Get In Touch')}
-          </h2>
-          <p className="text-base sm:text-lg text-muted-foreground animate-fade-up delay-100 max-w-2xl mx-auto">
-            {t(
-              'Sorularınızı yanıtlamak ve sağlık yolculuğunuzda size yardımcı olmak için buradayız',
-              "We're here to answer your questions and help you on your wellness journey"
-            )}
-          </p>
-        </div>
+    <section id="iletisim" className="section-shell bg-slate-50/70">
+      <div className="container-shell">
+        <div className="grid gap-10 lg:grid-cols-[0.95fr_1.05fr]">
+          <div>
+            <SectionHeading
+              eyebrow="İletişim"
+              title="İhtiyacınızı anlatın, size uygun ilk adımı birlikte planlayalım"
+              description="Telefon, WhatsApp, e-posta ve form üzerinden hızlıca ulaşabilir; ilk görüşme için uygun yönlendirmeyi ekibimizden alabilirsiniz."
+            />
 
-        <div className="grid sm:grid-cols-3 gap-4 sm:gap-6 mb-8 sm:mb-10 md:mb-12">
-          {contactInfo.map((item, idx) => {
-            const Icon = item.icon
-            return (
-              <div 
-                key={idx}
-                className="bg-secondary/50 p-5 sm:p-6 md:p-8 rounded-xl sm:rounded-2xl text-center hover-shadow-lift transition-all duration-500 group animate-fade-up"
-                style={{ animationDelay: `${(idx + 2) * 100}ms` }}
-              >
-                <div className="w-12 h-12 sm:w-14 sm:h-14 bg-primary rounded-lg sm:rounded-xl flex items-center justify-center mx-auto mb-3 sm:mb-4 group-hover:scale-110 transition-transform duration-300 animate-shadow-pulse">
-                  <Icon className="w-6 h-6 sm:w-7 sm:h-7 text-primary-foreground" />
-                </div>
-                <h3 className="text-base sm:text-lg font-semibold text-card-foreground mb-1 sm:mb-2">{item.title}</h3>
-                <p className="text-sm sm:text-base text-muted-foreground break-all sm:break-normal">{item.value}</p>
-              </div>
-            )
-          })}
-        </div>
+            <div className="mt-10 grid gap-4 sm:grid-cols-2">
+              {contactCards.map((item) => {
+                const Icon = item.icon
 
-        {/* Contact Form */}
-        <div className="max-w-2xl mx-auto">
-          <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-5 md:space-y-6 animate-fade-up delay-400">
-            <div className="grid sm:grid-cols-2 gap-4 sm:gap-5 md:gap-6">
+                return (
+                  <a
+                    key={item.title}
+                    href={item.href}
+                    target={item.href.startsWith('http') ? '_blank' : undefined}
+                    rel={item.href.startsWith('http') ? 'noreferrer' : undefined}
+                    className="rounded-[28px] border border-border/80 bg-white p-6 shadow-[0_18px_60px_rgba(10,34,57,0.06)] transition hover:-translate-y-1 hover:border-primary/18"
+                  >
+                    <div className="flex size-12 items-center justify-center rounded-2xl bg-primary/8 text-primary">
+                      <Icon className="size-5" />
+                    </div>
+                    <h3 className="mt-5 text-lg font-semibold text-foreground">{item.title}</h3>
+                    <p className="mt-3 text-sm leading-7 text-muted-foreground">{item.hint}</p>
+                    <p className="mt-4 text-base font-medium text-foreground">{item.value}</p>
+                  </a>
+                )
+              })}
+            </div>
+
+            <div className="mt-6 rounded-[30px] border border-primary/10 bg-primary p-7 text-primary-foreground shadow-[0_24px_80px_rgba(10,34,57,0.12)]">
+              <p className="text-sm font-semibold uppercase tracking-[0.22em] text-primary-foreground/60">
+                Bilgi notu
+              </p>
+              <p className="mt-4 text-xl font-semibold tracking-tight">
+                İlk görüşmede ihtiyacınızı, günlük yaşam hedeflerinizi ve mevcut kullanım
+                durumunuzu netleştirmek süreci hızlandırır.
+              </p>
+              <p className="mt-4 text-sm leading-7 text-primary-foreground/75">
+                Daha önce kullandığınız ürün, mevcut şikayetiniz veya yeni başvuru nedeniniz
+                varsa formda kısa şekilde belirtmeniz yeterlidir.
+              </p>
+            </div>
+          </div>
+
+          <div className="surface-panel p-7 sm:p-8">
+            <div className="flex items-start justify-between gap-4">
               <div>
-                <label className="block text-sm font-medium text-card-foreground mb-1.5 sm:mb-2">
-                  {t('Adınız', 'Your Name')}
+                <p className="eyebrow">Randevu Talebi</p>
+                <h3 className="mt-5 text-3xl font-semibold tracking-tight text-foreground">
+                  Kısa formu doldurun, size uygun yönlendirmeyi hazırlayalım
+                </h3>
+              </div>
+            </div>
+
+            <form className="mt-8 space-y-5" onSubmit={handleSubmit}>
+              <div className="grid gap-5 sm:grid-cols-2">
+                <label className="block text-sm font-medium text-foreground">
+                  Ad Soyad
+                  <input
+                    name="name"
+                    value={formData.name}
+                    onChange={handleChange}
+                    required
+                    placeholder="Adınızı ve soyadınızı yazın"
+                    className="mt-2 w-full rounded-2xl border border-border bg-white px-4 py-3 text-sm text-foreground transition placeholder:text-muted-foreground/70"
+                  />
                 </label>
-                <input
-                  type="text"
-                  name="name"
-                  value={formData.name}
+
+                <label className="block text-sm font-medium text-foreground">
+                  Telefon
+                  <input
+                    name="phone"
+                    value={formData.phone}
+                    onChange={handleChange}
+                    required
+                    placeholder="05xx xxx xx xx"
+                    className="mt-2 w-full rounded-2xl border border-border bg-white px-4 py-3 text-sm text-foreground transition placeholder:text-muted-foreground/70"
+                  />
+                </label>
+              </div>
+
+              <div className="grid gap-5 sm:grid-cols-2">
+                <label className="block text-sm font-medium text-foreground">
+                  E-posta
+                  <input
+                    name="email"
+                    type="email"
+                    value={formData.email}
+                    onChange={handleChange}
+                    placeholder="ornek@eposta.com"
+                    className="mt-2 w-full rounded-2xl border border-border bg-white px-4 py-3 text-sm text-foreground transition placeholder:text-muted-foreground/70"
+                  />
+                </label>
+
+                <label className="block text-sm font-medium text-foreground">
+                  İlgilendiğiniz alan
+                  <select
+                    name="service"
+                    value={formData.service}
+                    onChange={handleChange}
+                    className="mt-2 w-full rounded-2xl border border-border bg-white px-4 py-3 text-sm text-foreground transition"
+                  >
+                    <option value="">Seçiniz</option>
+                    {serviceDetails.map((service) => (
+                      <option key={service.slug} value={service.title}>
+                        {service.title}
+                      </option>
+                    ))}
+                  </select>
+                </label>
+              </div>
+
+              <label className="block text-sm font-medium text-foreground">
+                Mesajınız
+                <textarea
+                  name="message"
+                  value={formData.message}
                   onChange={handleChange}
                   required
-                  className="w-full px-3 sm:px-4 py-2.5 sm:py-3 bg-secondary border border-border rounded-lg sm:rounded-xl focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all duration-300 text-sm sm:text-base"
-                  placeholder={t('Ahmet Yılmaz', 'John Doe')}
+                  rows={6}
+                  placeholder="İhtiyacınızı, varsa mevcut ürününüzü veya randevu talebinizi kısaca paylaşın."
+                  className="mt-2 w-full rounded-[24px] border border-border bg-white px-4 py-3 text-sm leading-7 text-foreground transition placeholder:text-muted-foreground/70"
                 />
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-card-foreground mb-1.5 sm:mb-2">
-                  {t('E-posta Adresi', 'Email Address')}
-                </label>
-                <input
-                  type="email"
-                  name="email"
-                  value={formData.email}
-                  onChange={handleChange}
-                  required
-                  className="w-full px-3 sm:px-4 py-2.5 sm:py-3 bg-secondary border border-border rounded-lg sm:rounded-xl focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all duration-300 text-sm sm:text-base"
-                  placeholder={t('ahmet@ornek.com', 'john@example.com')}
-                />
-              </div>
-            </div>
-
-            <div>
-              <label className="block text-sm font-medium text-card-foreground mb-1.5 sm:mb-2">
-                {t('Telefon Numarası', 'Phone Number')}
               </label>
-              <input
-                type="tel"
-                name="phone"
-                value={formData.phone}
-                onChange={handleChange}
-                className="w-full px-3 sm:px-4 py-2.5 sm:py-3 bg-secondary border border-border rounded-lg sm:rounded-xl focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all duration-300 text-sm sm:text-base"
-                placeholder="+90 (XXX) XXX-XXXX"
-              />
-            </div>
 
-            <div>
-              <label className="block text-sm font-medium text-card-foreground mb-1.5 sm:mb-2">
-                {t('Mesajınız', 'Message')}
-              </label>
-              <textarea
-                name="message"
-                value={formData.message}
-                onChange={handleChange}
-                required
-                rows={4}
-                className="w-full px-3 sm:px-4 py-2.5 sm:py-3 bg-secondary border border-border rounded-lg sm:rounded-xl focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all duration-300 resize-none text-sm sm:text-base"
-                placeholder={t('Sorularınızı yazın...', 'Tell us about your inquiry...')}
-              ></textarea>
-            </div>
+              <button type="submit" className="button-primary w-full justify-center" disabled={status === 'loading'}>
+                <Send className="size-4" />
+                {status === 'loading' ? 'Gönderiliyor...' : 'Mesaj Gönder'}
+              </button>
 
-            <button
-              type="submit"
-              disabled={loading}
-              className="w-full bg-primary text-primary-foreground py-3 sm:py-4 rounded-lg sm:rounded-xl font-semibold hover:bg-primary/90 transition-all duration-300 flex items-center justify-center gap-2 animate-shadow-pulse disabled:opacity-50 text-sm sm:text-base"
-            >
-              {loading ? (
-                <span className="animate-pulse">{t('Gönderiliyor...', 'Sending...')}</span>
-              ) : (
-                <>
-                  <Send className="w-4 h-4 sm:w-5 sm:h-5" />
-                  {t('Mesaj Gönder', 'Send Message')}
-                </>
-              )}
-            </button>
+              <div aria-live="polite">
+                {status === 'success' ? (
+                  <div className="rounded-[22px] border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm text-emerald-700">
+                    Teşekkür ederiz. Ekibimiz en kısa sürede sizinle iletişime geçecektir.
+                  </div>
+                ) : null}
 
-            {submitted && (
-              <div className="p-3 sm:p-4 bg-green-50 border border-green-200 rounded-lg sm:rounded-xl text-green-700 text-center animate-fade-up text-sm sm:text-base">
-                {t('Teşekkürler! En kısa sürede size dönüş yapacağız.', "Thank you! We'll get back to you soon.")}
+                {status === 'error' ? (
+                  <div className="rounded-[22px] border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
+                    {errorMessage}
+                  </div>
+                ) : null}
               </div>
-            )}
-          </form>
+            </form>
+          </div>
         </div>
       </div>
     </section>

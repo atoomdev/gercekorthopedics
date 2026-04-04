@@ -1,54 +1,106 @@
-'use client'
+import { Award, DraftingCompass, Ruler, Wrench } from 'lucide-react'
 
-import { useLanguage } from './providers'
+import { credibilityNotes, siteConfig } from '@/lib/site-content'
+import { SectionHeading } from '@/components/section-heading'
+
+const storyPoints = [
+  {
+    title: 'Köklü deneyim',
+    description:
+      'Gerçek Ortopedi, 1984’ten bu yana ortopedik uygulama alanında biriken tecrübesini güncel ihtiyaçlarla birleştirir.',
+    icon: Award,
+  },
+  {
+    title: 'Kişiye özel ölçü yaklaşımı',
+    description:
+      'Her kullanıcı için ölçü, denge, yüklenme ve kullanım alışkanlıkları dikkate alınarak daha doğru uyum hedeflenir.',
+    icon: Ruler,
+  },
+  {
+    title: 'Teknik üretim ve ince ayar',
+    description:
+      'Atölye ve uygulama akışının birlikte yürütülmesi; prova, düzeltme ve kullanım konforunu daha kontrollü hale getirir.',
+    icon: Wrench,
+  },
+  {
+    title: 'Süreç görünürlüğü',
+    description:
+      'Başvuru, planlama, uygulama ve takip adımlarını netleştirerek karar verme sürecini hasta için daha anlaşılır kılıyoruz.',
+    icon: DraftingCompass,
+  },
+]
 
 export function About() {
-  const { t } = useLanguage()
-
-  const stats = [
-    { number: '15+', label: t('Yıllık Deneyim', 'Years Experience') },
-    { number: '5000+', label: t('Mutlu Hasta', 'Happy Patients') },
-    { number: '98%', label: t('Memnuniyet Oranı', 'Satisfaction Rate') },
-    { number: '24/7', label: t('Destek Mevcut', 'Support Available') },
-  ]
-
   return (
-    <section id="about" className="py-12 sm:py-16 md:py-20 lg:py-24 bg-background">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
-          {/* Left Content */}
-          <div className="space-y-6 sm:space-y-8">
-            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-primary mb-3 sm:mb-4">
-              {t('Gerçek Ortopedi Hakkında', 'About Gerçek Ortopedi')}
+    <section id="hakkimizda" className="section-shell bg-white">
+      <div className="container-shell">
+        <div className="grid gap-10 lg:grid-cols-[0.95fr_1.05fr] lg:items-start">
+          <div className="surface-panel overflow-hidden bg-[linear-gradient(180deg,#0a2239,#103858)] p-8 text-white lg:p-10">
+            <p className="eyebrow border-white/15 bg-white/10 text-white/70">
+              Hakkımızda
+            </p>
+            <h2 className="mt-6 text-3xl font-semibold tracking-tight sm:text-4xl">
+              Klinik güveni, teknik yeterlilik ve kişiye özel planlama aynı masada buluşmalı
             </h2>
-            <p className="text-sm sm:text-base text-muted-foreground leading-relaxed mb-3 sm:mb-4">
-              {t(
-                '15 yılı aşkın özveriyle hizmet sunan ekibimiz, kendimizi lider bir ortopedi kliniği olarak konumlandırdık. Mükemmelliğe ve hasta memnuniyetine olan bağlılığımız, yaptığımız her şeyi yönlendiriyor.',
-                "With over 15 years of dedicated service, we've established ourselves as a leading orthopedic practice. Our commitment to excellence and patient satisfaction drives everything we do."
-              )}
+            <p className="mt-6 text-base leading-8 text-white/75">
+              Bu anlayışla; protez, ortez, tabanlık ve ortopedik destek süreçlerini tek
+              merkezde, daha anlaşılır ve daha sürdürülebilir bir deneyime dönüştürmeyi
+              hedefliyoruz.
             </p>
-            <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">
-              {t(
-                'En son teknolojiyi şefkatli bakımla birleştirerek her hastanın kişiselleştirilmiş tedavi almasını ve optimal sonuçlara ulaşmasını sağlıyoruz.',
-                'We combine state-of-the-art technology with compassionate care, ensuring every patient receives personalized treatment and achieves optimal outcomes.'
-              )}
-            </p>
+
+            <div className="mt-8 grid gap-4 sm:grid-cols-2">
+              <div className="rounded-[24px] border border-white/10 bg-white/5 p-5">
+                <p className="text-sm font-semibold uppercase tracking-[0.2em] text-white/60">
+                  Kuruluş
+                </p>
+                <p className="mt-2 text-3xl font-semibold">{siteConfig.foundedYear}</p>
+              </div>
+              <div className="rounded-[24px] border border-white/10 bg-white/5 p-5">
+                <p className="text-sm font-semibold uppercase tracking-[0.2em] text-white/60">
+                  Merkez
+                </p>
+                <p className="mt-2 text-3xl font-semibold">{siteConfig.address.city}</p>
+              </div>
+            </div>
+
+            <ul className="mt-8 space-y-3 text-sm leading-7 text-white/75">
+              {credibilityNotes.map((item) => (
+                <li key={item} className="flex items-start gap-3">
+                  <span className="mt-2 size-1.5 rounded-full bg-accent" />
+                  <span>{item}</span>
+                </li>
+              ))}
+            </ul>
           </div>
 
-          {/* Right Image */}
-          <div className="relative h-64 sm:h-80 md:h-96 lg:h-[450px] bg-gradient-to-br from-primary to-primary/70 rounded-2xl sm:rounded-3xl overflow-hidden flex items-center justify-center">
-            <div className="absolute inset-0 opacity-50"> {/* Opaklık artırıldı */}
-              <div className="absolute top-1/4 right-1/4 w-20 sm:w-32 h-20 sm:h-32 bg-primary-foreground rounded-full blur-2xl"></div>
-              <div className="absolute bottom-1/4 left-1/4 w-28 sm:w-40 h-28 sm:h-40 bg-primary-foreground rounded-full blur-2xl"></div>
-            </div>
-            <div className="relative z-10 text-center p-4 sm:p-6 md:p-8">
-              <div className="w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 mx-auto mb-3 sm:mb-4 rounded-xl sm:rounded-2xl bg-primary-foreground/10 backdrop-blur-sm flex items-center justify-center items-center animate-bounce-soft" style={{ marginTop: '-20px' }}> {/* Tiki biraz üste aldım */}
-                <svg className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 text-primary-foreground" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V5h14v14zm-5.04-6.71l-2.75 3.54-1.3-1.54c-.2-.24-.57-.27-.85-.07-.29.2-.33.57-.13.85l1.9 2.23c.12.15.29.24.48.24s.36-.09.48-.24l3.5-4.14c.21-.28.16-.65-.12-.85-.28-.21-.65-.16-.85.12z" />
-                </svg>
-              </div>
-              <p className="text-primary-foreground text-base sm:text-lg font-medium">{t('Bakımda Mükemmellik', 'Excellence in Care')}</p>
-              <p className="text-primary-foreground/60 text-xs sm:text-sm mt-1 sm:mt-2">{t('2009\'dan beri', 'Since 2009')}</p>
+          <div>
+            <SectionHeading
+              eyebrow="Neden önemli?"
+              title="Kullanıcı deneyimini sadece sonuçta değil, sürecin her adımında güçlendiriyoruz"
+              description="Modern bir ortopedik marka; karmaşık terimlerle değil, hastanın ne yaşayacağını netleştirerek güven inşa eder. Tasarladığımız deneyim bu prensibe dayanıyor."
+            />
+
+            <div className="mt-10 grid gap-5 sm:grid-cols-2">
+              {storyPoints.map((item) => {
+                const Icon = item.icon
+
+                return (
+                  <article
+                    key={item.title}
+                    className="rounded-[28px] border border-border/80 bg-slate-50/80 p-6"
+                  >
+                    <div className="flex size-12 items-center justify-center rounded-2xl bg-primary/8 text-primary">
+                      <Icon className="size-5" />
+                    </div>
+                    <h3 className="mt-5 text-xl font-semibold tracking-tight text-foreground">
+                      {item.title}
+                    </h3>
+                    <p className="mt-3 text-sm leading-7 text-muted-foreground">
+                      {item.description}
+                    </p>
+                  </article>
+                )
+              })}
             </div>
           </div>
         </div>

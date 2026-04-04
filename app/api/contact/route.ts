@@ -5,32 +5,39 @@ export async function POST(request: NextRequest) {
   try {
     const { name, email, phone, message } = await request.json()
 
-    if (!name || !email || !message) {
+    const normalizedName = String(name || '').trim()
+    const normalizedEmail = String(email || '').trim()
+    const normalizedPhone = String(phone || '').trim()
+    const normalizedMessage = String(message || '').trim()
+
+    if (!normalizedName || !normalizedPhone || !normalizedMessage) {
       return NextResponse.json(
-        { error: 'Gerekli alanlar eksik' },
-        { status: 400 }
+        { error: 'Ad Soyad, telefon ve mesaj alanları zorunludur.' },
+        { status: 400 },
       )
     }
 
     const sql = neon(process.env.DATABASE_URL!)
-    
+    const messageToStore = normalizedEmail
+      ? `E-posta: ${normalizedEmail}\n\n${normalizedMessage}`
+      : normalizedMessage
+
     const result = await sql(
-      `INSERT INTO contact_submissions (name, phone, message) 
-       VALUES ($1, $2, $3) 
+      `INSERT INTO contact_submissions (name, phone, message)
+       VALUES ($1, $2, $3)
        RETURNING id`,
-      [name, phone || null, message]
+      [normalizedName, normalizedPhone, messageToStore],
     )
 
     return NextResponse.json(
       { success: true, id: result[0].id },
-      { status: 201 }
+      { status: 201 },
     )
   } catch (error) {
     console.error('Contact submission error:', error)
-    const msg = error instanceof Error ? error.message : String(error)
-    return NextResponse.json(
-      { error: 'DB Error: ' + msg },
-      { status: 500 }
-    )
+    const message =
+      error instanceof Error ? error.message : 'Mesaj kaydedilirken beklenmeyen bir hata oluştu.'
+
+    return NextResponse.json({ error: message }, { status: 500 })
   }
 }

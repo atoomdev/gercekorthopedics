@@ -1,17 +1,26 @@
+import type { Metadata } from 'next'
 import { neon } from '@neondatabase/serverless'
-import { Navbar } from '@/components/navbar'
-import { Footer } from '@/components/footer'
 import Link from 'next/link'
-import { ArrowLeft, BookOpen, Calendar } from 'lucide-react'
+import { ArrowRight, CalendarDays, NotebookPen } from 'lucide-react'
+
+import { Footer } from '@/components/footer'
+import { Navbar } from '@/components/navbar'
+import { PageHero } from '@/components/page-hero'
 
 export const dynamic = 'force-dynamic'
+
+export const metadata: Metadata = {
+  title: 'Blog',
+  description:
+    'Protez, ortez, ayak sağlığı, yürüme analizi ve ortopedik bakım süreçlerine dair açıklayıcı içerikler.',
+}
 
 async function getPosts() {
   try {
     const sql = neon(process.env.DATABASE_URL!)
     const posts = await sql`
-      SELECT * FROM blog_posts 
-      WHERE published = true 
+      SELECT * FROM blog_posts
+      WHERE published = true
       ORDER BY created_at DESC
     `
     return posts
@@ -27,72 +36,67 @@ export default async function BlogPage() {
   return (
     <main className="min-h-screen bg-background">
       <Navbar />
-      
-      <section className="pt-32 pb-16 md:pt-40 md:pb-24">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <Link 
-            href="/" 
-            className="inline-flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors mb-8 group"
-          >
-            <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
-            Back to Home
-          </Link>
 
-          <div className="flex items-center gap-4 mb-12">
-            <div className="w-14 h-14 bg-primary/10 rounded-2xl flex items-center justify-center animate-pulse-slow">
-              <BookOpen className="w-7 h-7 text-primary" />
-            </div>
-            <div>
-              <h1 className="text-4xl md:text-5xl font-bold text-primary">
-                Blog
-              </h1>
-              <p className="text-muted-foreground mt-1">
-                Latest insights on orthopedic health
-              </p>
-            </div>
-          </div>
+      <PageHero
+        eyebrow="Blog"
+        title="Ortopedik bakım ve uygulama süreçlerini daha anlaşılır hale getiren içerikler"
+        description="Kullanıcıların karar verme sürecini kolaylaştırmak için protez, ortez, yürüme analizi ve ayak sağlığı alanlarında açıklayıcı içerikler paylaşıyoruz."
+        primaryCta={{ href: '/#iletisim', label: 'Sorunuzu İletin' }}
+        secondaryCta={{ href: '/hizmetler', label: 'Hizmetleri Görün' }}
+      />
 
+      <section className="section-shell bg-white">
+        <div className="container-shell">
           {posts.length === 0 ? (
-            <div className="text-center py-16 bg-secondary/30 rounded-2xl">
-              <BookOpen className="w-16 h-16 text-muted-foreground mx-auto mb-4 opacity-50" />
-              <p className="text-muted-foreground text-lg">
-                No blog posts yet. Check back soon!
+            <div className="surface-panel mx-auto max-w-3xl p-10 text-center">
+              <div className="mx-auto flex size-16 items-center justify-center rounded-full bg-primary/8 text-primary">
+                <NotebookPen className="size-7" />
+              </div>
+              <h2 className="mt-6 text-3xl font-semibold tracking-tight text-foreground">
+                İçerikler hazırlanıyor
+              </h2>
+              <p className="mt-4 text-base leading-7 text-muted-foreground">
+                Çok yakında protez, ortez ve ortopedik bakım süreçlerine dair açıklayıcı
+                blog yazılarını burada bulabilirsiniz.
               </p>
             </div>
           ) : (
-            <div className="space-y-6">
-              {posts.map((post: any, idx: number) => {
-                const slug = post.slug_tr || post.slug_en || post.slug;
-                const title = post.title_tr || post.title_en || post.title;
-                const excerpt = post.excerpt_tr || post.excerpt_en || post.excerpt || (post.content_tr || post.content_en || post.content || '').substring(0, 200) + '...';
-                
+            <div className="grid gap-6 lg:grid-cols-2">
+              {posts.map((post: any) => {
+                const slug = post.slug_tr || post.slug_en || post.slug
+                const title = post.title_tr || post.title_en || post.title
+                const excerpt =
+                  post.excerpt_tr ||
+                  post.excerpt_en ||
+                  post.excerpt ||
+                  `${(post.content_tr || post.content_en || post.content || '').slice(0, 180)}...`
+
                 return (
                   <article
                     key={post.id}
-                    className="group bg-card border border-border rounded-2xl p-6 md:p-8 hover:shadow-xl hover:shadow-primary/5 hover:border-primary/30 transition-all duration-500 animate-fade-up"
-                    style={{ animationDelay: `${idx * 100}ms` }}
+                    className="group flex h-full flex-col rounded-[30px] border border-border/80 bg-slate-50/80 p-7 transition hover:-translate-y-1 hover:border-primary/18 hover:bg-white hover:shadow-[0_24px_80px_rgba(10,34,57,0.08)]"
                   >
-                    <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-3 mb-4">
-                      <h2 className="text-xl md:text-2xl font-semibold text-card-foreground group-hover:text-primary transition-colors">
-                        {title}
-                      </h2>
-                      <div className="flex items-center gap-2 text-sm text-muted-foreground whitespace-nowrap">
-                        <Calendar className="w-4 h-4" />
-                        <time dateTime={post.created_at}>
-                          {new Date(post.created_at).toLocaleDateString()}
-                        </time>
-                      </div>
+                    <div className="flex items-center gap-3 text-sm text-muted-foreground">
+                      <CalendarDays className="size-4" />
+                      <time dateTime={post.created_at}>
+                        {new Date(post.created_at).toLocaleDateString('tr-TR')}
+                      </time>
                     </div>
-                    <p className="text-muted-foreground mb-5 leading-relaxed">
+                    <h2 className="mt-5 text-2xl font-semibold tracking-tight text-foreground">
+                      {title}
+                    </h2>
+                    <p className="mt-4 flex-1 text-base leading-7 text-muted-foreground">
                       {excerpt}
                     </p>
-                    <Link
-                      href={`/blog/${slug}`}
-                      className="inline-flex items-center gap-2 text-primary font-semibold hover:text-primary/70 transition-colors group/btn"
-                    >
-                      Read More
-                      <span className="group-hover/btn:translate-x-1 transition-transform">→</span>
-                    </Link>
+                    <div className="mt-8">
+                      <Link
+                        href={`/blog/${slug}`}
+                        className="inline-flex items-center gap-2 text-sm font-semibold text-primary transition group-hover:gap-3"
+                      >
+                        Yazıyı okuyun
+                        <ArrowRight className="size-4" />
+                      </Link>
+                    </div>
                   </article>
                 )
               })}

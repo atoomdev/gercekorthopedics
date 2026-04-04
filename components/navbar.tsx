@@ -1,127 +1,149 @@
 'use client'
 
 import Link from 'next/link'
-import { usePathname, useRouter } from 'next/navigation'
-import { useState, useEffect } from 'react'
-import { Menu, X, Globe } from 'lucide-react'
-import { useLanguage } from './providers'
+import { usePathname } from 'next/navigation'
+import { MapPin, Menu, MessageCircle, Phone, X } from 'lucide-react'
+import { useEffect, useState } from 'react'
+
+import { navigationLinks, siteConfig } from '@/lib/site-content'
 
 export function Navbar() {
-  const [isOpen, setIsOpen] = useState(false)
-  const [scrolled, setScrolled] = useState(false)
-  const { language, setLanguage, t } = useLanguage()
   const pathname = usePathname()
-  const router = useRouter()
+  const [isOpen, setIsOpen] = useState(false)
+  const [isScrolled, setIsScrolled] = useState(false)
 
   useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 20)
-    }
-    window.addEventListener('scroll', handleScroll)
-    return () => window.removeEventListener('scroll', handleScroll)
+    const onScroll = () => setIsScrolled(window.scrollY > 16)
+    onScroll()
+    window.addEventListener('scroll', onScroll)
+    return () => window.removeEventListener('scroll', onScroll)
   }, [])
 
-  const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
-    if (href.startsWith('#')) {
-      e.preventDefault()
-      if (pathname !== '/') {
-        router.push('/' + href)
-      } else {
-        const element = document.querySelector(href)
-        if (element) {
-          element.scrollIntoView({ behavior: 'smooth' })
-        }
-      }
-      setIsOpen(false)
-    }
-  }
-
-  const navLinks = [
-    { href: '#services', label: t('Hizmetler', 'Services') },
-    { href: '#products', label: t('Ürünler', 'Products') },
-    { href: '#about', label: t('Hakkımızda', 'About') },
-    { href: '/blog', label: 'Blog' },
-    { href: '/announcements', label: t('Duyurular', 'Announcements') },
-    { href: '#contact', label: t('İletişim', 'Contact') },
-  ]
+  useEffect(() => {
+    setIsOpen(false)
+  }, [pathname])
 
   return (
-    <nav className={`fixed top-0 w-full z-50 transition-all duration-500 ${
-      scrolled 
-        ? 'bg-background/95 backdrop-blur-md shadow-lg shadow-primary/5 border-b border-border' 
-        : 'bg-background/80 backdrop-blur-sm'
-    }`}>
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center h-16 md:h-20">
-          {/* Logo */}
-          <Link href="/" className="flex items-center group">
-            <div className="flex flex-col">
-              <span className="text-xl md:text-2xl font-bold text-primary group-hover:text-primary/80 transition-colors">
-                Gerçek
-              </span>
-              <span className="text-xs text-muted-foreground leading-tight">
-                Ortopedi
-              </span>
-            </div>
-          </Link>
-
-          {/* Desktop Menu */}
-          <div className="hidden md:flex items-center gap-8">
-            {navLinks.map((link) => (
-              <Link
-                key={link.href}
-                href={link.href}
-                onClick={(e) => handleNavClick(e, link.href)}
-                className="text-sm font-medium text-foreground/80 hover:text-primary transition-colors relative after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-primary after:transition-all hover:after:w-full"
-              >
-                {link.label}
-              </Link>
-            ))}
-          </div>
-
-          {/* Language Toggle & Mobile Menu */}
-          <div className="flex items-center gap-3">
-            {/* Language Toggle */}
-            <button
-              onClick={() => setLanguage(language === 'tr' ? 'en' : 'tr')}
-              className="flex items-center gap-2 px-3 py-1.5 rounded-full border border-border hover:border-primary hover:bg-primary/5 transition-all duration-300 group animate-shadow-glow"
+    <header className="fixed inset-x-0 top-0 z-50">
+      <div className="border-b border-white/40 bg-primary text-primary-foreground">
+        <div className="container-shell flex min-h-11 items-center justify-between gap-4 py-2 text-xs sm:text-sm">
+          <p className="hidden text-primary-foreground/80 lg:block">
+            1984’ten bu yana Ankara’da kişiye özel protez, ortez ve ortopedik uygulama deneyimi
+          </p>
+          <div className="flex flex-1 items-center justify-between gap-4 lg:justify-end">
+            <a className="inline-flex items-center gap-2 text-primary-foreground/90 transition hover:text-white" href={`tel:${siteConfig.phone.raw}`}>
+              <Phone className="size-3.5" />
+              <span>{siteConfig.phone.display}</span>
+            </a>
+            <a
+              className="hidden items-center gap-2 text-primary-foreground/75 transition hover:text-white sm:inline-flex"
+              href={`https://wa.me/${siteConfig.phone.whatsappRaw}`}
+              target="_blank"
+              rel="noreferrer"
             >
-              <Globe className="w-4 h-4 text-muted-foreground group-hover:text-primary transition-colors" />
-              <span className="text-sm font-semibold text-foreground group-hover:text-primary transition-colors uppercase">
-                {language}
-              </span>
-            </button>
-
-            {/* Mobile Menu Button */}
-            <button
-              onClick={() => setIsOpen(!isOpen)}
-              className="md:hidden p-2 text-foreground hover:bg-secondary rounded-lg transition-colors"
-              aria-label="Toggle menu"
-            >
-              {isOpen ? <X size={24} /> : <Menu size={24} />}
-            </button>
-          </div>
-        </div>
-
-        {/* Mobile Menu */}
-        <div className={`md:hidden overflow-hidden transition-all duration-300 ease-in-out ${
-          isOpen ? 'max-h-96 pb-4' : 'max-h-0'
-        }`}>
-          <div className="space-y-1">
-            {navLinks.map((link, idx) => (
-              <Link
-                key={link.href}
-                href={link.href}
-                onClick={(e) => handleNavClick(e, link.href)}
-                className="block text-sm text-foreground hover:bg-secondary hover:text-primary p-3 rounded-lg transition-all animate-fade-up"
-                style={{ animationDelay: `${idx * 50}ms` }}
-              >
-                {link.label}
-              </Link>
-            ))}
+              <MessageCircle className="size-3.5" />
+              <span>WhatsApp danışma</span>
+            </a>
+            <span className="hidden items-center gap-2 text-primary-foreground/75 xl:inline-flex">
+              <MapPin className="size-3.5" />
+              <span>{siteConfig.address.line}</span>
+            </span>
           </div>
         </div>
       </div>
-    </nav>
+
+      <div
+        className={`border-b transition-all duration-300 ${
+          isScrolled
+            ? 'border-border/80 bg-white/95 shadow-[0_20px_60px_rgba(10,34,57,0.08)] backdrop-blur-xl'
+            : 'border-transparent bg-white/90 backdrop-blur-md'
+        }`}
+      >
+        <div className="container-shell flex min-h-[78px] items-center justify-between gap-4">
+          <Link href="/" className="flex items-center gap-3">
+            <div className="flex size-12 items-center justify-center rounded-2xl bg-primary text-lg font-semibold text-primary-foreground">
+              GO
+            </div>
+            <div>
+              <p className="text-lg font-semibold tracking-tight text-foreground">
+                Gerçek Ortopedi
+              </p>
+              <p className="text-sm text-muted-foreground">
+                Protez, ortez ve kişiye özel ortopedik çözümler
+              </p>
+            </div>
+          </Link>
+
+          <nav className="hidden items-center gap-8 lg:flex">
+            {navigationLinks.map((link) => {
+              const routeOnly = link.href.includes('#') ? null : link.href
+              const isActive = routeOnly ? pathname === routeOnly : false
+
+              return (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  className={`text-sm font-medium transition ${
+                    isActive ? 'text-primary' : 'text-foreground/80 hover:text-primary'
+                  }`}
+                >
+                  {link.label}
+                </Link>
+              )
+            })}
+          </nav>
+
+          <div className="hidden items-center gap-3 lg:flex">
+            <a className="button-secondary" href="/#iletisim">
+              İletişime Geç
+            </a>
+            <a className="button-primary" href={`https://wa.me/${siteConfig.phone.whatsappRaw}`} target="_blank" rel="noreferrer">
+              WhatsApp’tan Ulaş
+            </a>
+          </div>
+
+          <button
+            type="button"
+            aria-label="Menüyü aç"
+            className="inline-flex size-11 items-center justify-center rounded-full border border-border bg-white text-foreground lg:hidden"
+            onClick={() => setIsOpen((value) => !value)}
+          >
+            {isOpen ? <X className="size-5" /> : <Menu className="size-5" />}
+          </button>
+        </div>
+
+        {isOpen ? (
+          <div className="border-t border-border/80 bg-white lg:hidden">
+            <div className="container-shell py-5">
+              <nav className="grid gap-2">
+                {navigationLinks.map((link) => (
+                  <Link
+                    key={link.href}
+                    href={link.href}
+                    className="rounded-2xl border border-transparent px-4 py-3 text-sm font-medium text-foreground/80 transition hover:border-primary/10 hover:bg-primary/5 hover:text-primary"
+                  >
+                    {link.label}
+                  </Link>
+                ))}
+              </nav>
+
+              <div className="mt-5 grid gap-3">
+                <a className="button-primary justify-center" href={`tel:${siteConfig.phone.raw}`}>
+                  Randevu Al
+                </a>
+                <a
+                  className="button-secondary justify-center"
+                  href={`https://wa.me/${siteConfig.phone.whatsappRaw}`}
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  WhatsApp’tan Ulaş
+                </a>
+              </div>
+            </div>
+          </div>
+        ) : null}
+      </div>
+    </header>
   )
 }

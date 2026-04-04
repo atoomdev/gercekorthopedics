@@ -14,15 +14,16 @@ async function checkAuth(request: NextRequest) {
 
 export async function DELETE(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   if (!(await checkAuth(request))) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
   }
 
   try {
+    const { id } = await params
     const sql = neon(process.env.DATABASE_URL!)
-    await sql(`DELETE FROM announcements WHERE id = $1`, [parseInt(params.id)])
+    await sql(`DELETE FROM announcements WHERE id = $1`, [parseInt(id)])
     
     return NextResponse.json({ success: true })
   } catch (error) {
