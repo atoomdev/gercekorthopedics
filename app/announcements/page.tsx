@@ -4,6 +4,8 @@ import { Navbar } from '@/components/navbar'
 import { Footer } from '@/components/footer'
 import { ArrowLeft, Bell, Calendar } from 'lucide-react'
 
+export const dynamic = 'force-dynamic'
+
 async function getAnnouncements() {
   const sql = neon(process.env.DATABASE_URL!)
   const announcements = await sql`
@@ -55,37 +57,38 @@ export default async function AnnouncementsPage() {
             </div>
           ) : (
             <div className="space-y-6">
-              {announcements.map((announcement: any, idx: number) => (
-                <article 
-                  key={announcement.id} 
-                  className="group bg-card border border-border rounded-2xl p-6 md:p-8 hover:shadow-xl hover:shadow-primary/5 hover:border-primary/30 transition-all duration-500 animate-fade-up"
-                  style={{ animationDelay: `${idx * 100}ms` }}
-                >
-                  <div className="flex items-start gap-4">
-                    <div className="w-10 h-10 bg-primary/10 rounded-xl flex items-center justify-center flex-shrink-0 group-hover:bg-primary group-hover:scale-110 transition-all duration-300">
-                      <Bell className="w-5 h-5 text-primary group-hover:text-primary-foreground transition-colors" />
-                    </div>
-                    <div className="flex-1 min-w-0">
-                      <h2 className="text-xl md:text-2xl font-semibold text-card-foreground mb-3 group-hover:text-primary transition-colors">
-                        {announcement.title_en}
-                      </h2>
-                      <p className="text-muted-foreground leading-relaxed whitespace-pre-wrap">
-                        {announcement.description_en}
-                      </p>
-                      <div className="flex items-center gap-2 mt-4 text-sm text-muted-foreground">
-                        <Calendar className="w-4 h-4" />
-                        <time dateTime={announcement.display_date || announcement.created_at}>
-                          {new Date(announcement.display_date || announcement.created_at).toLocaleDateString('en-US', {
-                            year: 'numeric',
-                            month: 'long',
-                            day: 'numeric'
-                          })}
-                        </time>
-                      </div>
-                    </div>
-                  </div>
-                </article>
-              ))}
+              {announcements.map((announcement: any, idx: number) => {
+                const title = announcement.title_tr || announcement.title_en || "Untitled";
+                const description = announcement.description_tr || announcement.description_en || "";
+                
+                return (
+                 <article 
+                   key={announcement.id} 
+                   className="group bg-card border border-border rounded-2xl p-6 md:p-8 hover:shadow-xl hover:shadow-primary/5 hover:border-primary/30 transition-all duration-500 animate-fade-up"
+                   style={{ animationDelay: `${idx * 100}ms` }}
+                 >
+                   <div className="flex items-start gap-4">
+                     <div className="w-10 h-10 bg-primary/10 rounded-xl flex items-center justify-center flex-shrink-0 group-hover:bg-primary group-hover:scale-110 transition-all duration-300">
+                       <Bell className="w-5 h-5 text-primary group-hover:text-primary-foreground transition-colors" />
+                     </div>
+                     <div className="flex-1 min-w-0">
+                       <h2 className="text-xl md:text-2xl font-semibold text-card-foreground mb-3 group-hover:text-primary transition-colors">
+                         {title}
+                       </h2>
+                       <p className="text-muted-foreground leading-relaxed whitespace-pre-wrap">
+                         {description}
+                       </p>
+                       <div className="flex items-center gap-2 mt-4 text-sm text-muted-foreground">
+                         <Calendar className="w-4 h-4" />
+                         <time dateTime={announcement.display_date || announcement.created_at}>
+                           {new Date(announcement.display_date || announcement.created_at).toLocaleDateString()}
+                         </time>
+                       </div>
+                     </div>
+                   </div>
+                 </article>
+               )
+              })}
             </div>
           )}
         </div>

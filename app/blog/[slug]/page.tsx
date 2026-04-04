@@ -5,12 +5,14 @@ import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { ArrowLeft, Calendar, Clock } from 'lucide-react'
 
+export const dynamic = 'force-dynamic'
+
 async function getPost(slug: string) {
   try {
     const sql = neon(process.env.DATABASE_URL!)
     const result = await sql`
       SELECT * FROM blog_posts 
-      WHERE slug = ${slug} AND published = true
+      WHERE (slug_en = ${slug} OR slug_tr = ${slug} OR slug = ${slug}) AND published = true
     `
     return result[0] || null
   } catch (error) {
@@ -29,9 +31,9 @@ export default async function BlogPostPage(props: {
     notFound()
   }
 
-  const content = post.content_en || post.content || ''
-  const title = post.title_en || post.title || ''
-  const readTime = Math.ceil(content.split(' ').length / 200)
+  const content = post.content_tr || post.content_en || post.content || ''
+  const title = post.title_tr || post.title_en || post.title || ''
+  const readTime = Math.ceil(content.split(' ').length / 200) || 1
 
   return (
     <main className="min-h-screen bg-background">
@@ -55,11 +57,7 @@ export default async function BlogPostPage(props: {
               <div className="flex items-center gap-2">
                 <Calendar className="w-4 h-4" />
                 <time dateTime={post.created_at}>
-                  {new Date(post.created_at).toLocaleDateString('en-US', {
-                    year: 'numeric',
-                    month: 'long',
-                    day: 'numeric',
-                  })}
+                  {new Date(post.created_at).toLocaleDateString()}
                 </time>
               </div>
               <span className="text-border">•</span>
