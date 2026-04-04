@@ -123,24 +123,6 @@ export function Hero() {
                 </div>
               </div>
             </div>
-
-            <div className="animate-float-soft absolute -left-6 top-4 hidden rounded-[24px] border border-border/80 bg-white px-5 py-4 shadow-[0_22px_60px_rgba(10,34,57,0.08)] xl:block"> {/* Sol üstteki kutucuk daha üste taşındı */}
-              <p className="text-xs font-semibold uppercase tracking-[0.18em] text-primary/60">
-                {t(heroCopy.approachLabel)}
-              </p>
-              <p className="mt-2 whitespace-pre-line text-sm leading-6 text-foreground/80">
-                {t(heroCopy.approachDescription)}
-              </p>
-            </div>
-
-            <div className="animate-float-soft absolute -right-6 bottom-6 hidden rounded-[24px] border border-primary/10 bg-primary px-5 py-4 text-white shadow-[0_22px_60px_rgba(10,34,57,0.12)] xl:block"> {/* Sağ alttaki kutucuk daha alta taşındı */}
-              <p className="text-xs font-semibold uppercase tracking-[0.18em] text-white/60">
-                {t(heroCopy.fitLabel)}
-              </p>
-              <p className="mt-2 whitespace-pre-line text-sm leading-6">
-                {t(heroCopy.fitDescription)}
-              </p>
-            </div>
           </div>
         </div>
       </div>
