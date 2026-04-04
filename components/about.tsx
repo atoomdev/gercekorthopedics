@@ -42,7 +42,7 @@ export function About() {
               <div className="absolute bottom-1/4 left-1/4 w-28 sm:w-40 h-28 sm:h-40 bg-primary-foreground rounded-full blur-2xl"></div>
             </div>
             <div className="relative z-10 text-center p-4 sm:p-6 md:p-8">
-              <div className="w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 mx-auto mb-3 sm:mb-4 rounded-xl sm:rounded-2xl bg-primary-foreground/10 backdrop-blur-sm flex items-center justify-center">
+              <div className="w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 mx-auto mb-3 sm:mb-4 rounded-xl sm:rounded-2xl bg-primary-foreground/10 backdrop-blur-sm flex items-center justify-center items-center animate-bounce-soft" style={{ marginTop: '-10px' }}> {/* Tiki biraz üste aldım */}
                 <svg className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 text-primary-foreground" fill="currentColor" viewBox="0 0 24 24">
                   <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V5h14v14zm-5.04-6.71l-2.75 3.54-1.3-1.54c-.2-.24-.57-.27-.85-.07-.29.2-.33.57-.13.85l1.9 2.23c.12.15.29.24.48.24s.36-.09.48-.24l3.5-4.14c.21-.28.16-.65-.12-.85-.28-.21-.65-.16-.85.12z" />
                 </svg>
