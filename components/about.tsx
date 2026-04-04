@@ -18,7 +18,7 @@ export function About() {
         <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
           {/* Left Image */}
           <div className="relative h-64 sm:h-80 md:h-96 lg:h-[450px] bg-gradient-to-br from-primary to-primary/70 rounded-2xl sm:rounded-3xl overflow-hidden flex items-center justify-center animate-slide-left animate-shadow-glow">
-            <div className="absolute inset-0 opacity-20">
+            <div className="absolute inset-0 opacity-50"> {/* Opaklık artırıldı */}
               <div className="absolute top-1/4 right-1/4 w-20 sm:w-32 h-20 sm:h-32 bg-primary-foreground rounded-full blur-2xl animate-float"></div>
               <div className="absolute bottom-1/4 left-1/4 w-28 sm:w-40 h-28 sm:h-40 bg-primary-foreground rounded-full blur-2xl animate-float delay-500"></div>
             </div>
