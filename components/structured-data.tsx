@@ -5,19 +5,19 @@ export function StructuredData() {
     '@context': 'https://schema.org',
     '@type': 'MedicalBusiness',
     name: siteConfig.name,
-    description: siteConfig.description,
+    description: siteConfig.description.tr,
     url: siteConfig.url,
     email: siteConfig.email,
     telephone: siteConfig.phone.display,
     foundingDate: String(siteConfig.foundedYear),
     address: {
       '@type': 'PostalAddress',
-      streetAddress: siteConfig.address.line,
-      addressLocality: siteConfig.address.city,
-      addressCountry: siteConfig.address.country,
+      streetAddress: siteConfig.address.line.tr,
+      addressLocality: siteConfig.address.city.tr,
+      addressCountry: siteConfig.address.country.tr,
     },
     medicalSpecialty: ['Orthotics', 'Prosthetics'],
-    knowsAbout: serviceDetails.map((service) => service.title),
+    knowsAbout: serviceDetails.map((service) => service.title.tr),
   }
 
   return (

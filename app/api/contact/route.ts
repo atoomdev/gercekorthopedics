@@ -12,7 +12,7 @@ export async function POST(request: NextRequest) {
 
     if (!normalizedName || !normalizedPhone || !normalizedMessage) {
       return NextResponse.json(
-        { error: 'Ad Soyad, telefon ve mesaj alanları zorunludur.' },
+        { errorCode: 'MISSING_REQUIRED_FIELDS' },
         { status: 400 },
       )
     }
@@ -35,9 +35,9 @@ export async function POST(request: NextRequest) {
     )
   } catch (error) {
     console.error('Contact submission error:', error)
-    const message =
-      error instanceof Error ? error.message : 'Mesaj kaydedilirken beklenmeyen bir hata oluştu.'
-
-    return NextResponse.json({ error: message }, { status: 500 })
+    return NextResponse.json(
+      { errorCode: 'CONTACT_SUBMISSION_FAILED' },
+      { status: 500 },
+    )
   }
 }

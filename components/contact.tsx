@@ -3,8 +3,9 @@
 import { useState } from 'react'
 import { Mail, MapPin, MessageCircle, Phone, Send } from 'lucide-react'
 
-import { serviceDetails, siteConfig } from '@/lib/site-content'
+import { useLanguage } from '@/components/language-provider'
 import { SectionHeading } from '@/components/section-heading'
+import { commonCopy, contactCopy, serviceDetails, siteConfig } from '@/lib/site-content'
 
 type FormState = {
   name: string
@@ -22,38 +23,10 @@ const initialState: FormState = {
   message: '',
 }
 
-const contactCards = [
-  {
-    title: 'Telefon',
-    value: siteConfig.phone.display,
-    href: `tel:${siteConfig.phone.raw}`,
-    icon: Phone,
-    hint: 'Randevu ve bilgi hattı',
-  },
-  {
-    title: 'WhatsApp',
-    value: 'Danışma hattı',
-    href: `https://wa.me/${siteConfig.phone.whatsappRaw}`,
-    icon: MessageCircle,
-    hint: 'Hızlı dönüş için mesaj gönderin',
-  },
-  {
-    title: 'E-posta',
-    value: siteConfig.email,
-    href: `mailto:${siteConfig.email}`,
-    icon: Mail,
-    hint: 'Detaylı talepler için yazabilirsiniz',
-  },
-  {
-    title: 'Adres',
-    value: siteConfig.address.line,
-    href: `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(siteConfig.address.line)}`,
-    icon: MapPin,
-    hint: 'Çankaya / Ankara',
-  },
-]
+const icons = [Phone, MessageCircle, Mail, MapPin]
 
 export function Contact() {
+  const { t } = useLanguage()
   const [formData, setFormData] = useState<FormState>(initialState)
   const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle')
   const [errorMessage, setErrorMessage] = useState('')
@@ -71,8 +44,8 @@ export function Contact() {
     setErrorMessage('')
 
     const composedMessage = [
-      formData.service ? `Talep alanı: ${formData.service}` : null,
-      formData.email ? `E-posta: ${formData.email}` : null,
+      formData.service ? `${t(contactCopy.messagePrefixes.service)}: ${formData.service}` : null,
+      formData.email ? `${t(contactCopy.messagePrefixes.email)}: ${formData.email}` : null,
       formData.message.trim(),
     ]
       .filter(Boolean)
@@ -92,7 +65,12 @@ export function Contact() {
 
       if (!response.ok) {
         const data = await response.json().catch(() => ({}))
-        throw new Error(data.error || 'Mesaj gönderimi sırasında bir sorun oluştu.')
+
+        if (data.errorCode === 'MISSING_REQUIRED_FIELDS') {
+          throw new Error(t(contactCopy.errors.required))
+        }
+
+        throw new Error(t(contactCopy.errors.generic))
       }
 
       setStatus('success')
@@ -100,7 +78,7 @@ export function Contact() {
     } catch (error) {
       setStatus('error')
       setErrorMessage(
-        error instanceof Error ? error.message : 'Mesaj gönderimi sırasında bir sorun oluştu.',
+        error instanceof Error ? error.message : t(contactCopy.errors.failed),
       )
     }
   }
@@ -111,29 +89,37 @@ export function Contact() {
         <div className="grid gap-10 lg:grid-cols-[0.95fr_1.05fr]">
           <div>
             <SectionHeading
-              eyebrow="İletişim"
-              title="İhtiyacınızı anlatın, size uygun ilk adımı birlikte planlayalım"
-              description="Telefon, WhatsApp, e-posta ve form üzerinden hızlıca ulaşabilir; ilk görüşme için uygun yönlendirmeyi ekibimizden alabilirsiniz."
+              eyebrow={t(contactCopy.eyebrow)}
+              title={t(contactCopy.title)}
+              description={t(contactCopy.description)}
             />
 
             <div className="mt-10 grid gap-4 sm:grid-cols-2">
-              {contactCards.map((item) => {
-                const Icon = item.icon
+              {contactCopy.cards.map((item, index) => {
+                const Icon = icons[index]
+                const href =
+                  index === 0
+                    ? `tel:${siteConfig.phone.raw}`
+                    : index === 1
+                      ? `https://wa.me/${siteConfig.phone.whatsappRaw}`
+                      : index === 2
+                        ? `mailto:${siteConfig.email}`
+                        : `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(t(siteConfig.address.line))}`
 
                 return (
                   <a
-                    key={item.title}
-                    href={item.href}
-                    target={item.href.startsWith('http') ? '_blank' : undefined}
-                    rel={item.href.startsWith('http') ? 'noreferrer' : undefined}
+                    key={t(item.title)}
+                    href={href}
+                    target={href.startsWith('http') ? '_blank' : undefined}
+                    rel={href.startsWith('http') ? 'noreferrer' : undefined}
                     className="rounded-[28px] border border-border/80 bg-white p-6 shadow-[0_18px_60px_rgba(10,34,57,0.06)] transition hover:-translate-y-1 hover:border-primary/18"
                   >
                     <div className="flex size-12 items-center justify-center rounded-2xl bg-primary/8 text-primary">
                       <Icon className="size-5" />
                     </div>
-                    <h3 className="mt-5 text-lg font-semibold text-foreground">{item.title}</h3>
-                    <p className="mt-3 text-sm leading-7 text-muted-foreground">{item.hint}</p>
-                    <p className="mt-4 text-base font-medium text-foreground">{item.value}</p>
+                    <h3 className="mt-5 text-lg font-semibold text-foreground">{t(item.title)}</h3>
+                    <p className="mt-3 text-sm leading-7 text-muted-foreground">{t(item.hint)}</p>
+                    <p className="mt-4 text-base font-medium text-foreground">{t(item.value)}</p>
                   </a>
                 )
               })}
@@ -141,15 +127,13 @@ export function Contact() {
 
             <div className="mt-6 rounded-[30px] border border-primary/10 bg-primary p-7 text-primary-foreground shadow-[0_24px_80px_rgba(10,34,57,0.12)]">
               <p className="text-sm font-semibold uppercase tracking-[0.22em] text-primary-foreground/60">
-                Bilgi notu
+                {t(contactCopy.infoLabel)}
               </p>
               <p className="mt-4 text-xl font-semibold tracking-tight">
-                İlk görüşmede ihtiyacınızı, günlük yaşam hedeflerinizi ve mevcut kullanım
-                durumunuzu netleştirmek süreci hızlandırır.
+                {t(contactCopy.infoTitle)}
               </p>
               <p className="mt-4 text-sm leading-7 text-primary-foreground/75">
-                Daha önce kullandığınız ürün, mevcut şikayetiniz veya yeni başvuru nedeniniz
-                varsa formda kısa şekilde belirtmeniz yeterlidir.
+                {t(contactCopy.infoDescription)}
               </p>
             </div>
           </div>
@@ -157,9 +141,9 @@ export function Contact() {
           <div className="surface-panel p-7 sm:p-8">
             <div className="flex items-start justify-between gap-4">
               <div>
-                <p className="eyebrow">Randevu Talebi</p>
+                <p className="eyebrow">{t(contactCopy.formEyebrow)}</p>
                 <h3 className="mt-5 text-3xl font-semibold tracking-tight text-foreground">
-                  Kısa formu doldurun, size uygun yönlendirmeyi hazırlayalım
+                  {t(contactCopy.formTitle)}
                 </h3>
               </div>
             </div>
@@ -167,25 +151,25 @@ export function Contact() {
             <form className="mt-8 space-y-5" onSubmit={handleSubmit}>
               <div className="grid gap-5 sm:grid-cols-2">
                 <label className="block text-sm font-medium text-foreground">
-                  Ad Soyad
+                  {t(contactCopy.labels.name)}
                   <input
                     name="name"
                     value={formData.name}
                     onChange={handleChange}
                     required
-                    placeholder="Adınızı ve soyadınızı yazın"
+                    placeholder={t(contactCopy.placeholders.name)}
                     className="mt-2 w-full rounded-2xl border border-border bg-white px-4 py-3 text-sm text-foreground transition placeholder:text-muted-foreground/70"
                   />
                 </label>
 
                 <label className="block text-sm font-medium text-foreground">
-                  Telefon
+                  {t(contactCopy.labels.phone)}
                   <input
                     name="phone"
                     value={formData.phone}
                     onChange={handleChange}
                     required
-                    placeholder="05xx xxx xx xx"
+                    placeholder={t(contactCopy.placeholders.phone)}
                     className="mt-2 w-full rounded-2xl border border-border bg-white px-4 py-3 text-sm text-foreground transition placeholder:text-muted-foreground/70"
                   />
                 </label>
@@ -193,29 +177,29 @@ export function Contact() {
 
               <div className="grid gap-5 sm:grid-cols-2">
                 <label className="block text-sm font-medium text-foreground">
-                  E-posta
+                  {t(contactCopy.labels.email)}
                   <input
                     name="email"
                     type="email"
                     value={formData.email}
                     onChange={handleChange}
-                    placeholder="ornek@eposta.com"
+                    placeholder={t(contactCopy.placeholders.email)}
                     className="mt-2 w-full rounded-2xl border border-border bg-white px-4 py-3 text-sm text-foreground transition placeholder:text-muted-foreground/70"
                   />
                 </label>
 
                 <label className="block text-sm font-medium text-foreground">
-                  İlgilendiğiniz alan
+                  {t(contactCopy.labels.service)}
                   <select
                     name="service"
                     value={formData.service}
                     onChange={handleChange}
                     className="mt-2 w-full rounded-2xl border border-border bg-white px-4 py-3 text-sm text-foreground transition"
                   >
-                    <option value="">Seçiniz</option>
+                    <option value="">{t(contactCopy.placeholders.service)}</option>
                     {serviceDetails.map((service) => (
-                      <option key={service.slug} value={service.title}>
-                        {service.title}
+                      <option key={service.slug} value={t(service.title)}>
+                        {t(service.title)}
                       </option>
                     ))}
                   </select>
@@ -223,27 +207,31 @@ export function Contact() {
               </div>
 
               <label className="block text-sm font-medium text-foreground">
-                Mesajınız
+                {t(contactCopy.labels.message)}
                 <textarea
                   name="message"
                   value={formData.message}
                   onChange={handleChange}
                   required
                   rows={6}
-                  placeholder="İhtiyacınızı, varsa mevcut ürününüzü veya randevu talebinizi kısaca paylaşın."
+                  placeholder={t(contactCopy.placeholders.message)}
                   className="mt-2 w-full rounded-[24px] border border-border bg-white px-4 py-3 text-sm leading-7 text-foreground transition placeholder:text-muted-foreground/70"
                 />
               </label>
 
-              <button type="submit" className="button-primary w-full justify-center" disabled={status === 'loading'}>
+              <button
+                type="submit"
+                className="button-primary w-full justify-center"
+                disabled={status === 'loading'}
+              >
                 <Send className="size-4" />
-                {status === 'loading' ? 'Gönderiliyor...' : 'Mesaj Gönder'}
+                {status === 'loading' ? t(commonCopy.sending) : t(commonCopy.sendMessage)}
               </button>
 
               <div aria-live="polite">
                 {status === 'success' ? (
                   <div className="rounded-[22px] border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm text-emerald-700">
-                    Teşekkür ederiz. Ekibimiz en kısa sürede sizinle iletişime geçecektir.
+                    {t(contactCopy.success)}
                   </div>
                 ) : null}
 

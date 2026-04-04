@@ -1,28 +1,33 @@
+'use client'
+
 import Link from 'next/link'
 import { Mail, MapPin, MessageCircle, Phone } from 'lucide-react'
 
+import { useLanguage } from '@/components/language-provider'
 import {
+  commonCopy,
+  footerCopy,
   footerServiceLinks,
   navigationLinks,
   siteConfig,
 } from '@/lib/site-content'
 
 export function Footer() {
+  const { t } = useLanguage()
+
   return (
     <footer className="border-t border-border/80 bg-[#081a2a] text-white">
       <div className="container-shell py-14">
         <div className="grid gap-10 lg:grid-cols-[1.4fr_1fr_1fr_1.2fr]">
           <div>
             <p className="eyebrow border-white/15 bg-white/5 text-white/70">
-              Gerçek Ortopedi
+              {t(footerCopy.eyebrow)}
             </p>
             <h2 className="mt-5 text-3xl font-semibold tracking-tight">
-              Kişiye özel ortopedik çözümleri güven veren bir süreçle buluşturuyoruz
+              {t(footerCopy.title)}
             </h2>
             <p className="mt-5 max-w-xl text-sm leading-7 text-white/70">
-              Protez, ortez, yürüme analizi ve kişiye özel tabanlık uygulamalarında
-              hastanın ihtiyacını anlamaya, doğru planı oluşturmaya ve sürdürülebilir
-              kullanım desteği sunmaya odaklanıyoruz.
+              {t(footerCopy.description)}
             </p>
             <div className="mt-6 flex flex-col gap-3 text-sm text-white/75">
               <a className="inline-flex items-center gap-3 hover:text-white" href={`tel:${siteConfig.phone.raw}`}>
@@ -38,19 +43,19 @@ export function Footer() {
               </a>
               <p className="inline-flex items-start gap-3">
                 <MapPin className="mt-1 size-4 shrink-0" />
-                <span>{siteConfig.address.line}</span>
+                <span>{t(siteConfig.address.line)}</span>
               </p>
             </div>
           </div>
 
           <div>
             <h3 className="text-sm font-semibold uppercase tracking-[0.22em] text-white/60">
-              Menü
+              {t(footerCopy.menuTitle)}
             </h3>
             <nav className="mt-5 grid gap-3 text-sm text-white/80">
               {navigationLinks.map((link) => (
                 <Link key={link.href} href={link.href} className="hover:text-white">
-                  {link.label}
+                  {t(link.label)}
                 </Link>
               ))}
             </nav>
@@ -58,12 +63,12 @@ export function Footer() {
 
           <div>
             <h3 className="text-sm font-semibold uppercase tracking-[0.22em] text-white/60">
-              Öne çıkan hizmetler
+              {t(footerCopy.featuredServicesTitle)}
             </h3>
             <div className="mt-5 grid gap-3 text-sm text-white/80">
               {footerServiceLinks.map((item) => (
                 <Link key={item.href} href={item.href} className="hover:text-white">
-                  {item.label}
+                  {t(item.label)}
                 </Link>
               ))}
             </div>
@@ -71,18 +76,17 @@ export function Footer() {
 
           <div>
             <h3 className="text-sm font-semibold uppercase tracking-[0.22em] text-white/60">
-              Hızlı iletişim
+              {t(footerCopy.quickContactTitle)}
             </h3>
             <div className="mt-5 rounded-[28px] border border-white/10 bg-white/5 p-6">
-              <p className="text-base font-semibold">Randevu ve bilgi hattı</p>
+              <p className="text-base font-semibold">{t(footerCopy.quickContactLabel)}</p>
               <p className="mt-2 text-sm leading-7 text-white/70">
-                İlk görüşme, süreç planlaması veya ürün yönlendirmesi için ekibimizle
-                doğrudan iletişime geçebilirsiniz.
+                {t(footerCopy.quickContactDescription)}
               </p>
               <div className="mt-6 grid gap-3">
                 <a className="button-primary justify-center" href={`tel:${siteConfig.phone.raw}`}>
                   <Phone className="size-4" />
-                  Randevu Al
+                  {t(commonCopy.appointment)}
                 </a>
                 <a
                   className="button-secondary justify-center border-white/12 bg-white/5 text-white hover:bg-white/10"
@@ -91,7 +95,7 @@ export function Footer() {
                   rel="noreferrer"
                 >
                   <MessageCircle className="size-4" />
-                  WhatsApp’tan Ulaş
+                  {t(commonCopy.whatsappReach)}
                 </a>
               </div>
             </div>
@@ -100,9 +104,9 @@ export function Footer() {
 
         <div className="mt-12 flex flex-col gap-3 border-t border-white/10 pt-6 text-sm text-white/52 sm:flex-row sm:items-center sm:justify-between">
           <p>
-            © {new Date().getFullYear()} {siteConfig.name}. Tüm hakları saklıdır.
+            © {new Date().getFullYear()} {siteConfig.name}. {t(commonCopy.rightsReserved)}
           </p>
-          <p>{siteConfig.appointmentNote}</p>
+          <p>{t(siteConfig.appointmentNote)}</p>
         </div>
       </div>
     </footer>

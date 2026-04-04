@@ -1,25 +1,28 @@
-import { CheckCircle2, ClipboardList, Headset, ShieldCheck } from 'lucide-react'
+'use client'
 
-import { trustPillars } from '@/lib/site-content'
+import {
+  CheckCircle2,
+  ClipboardList,
+  Headset,
+  ShieldCheck,
+} from 'lucide-react'
+
+import { useLanguage } from '@/components/language-provider'
 import { SectionHeading } from '@/components/section-heading'
-
-const supportTopics = [
-  'İlk başvuruda hangi bilgilerin gerekli olduğu',
-  'Ölçü, prova ve teslim adımlarının nasıl ilerlediği',
-  'Kullanım sonrası kontrol ve revizyon planı',
-  'Bakım, onarım ve destek süreçleri hakkında yönlendirme',
-]
+import { trustPillars, whyUsCopy } from '@/lib/site-content'
 
 export function WhyUs() {
+  const { t } = useLanguage()
+
   return (
     <section className="section-shell border-y border-border/70 bg-[linear-gradient(180deg,#f5fafb,#ffffff)]">
       <div className="container-shell">
         <div className="grid gap-10 lg:grid-cols-[0.92fr_1.08fr] lg:items-start">
           <div>
             <SectionHeading
-              eyebrow="Güven Unsurları"
-              title="Karar vermeyi zorlaştıran belirsizlikleri azaltmak için tasarlanmış bir deneyim"
-              description="Doğru tıbbi yaklaşım kadar; neyin neden önerildiği, uygulamanın nasıl ilerlediği ve sonrasında hangi desteğin verileceği de önemlidir."
+              eyebrow={t(whyUsCopy.eyebrow)}
+              title={t(whyUsCopy.title)}
+              description={t(whyUsCopy.description)}
             />
 
             <div className="mt-8 rounded-[30px] border border-primary/10 bg-primary p-7 text-primary-foreground shadow-[0_24px_80px_rgba(10,34,57,0.12)]">
@@ -29,10 +32,10 @@ export function WhyUs() {
                 </div>
                 <div>
                   <p className="text-sm font-semibold uppercase tracking-[0.2em] text-primary-foreground/65">
-                    Hasta odaklı yaklaşım
+                    {t(whyUsCopy.focusLabel)}
                   </p>
                   <p className="mt-2 text-xl font-semibold">
-                    Teknik kararlar, kullanıcının günlük yaşam hedefi ile birlikte değerlendirilir
+                    {t(whyUsCopy.focusTitle)}
                   </p>
                 </div>
               </div>
@@ -42,7 +45,7 @@ export function WhyUs() {
           <div className="grid gap-5">
             {trustPillars.map((item) => (
               <article
-                key={item.title}
+                key={t(item.title)}
                 className="rounded-[28px] border border-border/80 bg-white p-6 shadow-[0_18px_60px_rgba(10,34,57,0.06)]"
               >
                 <div className="flex items-start gap-4">
@@ -51,10 +54,10 @@ export function WhyUs() {
                   </div>
                   <div>
                     <h3 className="text-xl font-semibold tracking-tight text-foreground">
-                      {item.title}
+                      {t(item.title)}
                     </h3>
                     <p className="mt-3 text-sm leading-7 text-muted-foreground">
-                      {item.description}
+                      {t(item.description)}
                     </p>
                   </div>
                 </div>
@@ -67,10 +70,10 @@ export function WhyUs() {
                   <ClipboardList className="size-5" />
                 </div>
                 <h3 className="mt-5 text-lg font-semibold text-foreground">
-                  Süreci açıklayan destek başlıkları
+                  {t(whyUsCopy.supportTitle)}
                 </h3>
                 <ul className="mt-4 space-y-3 text-sm leading-6 text-muted-foreground">
-                  {supportTopics.map((topic) => (
+                  {t(whyUsCopy.supportTopics).map((topic) => (
                     <li key={topic} className="flex items-start gap-3">
                       <span className="mt-2 size-1.5 rounded-full bg-primary" />
                       <span>{topic}</span>
@@ -84,11 +87,10 @@ export function WhyUs() {
                   <Headset className="size-5" />
                 </div>
                 <h3 className="mt-5 text-lg font-semibold text-foreground">
-                  İletişimde hız ve açıklık
+                  {t(whyUsCopy.communicationTitle)}
                 </h3>
                 <p className="mt-4 text-sm leading-7 text-muted-foreground">
-                  Telefon, WhatsApp ve form kanallarını aynı anda görünür kılarak,
-                  danışma ve randevu başlatmayı kullanıcı için daha kolay hale getiriyoruz.
+                  {t(whyUsCopy.communicationDescription)}
                 </p>
               </article>
             </div>

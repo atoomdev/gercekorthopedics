@@ -1,3 +1,5 @@
+'use client'
+
 import Link from 'next/link'
 import type { ComponentType } from 'react'
 import {
@@ -10,7 +12,8 @@ import {
   Workflow,
 } from 'lucide-react'
 
-import { type ServiceDetail } from '@/lib/site-content'
+import { useLanguage } from '@/components/language-provider'
+import { commonCopy, type ServiceDetail } from '@/lib/site-content'
 
 const iconMap = {
   'protez-uygulamalari': Activity,
@@ -27,6 +30,8 @@ type ServiceGridProps = {
 }
 
 export function ServiceGrid({ services, detailed = false }: ServiceGridProps) {
+  const { t } = useLanguage()
+
   return (
     <div className="grid gap-6 lg:grid-cols-2 xl:grid-cols-3">
       {services.map((service) => {
@@ -42,26 +47,28 @@ export function ServiceGrid({ services, detailed = false }: ServiceGridProps) {
                 <Icon className="size-6" />
               </div>
               <span className="rounded-full border border-primary/10 bg-primary/5 px-3 py-1 text-xs font-semibold uppercase tracking-[0.18em] text-primary/80">
-                Kişiye özel
+                {t(commonCopy.customBadge)}
               </span>
             </div>
 
             <div className="mt-6 flex flex-1 flex-col">
               <h3 className="text-2xl font-semibold tracking-tight text-foreground">
-                {service.title}
+                {t(service.title)}
               </h3>
               <p className="mt-4 text-base leading-7 text-muted-foreground">
-                {service.shortDescription}
+                {t(service.shortDescription)}
               </p>
 
               {detailed ? (
                 <ul className="mt-6 space-y-3 text-sm leading-6 text-foreground/80">
-                  {service.focusAreas.slice(0, 3).map((item) => (
-                    <li key={item} className="flex items-start gap-3">
-                      <span className="mt-2 size-1.5 rounded-full bg-primary" />
-                      <span>{item}</span>
-                    </li>
-                  ))}
+                  {t(service.focusAreas)
+                    .slice(0, 3)
+                    .map((item) => (
+                      <li key={item} className="flex items-start gap-3">
+                        <span className="mt-2 size-1.5 rounded-full bg-primary" />
+                        <span>{item}</span>
+                      </li>
+                    ))}
                 </ul>
               ) : null}
 
@@ -70,7 +77,7 @@ export function ServiceGrid({ services, detailed = false }: ServiceGridProps) {
                   href={`/hizmetler/${service.slug}`}
                   className="inline-flex items-center gap-2 text-sm font-semibold text-primary transition group-hover:gap-3"
                 >
-                  Detayları inceleyin
+                  {t(commonCopy.serviceDetails)}
                   <ArrowRight className="size-4" />
                 </Link>
               </div>

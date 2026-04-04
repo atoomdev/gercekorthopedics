@@ -5,12 +5,20 @@ import { usePathname } from 'next/navigation'
 import { MapPin, Menu, MessageCircle, Phone, X } from 'lucide-react'
 import { useEffect, useState } from 'react'
 
-import { navigationLinks, siteConfig } from '@/lib/site-content'
+import { LanguageSwitcher } from '@/components/language-switcher'
+import { useLanguage } from '@/components/language-provider'
+import {
+  commonCopy,
+  navigationLinks,
+  navbarCopy,
+  siteConfig,
+} from '@/lib/site-content'
 
 export function Navbar() {
   const pathname = usePathname()
   const [isOpen, setIsOpen] = useState(false)
   const [isScrolled, setIsScrolled] = useState(false)
+  const { t } = useLanguage()
 
   useEffect(() => {
     const onScroll = () => setIsScrolled(window.scrollY > 16)
@@ -28,10 +36,13 @@ export function Navbar() {
       <div className="border-b border-white/40 bg-primary text-primary-foreground">
         <div className="container-shell flex min-h-11 items-center justify-between gap-4 py-2 text-xs sm:text-sm">
           <p className="hidden text-primary-foreground/80 lg:block">
-            1984’ten bu yana Ankara’da kişiye özel protez, ortez ve ortopedik uygulama deneyimi
+            {t(navbarCopy.topBarMessage)}
           </p>
           <div className="flex flex-1 items-center justify-between gap-4 lg:justify-end">
-            <a className="inline-flex items-center gap-2 text-primary-foreground/90 transition hover:text-white" href={`tel:${siteConfig.phone.raw}`}>
+            <a
+              className="inline-flex items-center gap-2 text-primary-foreground/90 transition hover:text-white"
+              href={`tel:${siteConfig.phone.raw}`}
+            >
               <Phone className="size-3.5" />
               <span>{siteConfig.phone.display}</span>
             </a>
@@ -42,11 +53,11 @@ export function Navbar() {
               rel="noreferrer"
             >
               <MessageCircle className="size-3.5" />
-              <span>WhatsApp danışma</span>
+              <span>{t(navbarCopy.whatsappConsultation)}</span>
             </a>
             <span className="hidden items-center gap-2 text-primary-foreground/75 xl:inline-flex">
               <MapPin className="size-3.5" />
-              <span>{siteConfig.address.line}</span>
+              <span>{t(siteConfig.address.line)}</span>
             </span>
           </div>
         </div>
@@ -66,10 +77,10 @@ export function Navbar() {
             </div>
             <div>
               <p className="text-lg font-semibold tracking-tight text-foreground">
-                Gerçek Ortopedi
+                {siteConfig.name}
               </p>
               <p className="text-sm text-muted-foreground">
-                Protez, ortez ve kişiye özel ortopedik çözümler
+                {t(navbarCopy.brandTagline)}
               </p>
             </div>
           </Link>
@@ -87,29 +98,38 @@ export function Navbar() {
                     isActive ? 'text-primary' : 'text-foreground/80 hover:text-primary'
                   }`}
                 >
-                  {link.label}
+                  {t(link.label)}
                 </Link>
               )
             })}
           </nav>
 
           <div className="hidden items-center gap-3 lg:flex">
+            <LanguageSwitcher />
             <a className="button-secondary" href="/#iletisim">
-              İletişime Geç
+              {t(commonCopy.contact)}
             </a>
-            <a className="button-primary" href={`https://wa.me/${siteConfig.phone.whatsappRaw}`} target="_blank" rel="noreferrer">
-              WhatsApp’tan Ulaş
+            <a
+              className="button-primary"
+              href={`https://wa.me/${siteConfig.phone.whatsappRaw}`}
+              target="_blank"
+              rel="noreferrer"
+            >
+              {t(commonCopy.whatsappReach)}
             </a>
           </div>
 
-          <button
-            type="button"
-            aria-label="Menüyü aç"
-            className="inline-flex size-11 items-center justify-center rounded-full border border-border bg-white text-foreground lg:hidden"
-            onClick={() => setIsOpen((value) => !value)}
-          >
-            {isOpen ? <X className="size-5" /> : <Menu className="size-5" />}
-          </button>
+          <div className="flex items-center gap-2 lg:hidden">
+            <LanguageSwitcher />
+            <button
+              type="button"
+              aria-label={t(navbarCopy.mobileMenuLabel)}
+              className="inline-flex size-11 items-center justify-center rounded-full border border-border bg-white text-foreground"
+              onClick={() => setIsOpen((value) => !value)}
+            >
+              {isOpen ? <X className="size-5" /> : <Menu className="size-5" />}
+            </button>
+          </div>
         </div>
 
         {isOpen ? (
@@ -122,14 +142,14 @@ export function Navbar() {
                     href={link.href}
                     className="rounded-2xl border border-transparent px-4 py-3 text-sm font-medium text-foreground/80 transition hover:border-primary/10 hover:bg-primary/5 hover:text-primary"
                   >
-                    {link.label}
+                    {t(link.label)}
                   </Link>
                 ))}
               </nav>
 
               <div className="mt-5 grid gap-3">
                 <a className="button-primary justify-center" href={`tel:${siteConfig.phone.raw}`}>
-                  Randevu Al
+                  {t(commonCopy.appointment)}
                 </a>
                 <a
                   className="button-secondary justify-center"
@@ -137,7 +157,7 @@ export function Navbar() {
                   target="_blank"
                   rel="noreferrer"
                 >
-                  WhatsApp’tan Ulaş
+                  {t(commonCopy.whatsappReach)}
                 </a>
               </div>
             </div>

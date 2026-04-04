@@ -11,11 +11,14 @@ import { Services } from '@/components/services'
 import { Specialties } from '@/components/specialties'
 import { StructuredData } from '@/components/structured-data'
 import { WhyUs } from '@/components/why-us'
+import { getRequestLocalizedValue } from '@/lib/i18n-server'
+import { metadataCopy } from '@/lib/site-content'
 
-export const metadata: Metadata = {
-  title: 'Gerçek Ortopedi | Protez, Ortez ve Kişiye Özel Çözümler',
-  description:
-    'Ankara’da protez, ortez, kişiye özel tabanlık ve yürüme analizi hizmetleri için güven veren, modern ve dönüşüm odaklı ortopedik çözüm deneyimi.',
+export async function generateMetadata(): Promise<Metadata> {
+  return {
+    title: await getRequestLocalizedValue(metadataCopy.homeTitle),
+    description: await getRequestLocalizedValue(metadataCopy.homeDescription),
+  }
 }
 
 export default function Home() {
