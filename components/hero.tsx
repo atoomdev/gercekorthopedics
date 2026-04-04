@@ -124,7 +124,7 @@ export function Hero() {
               </div>
             </div>
 
-            <div className="animate-float-soft absolute -left-4 top-12 hidden rounded-[24px] border border-border/80 bg-white px-5 py-4 shadow-[0_22px_60px_rgba(10,34,57,0.08)] xl:block">
+            <div className="animate-float-soft absolute -left-8 top-8 hidden rounded-[24px] border border-border/80 bg-white px-5 py-4 shadow-[0_22px_60px_rgba(10,34,57,0.08)] xl:block"> {/* Sol alttaki kutucuk köşeye taşındı */}
               <p className="text-xs font-semibold uppercase tracking-[0.18em] text-primary/60">
                 {t(heroCopy.approachLabel)}
               </p>
@@ -133,7 +133,7 @@ export function Hero() {
               </p>
             </div>
 
-            <div className="animate-float-soft absolute -right-4 bottom-10 hidden rounded-[24px] border border-primary/10 bg-primary px-5 py-4 text-white shadow-[0_22px_60px_rgba(10,34,57,0.12)] xl:block">
+            <div className="animate-float-soft absolute -right-8 bottom-8 hidden rounded-[24px] border border-primary/10 bg-primary px-5 py-4 text-white shadow-[0_22px_60px_rgba(10,34,57,0.12)] xl:block"> {/* Sağ üstteki kutucuk köşeye taşındı */}
               <p className="text-xs font-semibold uppercase tracking-[0.18em] text-white/60">
                 {t(heroCopy.fitLabel)}
               </p>
