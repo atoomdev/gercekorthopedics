@@ -19,6 +19,8 @@ export function Navbar() {
   const [isOpen, setIsOpen] = useState(false)
   const [isScrolled, setIsScrolled] = useState(false)
   const { t } = useLanguage()
+  const homeHref = '/#site-top'
+  const navbarWhatsappHref = 'https://wa.me/905306727646'
 
   useEffect(() => {
     const onScroll = () => setIsScrolled(window.scrollY > 16)
@@ -30,6 +32,14 @@ export function Navbar() {
   useEffect(() => {
     setIsOpen(false)
   }, [pathname])
+
+  const handleHomeClick = () => {
+    setIsOpen(false)
+
+    if (pathname === '/') {
+      window.scrollTo({ top: 0, behavior: 'smooth' })
+    }
+  }
 
   return (
     <header className="fixed inset-x-0 top-0 z-50">
@@ -48,7 +58,7 @@ export function Navbar() {
             </a>
             <a
               className="hidden items-center gap-2 text-primary-foreground/75 transition hover:text-white sm:inline-flex"
-              href={`https://wa.me/${siteConfig.phone.whatsappRaw}`}
+              href={navbarWhatsappHref}
               target="_blank"
               rel="noreferrer"
             >
@@ -71,7 +81,7 @@ export function Navbar() {
         }`}
       >
         <div className="container-shell flex min-h-[78px] items-center justify-between gap-4">
-          <Link href="/" className="flex items-center gap-3">
+          <Link href={homeHref} className="flex items-center gap-3" onClick={handleHomeClick}>
             <div className="flex items-center justify-center">
               <img
                 src="/Untitled%20design.png"
@@ -90,17 +100,18 @@ export function Navbar() {
           </Link>
 
           <nav className="hidden items-center gap-8 lg:flex">
-            {navigationLinks.map((link) => {
-              const routeOnly = link.href.includes('#') ? null : link.href
-              const isActive = routeOnly ? pathname === routeOnly : false
+              {navigationLinks.map((link) => {
+                const routeOnly = link.href.includes('#') ? null : link.href
+                const isActive = routeOnly ? pathname === routeOnly : false
 
-              return (
-                <Link
-                  key={link.href}
-                  href={link.href}
-                  className={`text-sm font-medium transition ${
-                    isActive ? 'text-primary' : 'text-foreground/80 hover:text-primary'
-                  }`}
+                return (
+                  <Link
+                    key={link.href}
+                    href={link.href}
+                    onClick={link.href === homeHref ? handleHomeClick : undefined}
+                    className={`text-sm font-medium transition ${
+                      isActive ? 'text-primary' : 'text-foreground/80 hover:text-primary'
+                    }`}
                 >
                   {t(link.label)}
                 </Link>
@@ -118,7 +129,7 @@ export function Navbar() {
             </a>
             <a
               className="button-primary shrink-0 px-4 py-2 text-[13px]"
-              href={`https://wa.me/${siteConfig.phone.whatsappRaw}`}
+              href={navbarWhatsappHref}
               target="_blank"
               rel="noreferrer"
             >
@@ -147,6 +158,7 @@ export function Navbar() {
                   <Link
                     key={link.href}
                     href={link.href}
+                    onClick={link.href === homeHref ? handleHomeClick : undefined}
                     className="rounded-2xl border border-transparent px-4 py-3 text-sm font-medium text-foreground/80 transition hover:border-primary/10 hover:bg-primary/5 hover:text-primary"
                   >
                     {t(link.label)}
@@ -160,7 +172,7 @@ export function Navbar() {
                 </a>
                 <a
                   className="button-secondary justify-center"
-                  href={`https://wa.me/${siteConfig.phone.whatsappRaw}`}
+                  href={navbarWhatsappHref}
                   target="_blank"
                   rel="noreferrer"
                 >

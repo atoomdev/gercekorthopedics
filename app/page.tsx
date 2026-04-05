@@ -22,7 +22,7 @@ export async function generateMetadata(): Promise<Metadata> {
 
 export default function Home() {
   return (
-    <main className="min-h-screen bg-background">
+    <main id="site-top" className="min-h-screen bg-background">
       <StructuredData />
       <Navbar />
       <Hero />

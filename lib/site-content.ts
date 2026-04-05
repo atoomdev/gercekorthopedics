@@ -126,6 +126,7 @@ export const metadataCopy = {
 }
 
 export const navigationLinks = [
+  { href: '/#site-top', label: text('Ana Sayfa', 'Home') },
   { href: '/#hizmetler', label: text('Hizmetler', 'Services') },
   { href: '/#surec', label: text('Süreç', 'Process') },
   { href: '/#uzmanliklar', label: text('Uzmanlıklar', 'Specialties') },
