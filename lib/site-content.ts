@@ -849,10 +849,6 @@ export const contactCopy = {
       'An unexpected error occurred while saving your message.',
     ),
   },
-  messagePrefixes: {
-    service: text('Talep alanı', 'Requested area'),
-    email: text('E-posta', 'Email'),
-  },
 }
 
 export const footerCopy = {

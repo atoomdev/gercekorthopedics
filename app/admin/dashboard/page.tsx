@@ -402,20 +402,32 @@ export default function AdminDashboard() {
                       <h3 className="text-lg font-semibold text-[#1f2953]">
                         {contact.name}
                       </h3>
-                      {contact.phone ? (
-                        <p className="mt-1 text-sm text-[#667085]">
-                          Telefon: {contact.phone}
-                        </p>
-                      ) : null}
-                      <p className="mt-1 text-sm text-[#667085]">
-                        E-posta: {contact.email}
-                      </p>
-                      <p className="mt-1 text-sm text-[#667085]">
-                        Talep alanı: {contact.requestArea}
-                      </p>
-                      <p className="mt-1 text-sm text-[#667085]">
-                        Mesaj: {contact.message}
-                      </p>
+                      <dl className="mt-4 space-y-3 text-sm text-[#667085]">
+                        {contact.phone ? (
+                          <div>
+                            <dt className="font-medium text-[#1f2953]">Telefon</dt>
+                            <dd className="mt-1 break-words">{contact.phone}</dd>
+                          </div>
+                        ) : null}
+                        {contact.email ? (
+                          <div>
+                            <dt className="font-medium text-[#1f2953]">E-posta</dt>
+                            <dd className="mt-1 break-words">{contact.email}</dd>
+                          </div>
+                        ) : null}
+                        {contact.requestArea ? (
+                          <div>
+                            <dt className="font-medium text-[#1f2953]">Talep alanı</dt>
+                            <dd className="mt-1 break-words">{contact.requestArea}</dd>
+                          </div>
+                        ) : null}
+                        <div>
+                          <dt className="font-medium text-[#1f2953]">Mesaj</dt>
+                          <dd className="mt-1 whitespace-pre-line break-words leading-7">
+                            {contact.message}
+                          </dd>
+                        </div>
+                      </dl>
                       <p className="mt-3 text-xs text-[#98a2b3]">
                         {new Date(contact.created_at).toLocaleString('tr-TR')}
                       </p>

@@ -43,14 +43,6 @@ export function Contact() {
     setStatus('loading')
     setErrorMessage('')
 
-    const composedMessage = [
-      formData.service ? `${t(contactCopy.messagePrefixes.service)}: ${formData.service}` : null,
-      formData.email ? `${t(contactCopy.messagePrefixes.email)}: ${formData.email}` : null,
-      formData.message.trim(),
-    ]
-      .filter(Boolean)
-      .join('\n\n')
-
     try {
       const response = await fetch('/api/contact', {
         method: 'POST',
@@ -59,7 +51,8 @@ export function Contact() {
           name: formData.name.trim(),
           phone: formData.phone.trim(),
           email: formData.email.trim(),
-          message: composedMessage,
+          service: formData.service.trim(),
+          message: formData.message.trim(),
         }),
       })
 
