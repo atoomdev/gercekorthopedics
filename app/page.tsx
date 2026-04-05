@@ -10,7 +10,6 @@ import { Process } from '@/components/process'
 import { Services } from '@/components/services'
 import { Specialties } from '@/components/specialties'
 import { StructuredData } from '@/components/structured-data'
-import { WhyUs } from '@/components/why-us'
 import { getRequestLocalizedValue } from '@/lib/i18n-server'
 import { metadataCopy } from '@/lib/site-content'
 
@@ -31,7 +30,6 @@ export default function Home() {
       <Process />
       <Specialties />
       <About />
-      <WhyUs />
       <KnowledgeCenter />
       <Contact />
       <Footer />

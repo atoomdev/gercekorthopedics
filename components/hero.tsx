@@ -10,7 +10,7 @@ import {
 } from 'lucide-react'
 
 import { useLanguage } from '@/components/language-provider'
-import { commonCopy, heroCopy, siteConfig, trustStats } from '@/lib/site-content'
+import { commonCopy, heroCopy, siteConfig } from '@/lib/site-content'
 
 export function Hero() {
   const { t } = useLanguage()
@@ -60,22 +60,6 @@ export function Hero() {
                 {t(commonCopy.exploreServices)}
                 <ArrowRight className="size-4" />
               </Link>
-            </div>
-
-            <div className="mt-12 grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
-              {trustStats.map((stat) => (
-                <div
-                  key={stat.value.toString() + t(stat.label)}
-                  className="rounded-[24px] border border-border/80 bg-white/90 p-5 backdrop-blur-sm"
-                >
-                  <p className="text-2xl font-semibold tracking-tight text-foreground">
-                    {typeof stat.value === 'string' ? stat.value : t(stat.value)}
-                  </p>
-                  <p className="mt-2 text-sm leading-6 text-muted-foreground">
-                    {t(stat.label)}
-                  </p>
-                </div>
-              ))}
             </div>
           </div>
 

@@ -205,37 +205,6 @@ export const heroCopy = {
   ),
 }
 
-export const trustStats = [
-  { value: '1984', label: text('kuruluş', 'founded') },
-  { value: '40+', label: text('yıl deneyim', 'years') },
-  { value: 'Ankara', label: text('uygulama merkezi', 'clinic') },
-  { value: text('Kişiye özel', 'Custom'), label: text('ölçü ve uyum', 'fit & measurement') },
-]
-
-export const trustPillars = [
-  {
-    title: text('Uzman değerlendirme', 'Expert assessment'),
-    description: text(
-      'Her süreç ihtiyaç, hareket ve günlük yaşam hedefleriyle başlar.',
-      'Every process starts with the need, movement pattern, and daily goals.',
-    ),
-  },
-  {
-    title: text('Doğru ölçü ve uyum', 'Precise fit'),
-    description: text(
-      'Ölçü, malzeme ve uygulama detayları birlikte planlanır.',
-      'Measurement, materials, and fitting details are planned together.',
-    ),
-  },
-  {
-    title: text('Takip planı nettir', 'Clear follow-up'),
-    description: text(
-      'Teslim sonrası konfor ve gerekli ayarlar kontrollü biçimde izlenir.',
-      'Comfort and adjustments are followed in a structured way after delivery.',
-    ),
-  },
-]
-
 export const processCopy = {
   eyebrow: text('Süreç', 'Process'),
   title: text(
@@ -755,41 +724,6 @@ export const credibilityNotes = [
   text('Ayak fonksiyonu, yürüme ve denge analizi odaklı yaklaşım', 'A foot function, gait, and balance-oriented approach'),
   text('Protez-ortez uygulamaları ile destek ürünlerinin aynı merkezde planlanması', 'Planning prosthetic-orthotic applications and support products within the same center'),
 ]
-
-export const whyUsCopy = {
-  eyebrow: text('Güven Unsurları', 'Trust Factors'),
-  title: text(
-    'Güven veren bir süreç',
-    'A process built on trust',
-  ),
-  description: text(
-    'Ne önerildiğini, neden önerildiğini ve sonraki adımı açıkça paylaşıyoruz.',
-    'We explain what is recommended, why, and what comes next.',
-  ),
-  focusLabel: text('Hasta odaklı yaklaşım', 'Patient-centered approach'),
-  focusTitle: text(
-    'Teknik kararlar günlük yaşam hedefiyle birlikte değerlendirilir',
-    'Technical decisions are aligned with daily-life goals',
-  ),
-  supportTitle: text('Süreci açıklayan destek başlıkları', 'Support topics that clarify the process'),
-  supportTopics: list(
-    [
-      'İlk başvuruda gerekli bilgiler',
-      'Ölçü, prova ve teslim akışı',
-      'Kontrol ve revizyon planı',
-    ],
-    [
-      'What is needed at first contact',
-      'Measurement, trial, and delivery flow',
-      'Follow-up and revision plan',
-    ],
-  ),
-  communicationTitle: text('İletişimde hız ve açıklık', 'Fast and clear communication'),
-  communicationDescription: text(
-    'Telefon, WhatsApp ve form ile bize hızlıca ulaşabilirsiniz.',
-    'You can quickly reach us by phone, WhatsApp, or form.',
-  ),
-}
 
 export const knowledgeCenterCopy = {
   eyebrow: text('Bilgi Merkezi', 'Knowledge Center'),
