@@ -13,7 +13,7 @@ import {
 } from '@/lib/site-content'
 
 export function Footer() {
-  const { t } = useLanguage()
+  const { language, t } = useLanguage()
 
   return (
     <footer className="border-t border-border/80 bg-[#081a2a] text-white">
@@ -102,11 +102,22 @@ export function Footer() {
           </div>
         </div>
 
-        <div className="mt-12 flex flex-col gap-3 border-t border-white/10 pt-6 text-sm text-white/52 sm:flex-row sm:items-center sm:justify-between">
+        <div className="mt-12 flex flex-col gap-3 border-t border-white/10 pt-6 text-sm text-white/52 lg:flex-row lg:items-center lg:justify-between">
           <p>
             © {new Date().getFullYear()} {siteConfig.name}. {t(commonCopy.rightsReserved)}
           </p>
-          <p>{t(siteConfig.appointmentNote)}</p>
+          <a
+            href="https://x.com/atesaltnk"
+            target="_blank"
+            rel="noreferrer"
+            aria-label={language === 'tr' ? 'Ateş Altınkaynak X profili' : 'Ateş Altınkaynak X profile'}
+            className="group inline-flex w-fit items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm text-white/65 transition hover:border-cyan-300/40 hover:bg-white/10 hover:text-white hover:shadow-[0_0_28px_rgba(103,232,249,0.28)]"
+          >
+            <span className="text-white/45">{t(siteConfig.appointmentNote)}:</span>
+            <span className="font-medium transition group-hover:[text-shadow:0_0_18px_rgba(255,255,255,0.85)]">
+              Ateş Altınkaynak
+            </span>
+          </a>
         </div>
       </div>
     </footer>

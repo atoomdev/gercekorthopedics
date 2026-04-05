@@ -39,8 +39,8 @@ export const siteConfig = {
   },
   foundedYear: 1984,
   appointmentNote: text(
-    'Ateş Altınkaynak tarafından geliştirilmiştir.',
-    'Developed by Ateş Altınkaynak.',
+    'Geliştiren',
+    'Developed by',
   ),
 }
 
@@ -144,7 +144,7 @@ export const navbarCopy = {
   whatsappConsultation: text('WhatsApp', 'WhatsApp'),
   brandTagline: text(
     'Protez, ortez ve tabanlık',
-    'Prosthetics, orthotics, and insoles',
+    'Prosthetics, orthotics.',
   ),
   mobileMenuLabel: text('Menüyü aç', 'Open menu'),
   languageSwitcherLabel: text('Dil seçimi', 'Language selection'),

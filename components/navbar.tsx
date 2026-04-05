@@ -80,10 +80,10 @@ export function Navbar() {
             : 'border-transparent bg-white/90 backdrop-blur-md'
         }`}
       >
-        <div className="container-shell flex min-h-[78px] items-center justify-between gap-4 lg:gap-6">
+        <div className="container-shell grid min-h-[78px] grid-cols-[minmax(0,1fr)_auto] items-center gap-4 xl:grid-cols-[minmax(220px,242px)_minmax(0,1fr)_auto] xl:gap-4">
           <Link
             href={homeHref}
-            className="flex shrink-0 items-center gap-3 lg:min-w-[280px] xl:min-w-[320px]"
+            className="flex min-w-0 items-center gap-3"
             onClick={handleHomeClick}
           >
             <div className="flex items-center justify-center">
@@ -103,7 +103,7 @@ export function Navbar() {
             </div>
           </Link>
 
-          <nav className="hidden min-w-0 flex-1 items-center justify-center gap-5 xl:flex xl:gap-7">
+          <nav className="hidden min-w-0 items-center justify-center gap-4 xl:flex 2xl:gap-5">
             {navigationLinks.map((link) => {
               const routeOnly = link.href.includes('#') ? null : link.href
               const isActive = routeOnly ? pathname === routeOnly : false
@@ -123,16 +123,16 @@ export function Navbar() {
             })}
           </nav>
 
-          <div className="hidden shrink-0 items-center gap-3 xl:flex">
+          <div className="hidden shrink-0 items-center justify-end gap-2 xl:flex">
             <LanguageSwitcher />
             <a
-              className="button-secondary shrink-0 px-4 py-2 text-[13px]"
+              className="button-secondary shrink-0 px-3 py-2 text-xs 2xl:px-4 2xl:text-[13px]"
               href="/#iletisim"
             >
               {t(navbarCopy.contactCta)}
             </a>
             <a
-              className="button-primary shrink-0 px-4 py-2 text-[13px]"
+              className="button-primary shrink-0 px-3 py-2 text-xs 2xl:px-4 2xl:text-[13px]"
               href={navbarWhatsappHref}
               target="_blank"
               rel="noreferrer"
