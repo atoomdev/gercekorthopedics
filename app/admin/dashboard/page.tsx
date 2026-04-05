@@ -28,6 +28,8 @@ type ContactSubmission = {
   name: string
   phone?: string | null
   message: string
+  email?: string | null
+  requestArea?: string | null
   created_at: string
 }
 
@@ -405,8 +407,14 @@ export default function AdminDashboard() {
                           Telefon: {contact.phone}
                         </p>
                       ) : null}
-                      <p className="mt-4 rounded-[20px] bg-[#f5f7fb] px-4 py-4 text-sm leading-7 text-[#475467]">
-                        {contact.message}
+                      <p className="mt-1 text-sm text-[#667085]">
+                        E-posta: {contact.email}
+                      </p>
+                      <p className="mt-1 text-sm text-[#667085]">
+                        Talep alanı: {contact.requestArea}
+                      </p>
+                      <p className="mt-1 text-sm text-[#667085]">
+                        Mesaj: {contact.message}
                       </p>
                       <p className="mt-3 text-xs text-[#98a2b3]">
                         {new Date(contact.created_at).toLocaleString('tr-TR')}
