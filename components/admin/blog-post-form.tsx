@@ -16,6 +16,7 @@ type BlogPostFormData = {
   content_en: string
   author: string
   published: boolean
+  email: string
 }
 
 type BlogPostFormProps = {
@@ -34,6 +35,7 @@ const emptyForm: BlogPostFormData = {
   content_en: '',
   author: '',
   published: false,
+  email: '',
 }
 
 function slugify(value: string) {
@@ -102,6 +104,7 @@ export function BlogPostForm({ mode, postId }: BlogPostFormProps) {
           content_en: data.content_en || '',
           author: data.author || '',
           published: Boolean(data.published),
+          email: data.email || '',
         })
       } catch (fetchError) {
         setError(
@@ -349,6 +352,21 @@ export function BlogPostForm({ mode, postId }: BlogPostFormProps) {
                 className="size-4"
               />
               Yayında
+            </label>
+          </div>
+
+          <div className="space-y-4">
+            <label className="block text-sm font-medium text-[#1f2953]">
+              Email
+              <input
+                type="email"
+                name="email"
+                value={formData.email}
+                onChange={handleChange}
+                required
+                className="mt-2 w-full rounded-2xl border border-[#d9e0ea] px-4 py-3 text-sm"
+                placeholder="admin@example.com"
+              />
             </label>
           </div>
 
