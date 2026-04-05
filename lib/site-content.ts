@@ -143,8 +143,8 @@ export const navbarCopy = {
   ),
   whatsappConsultation: text('WhatsApp', 'WhatsApp'),
   brandTagline: text(
-    'Protezler, ortezler, ortopedik çözümler.',
-    'Prosthetics, orthotics, and orthopedic care.',
+    'Protez, ortez ve tabanlık',
+    'Prosthetics, orthotics, and insoles',
   ),
   mobileMenuLabel: text('Menüyü aç', 'Open menu'),
   languageSwitcherLabel: text('Dil seçimi', 'Language selection'),
@@ -154,7 +154,7 @@ export const navbarCopy = {
 
 export const heroCopy = {
   eyebrow: text(
-    'Gerçek Protez-Ortez',
+    'Ankara ortopedik çözüm merkezi',
     'Orthopedic solutions center in Ankara',
   ),
   title: text(
