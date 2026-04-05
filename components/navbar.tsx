@@ -80,38 +80,42 @@ export function Navbar() {
             : 'border-transparent bg-white/90 backdrop-blur-md'
         }`}
       >
-        <div className="container-shell flex min-h-[78px] items-center justify-between gap-4">
-          <Link href={homeHref} className="flex items-center gap-3" onClick={handleHomeClick}>
+        <div className="container-shell flex min-h-[78px] items-center justify-between gap-4 lg:gap-6">
+          <Link
+            href={homeHref}
+            className="flex shrink-0 items-center gap-3 lg:min-w-[280px] xl:min-w-[320px]"
+            onClick={handleHomeClick}
+          >
             <div className="flex items-center justify-center">
               <img
                 src="/Untitled%20design.png"
                 alt="GO Logo"
-                className="h-16 w-16 object-contain" /* Logoyu büyüttüm */
+                className="h-16 w-16 object-contain"
               />
             </div>
-            <div>
-              <p className="text-lg font-semibold tracking-tight text-foreground">
+            <div className="min-w-0 overflow-hidden">
+              <p className="truncate text-lg font-semibold tracking-tight text-foreground">
                 {siteConfig.name}
               </p>
-              <p className="text-sm text-muted-foreground">
+              <p className="hidden truncate text-xs text-muted-foreground xl:block xl:text-sm">
                 {t(navbarCopy.brandTagline)}
               </p>
             </div>
           </Link>
 
-          <nav className="hidden items-center gap-8 lg:flex">
-              {navigationLinks.map((link) => {
-                const routeOnly = link.href.includes('#') ? null : link.href
-                const isActive = routeOnly ? pathname === routeOnly : false
+          <nav className="hidden min-w-0 flex-1 items-center justify-center gap-5 xl:flex xl:gap-7">
+            {navigationLinks.map((link) => {
+              const routeOnly = link.href.includes('#') ? null : link.href
+              const isActive = routeOnly ? pathname === routeOnly : false
 
-                return (
-                  <Link
-                    key={link.href}
-                    href={link.href}
-                    onClick={link.href === homeHref ? handleHomeClick : undefined}
-                    className={`text-sm font-medium transition ${
-                      isActive ? 'text-primary' : 'text-foreground/80 hover:text-primary'
-                    }`}
+              return (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  onClick={link.href === homeHref ? handleHomeClick : undefined}
+                  className={`text-[13px] font-medium whitespace-nowrap transition xl:text-sm ${
+                    isActive ? 'text-primary' : 'text-foreground/80 hover:text-primary'
+                  }`}
                 >
                   {t(link.label)}
                 </Link>
@@ -119,7 +123,7 @@ export function Navbar() {
             })}
           </nav>
 
-          <div className="hidden items-center gap-3 lg:flex">
+          <div className="hidden shrink-0 items-center gap-3 xl:flex">
             <LanguageSwitcher />
             <a
               className="button-secondary shrink-0 px-4 py-2 text-[13px]"
@@ -137,7 +141,7 @@ export function Navbar() {
             </a>
           </div>
 
-          <div className="flex items-center gap-2 lg:hidden">
+          <div className="flex items-center gap-2 xl:hidden">
             <LanguageSwitcher />
             <button
               type="button"
@@ -151,7 +155,7 @@ export function Navbar() {
         </div>
 
         {isOpen ? (
-          <div className="border-t border-border/80 bg-white lg:hidden">
+          <div className="border-t border-border/80 bg-white xl:hidden">
             <div className="container-shell py-5">
               <nav className="grid gap-2">
                 {navigationLinks.map((link) => (

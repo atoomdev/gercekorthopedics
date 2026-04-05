@@ -39,8 +39,8 @@ export const siteConfig = {
   },
   foundedYear: 1984,
   appointmentNote: text(
-    'Randevu ile değerlendirme, ölçü ve uygulama planlaması yapılır.',
-    'Assessment, measurement, and application planning are carried out by appointment.',
+    'Ateş Altınkaynak tarafından geliştirilmiştir.',
+    'Developed by Ateş Altınkaynak.',
   ),
 }
 
@@ -143,8 +143,8 @@ export const navbarCopy = {
   ),
   whatsappConsultation: text('WhatsApp', 'WhatsApp'),
   brandTagline: text(
-    'Protez, ortez ve tabanlık',
-    'Prosthetics, orthotics, and insoles',
+    'Protezler, ortezler, ortopedik çözümler.',
+    'Prosthetics, orthotics, and orthopedic care.',
   ),
   mobileMenuLabel: text('Menüyü aç', 'Open menu'),
   languageSwitcherLabel: text('Dil seçimi', 'Language selection'),
@@ -154,7 +154,7 @@ export const navbarCopy = {
 
 export const heroCopy = {
   eyebrow: text(
-    'Ankara ortopedik çözüm merkezi',
+    'Gerçek Protez-Ortez',
     'Orthopedic solutions center in Ankara',
   ),
   title: text(
