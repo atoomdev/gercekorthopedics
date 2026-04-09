@@ -385,7 +385,7 @@ export const serviceDetails: ServiceDetail[] = [
     slug: 'kisiye-ozel-tabanlik-ve-yurume-analizi',
     title: text('Kişiye Özel Tabanlık ve Yürüme Analizi', 'Custom Insoles & Gait Analysis'),
     shortDescription: text(
-      'Basış ve yürüyüş analizine göre planlanan kişiye özel tabanlıklar.',
+      'Basış ve yürüme analizine göre planlanan kişiye özel tabanlıklar.',
       'Custom insoles planned with pressure and gait analysis.',
     ),
     intro: text(
